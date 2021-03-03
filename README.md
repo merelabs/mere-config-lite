@@ -1,0 +1,1 @@
+# mere-config-lite
