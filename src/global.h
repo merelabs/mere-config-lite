@@ -1,0 +1,12 @@
+#ifndef MERECONFIGGLOBAL_H
+#define MERECONFIGGLOBAL_H
+
+#include <QtCore/QtGlobal>
+
+#if defined(MERE_CONFIG_LITE_LIB)
+# define MERE_CONFIG_LITE_LIB_SPEC Q_DECL_EXPORT
+#else
+# define MERE_CONFIG_LITE_LIB_SPEC Q_DECL_IMPORT
+#endif
+
+#endif // MERECONFIGGLOBAL_H
