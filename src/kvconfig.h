@@ -1,9 +1,8 @@
-#ifndef MERECONFIG_H
-#define MERECONFIG_H
+#ifndef MERE_CONFIG_KVCONFIG_H
+#define MERE_CONFIG_KVCONFIG_H
 
 #include "global.h"
 
-#include <QDebug>
 #include <QObject>
 #include <QSettings>
 
@@ -11,17 +10,17 @@ class MereSettings;
 
 namespace Mere
 {
-namespace ConfigLite
+namespace Config
 {
 
-class MERE_CONFIG_LITE_LIB_SPEC Config : public QObject
+class MERE_CONFIG_LIB_SPEC KVConfig : public QObject
 {
     Q_OBJECT
 public:
-    virtual ~Config();
-    explicit Config(QObject *parent = 0);
-    explicit Config(const std::string &path, QObject *parent = 0);
-    explicit Config(const std::string &path, const std::string &type, QObject *parent = 0);
+    virtual ~KVConfig();
+    explicit KVConfig(QObject *parent = 0);
+    explicit KVConfig(const std::string &path, QObject *parent = 0);
+    explicit KVConfig(const std::string &path, const std::string &type, QObject *parent = 0);
 
     QVariant get(const std::string &key) const;
     void set(const std::string &key, const QVariant &value);
@@ -30,9 +29,10 @@ public:
     std::map<std::string, QVariant> properties() const;
 
 protected:
-    void load();
+    virtual void load();
 
 private:
+    bool m_loaded;
     std::string m_path;
     std::string m_type;
     QSettings *m_settings;
@@ -44,4 +44,4 @@ private:
 }
 
 
-#endif // MERECONFIG_H
+#endif // MERE_CONFIG_KVCONFIG_H
