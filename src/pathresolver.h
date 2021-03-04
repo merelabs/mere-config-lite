@@ -1,25 +1,21 @@
-#ifndef PATHRESOLVER_H
-#define PATHRESOLVER_H
+#ifndef MERE_CONFIG_PATHRESOLVER_H
+#define MERE_CONFIG_PATHRESOLVER_H
 
-#include <QObject>
+#include "global.h"
 
 namespace Mere
 {
-namespace ConfigLite
+namespace Config
 {
 
-class PathResolver : public QObject
+class MERE_CONFIG_LIB_SPEC PathResolver
 {
-    Q_OBJECT
 public:
-    explicit PathResolver(QObject *parent = nullptr);
-    QString resolve(const QString &path, const QString &type);
-
-signals:
-
+    PathResolver() = default;
+    std::string resolve(const std::string &path, const std::string &type);
 };
 
 }
 }
 
-#endif // PATHRESOLVER_H
+#endif // MERE_CONFIG_PATHRESOLVER_H

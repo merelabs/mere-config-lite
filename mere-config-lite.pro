@@ -13,17 +13,19 @@ DEFINES += LIB_VERSION=\\\"$$VERSION\\\"
 DEFINES += QT_DEPRECATED_WARNINGS MERE_CONFIG_LITE_LIB
 
 SOURCES += \
-    src/config.cpp \
+    src/homespec.cpp \
+    src/kvconfig.cpp \
     src/pathresolver.cpp
 
 HEADERS += \
-    src/config.h \
+    src/homespec.h \
+    src/kvconfig.h \
     src/pathresolver.h \
     src/global.h
 
 INCLUDEPATH += /usr/local/include
 
-#LIBS += -lmere-utils
+#LIBS += -lmere-xdg -lmere-utils
 
 #
 # Install
@@ -32,7 +34,7 @@ unix {
     target.path = /usr/local/lib
     INSTALLS += target
 
-    INSTALL_PREFIX = /usr/local/include/mere/config-lite
+    INSTALL_PREFIX = /usr/local/include/mere/config
     for(header, HEADERS) {
         sdir = $${dirname(header)}
         sdir = $$replace(sdir, "src", "")
