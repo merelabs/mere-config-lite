@@ -1,31 +1,20 @@
 #include "pathresolver.h"
+#include "homespec.h"
 
-#include <QDebug>
-#include <QFile>
+#include <fstream>
+#include <vector>
 
-Mere::ConfigLite::PathResolver::PathResolver(QObject *parent) : QObject(parent)
+std::string Mere::Config::PathResolver::resolve(const std::string &path, const std::string &type)
 {
+    auto pos = path.find_last_of("/");
+    if (pos == 0) return path;
 
-}
-
-QString Mere::ConfigLite::PathResolver::resolve(const QString &path, const QString &type)
-{
-    if (path.startsWith("/"))
-        return path;
-
-    qDebug() << path << type;
-
-    // check in /usr/local/etc
-    QString local("/usr/local/etc/");
-    local = local.append(path);
-
-    if(QFile(local).exists()) return local;
-
-    // chck in /etc
-    QString system("/etc/");
-    system = system.append(path);
-    if(QFile(system).exists()) return system;
-
+    std::vector<std::string> homes = HomeSpec::homes();
+    for(std::string &home : homes)
+    {
+        if(std::ifstream(home.append(path)).good())
+            return home;
+    }
 
     return "";
 }
