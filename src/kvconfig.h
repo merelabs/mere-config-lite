@@ -5,8 +5,6 @@
 
 #include <QObject>
 
-class MereSettings;
-
 namespace Mere
 {
 namespace Config

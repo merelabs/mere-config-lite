@@ -1,4 +1,5 @@
 #include "kvconfig.h"
+#include "parser.h"
 #include "pathresolver.h"
 
 #include <fstream>
@@ -49,66 +50,14 @@ void Mere::Config::KVConfig::set(const std::string &key, const std::string &valu
 
 std::string Mere::Config::KVConfig::property(const std::string &property, int *set) const
 {
-    std::string value;
-
-    if (set) *set = 0;
-
-    // check for the file extension
-    std::string ext(".conf");
-    auto pos = m_path.find(ext);
-    if (pos != m_path.length() - ext.length())
-        return "";
-
-    std::ifstream file(m_path);
-
-    // check for the file existance
-    if (!file.good()) return "";
-
-    std::string line;
-    while (std::getline(file, line))
-    {
-        if (line.empty()) continue;
-        if (this->comment(line)) continue;
-
-        std::string key   = this->key(line);
-        if (key != property) continue;
-
-        if (set) *set = 1;
-        value = this->value(line);
-        break;
-    }
-
-    return value;
+    Parser parser(m_path);
+    return parser.parse(property, set);
 }
 
 std::map<std::string, std::string> Mere::Config::KVConfig::properties() const
 {
-    std::map<std::string, std::string> properties;
-
-    // check for the file extension
-    std::string ext(".conf");
-    auto pos = m_path.find(ext);
-    if (pos != m_path.length() - ext.length())
-        return properties;
-
-    std::ifstream file(m_path);
-
-    // check for the file existance
-    if (!file.good()) return properties;
-
-    std::string line;
-    while (std::getline(file, line))
-    {
-        if (line.empty()) continue;
-        if (this->comment(line)) continue;
-
-        std::string key   = this->key(line);
-        std::string value = this->value(line);
-
-        properties.insert({key, value});
-    }
-
-    return properties;
+    Parser parser(m_path);
+    return parser.parse();
 }
 
 bool Mere::Config::KVConfig::comment(const std::string &line) const

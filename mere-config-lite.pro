@@ -15,13 +15,19 @@ DEFINES += QT_DEPRECATED_WARNINGS MERE_CONFIG_LITE_LIB
 SOURCES += \
     src/homespec.cpp \
     src/kvconfig.cpp \
-    src/pathresolver.cpp
+    src/parser.cpp \
+    src/pathresolver.cpp \
+    src/reader.cpp \
+    src/writer.cpp
 
 HEADERS += \
     src/homespec.h \
     src/kvconfig.h \
+    src/parser.h \
     src/pathresolver.h \
-    src/global.h
+    src/global.h \
+    src/reader.h \
+    src/writer.h
 
 INCLUDEPATH += /usr/local/include
 
