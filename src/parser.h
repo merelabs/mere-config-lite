@@ -17,7 +17,6 @@ public:
     std::string parse(const std::string &key, int *set = nullptr) const;
 
 private:
-    std::string& trim(std::string &line) const;
     bool comment(const std::string &line) const;
     std::string key(const std::string &line) const;
     std::string value(const std::string &line) const;

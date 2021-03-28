@@ -1,4 +1,5 @@
 #include "parser.h"
+#include "mere/utils/stringutils.h"
 
 #include <fstream>
 
@@ -27,7 +28,7 @@ std::map<std::string, std::string> Mere::Config::Parser::parse() const
     std::string line;
     while (std::getline(file, line))
     {
-        trim(line);
+        Mere::Utils::StringUtils::trim(line);
 
         if (line.empty()) continue;
         if (this->comment(line)) continue;
@@ -63,7 +64,7 @@ std::string Mere::Config::Parser::parse(const std::string &key, int *set) const
     std::string line;
     while (std::getline(file, line))
     {
-        trim(line);
+        Mere::Utils::StringUtils::trim(line);
 
         if (line.empty()) continue;
         if (this->comment(line)) continue;
@@ -79,21 +80,6 @@ std::string Mere::Config::Parser::parse(const std::string &key, int *set) const
     }
 
     return value;
-}
-
-std::string& Mere::Config::Parser::trim(std::string &line) const
-{
-    // left
-    uint count = 0;
-    while(count < line.length() && line[count] == ' ') count++;
-    if (count) line.erase(0, count);
-
-    // right
-    count = line.length() - 1;
-    while(count != 0 && line[count] == ' ') count--;
-    if (count != line.length() - 1) line.erase(count);
-
-    return line;
 }
 
 bool Mere::Config::Parser::comment(const std::string &line) const
