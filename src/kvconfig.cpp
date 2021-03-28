@@ -1,15 +1,14 @@
 #include "kvconfig.h"
+#include "parser.h"
 #include "pathresolver.h"
+
+#include <fstream>
+#include <iostream>
 
 Mere::Config::KVConfig::~KVConfig()
 {
-    if (m_settings)
-    {
-        delete m_settings;
-        m_settings = nullptr;
-    }
-}
 
+}
 
 Mere::Config::KVConfig::KVConfig(const std::string &path, QObject *parent)
     : KVConfig(path, ".conf", parent)
@@ -18,57 +17,68 @@ Mere::Config::KVConfig::KVConfig(const std::string &path, QObject *parent)
 
 Mere::Config::KVConfig::KVConfig(const std::string &path, const std::string &type, QObject *parent)
     : QObject(parent),
-      m_loaded(false),
       m_path(path),
-      m_type(type),
-      m_settings(nullptr)
+      m_type(type)
 {
     PathResolver resolver;
     std::string fqpath = resolver.resolve(m_path, m_type);
-
-    m_settings = new QSettings(QString::fromStdString(fqpath), QSettings::Format::IniFormat);
 }
 
 void Mere::Config::KVConfig::load()
 {
     m_properties = this->properties();
-    m_loaded = true;
 }
 
-QVariant Mere::Config::KVConfig::get(const std::string &key) const
+std::string Mere::Config::KVConfig::get(const std::string &key, int *set) const
 {
     auto result = m_properties.find(key);
     if (result != m_properties.end())
+    {
+        if (set) *set = 1;
         return result->second;
+    }
 
-    return QVariant();
+    if (set) *set = 0;
+
+    return "";
 }
 
-void Mere::Config::KVConfig::set(const std::string &key, const QVariant &value)
+void Mere::Config::KVConfig::set(const std::string &key, const std::string &value)
 {
     m_properties.insert({key, value});
 }
 
-QVariant Mere::Config::KVConfig::property(const std::string &property) const
+std::string Mere::Config::KVConfig::property(const std::string &property, int *set) const
 {
-    QString prop(QString::fromStdString(property));
-
-    if (m_settings->contains(prop))
-        return m_settings->value(prop);
-
-    return QVariant();
+    Parser parser(m_path);
+    return parser.parse(property, set);
 }
 
-std::map<std::string, QVariant> Mere::Config::KVConfig::properties() const
+std::map<std::string, std::string> Mere::Config::KVConfig::properties() const
 {
-    std::map<std::string, QVariant> properties;
+    Parser parser(m_path);
+    return parser.parse();
+}
 
-    QStringList keys = m_settings->allKeys();
-    for(QString key : keys)
-    {
-        QVariant value = m_settings->value(key);
-        properties.insert({key.toStdString(), value});
-    }
+bool Mere::Config::KVConfig::comment(const std::string &line) const
+{
+    auto pos = line.find("#");
 
-    return properties;
+    return pos == 0;
+}
+
+std::string Mere::Config::KVConfig::key(const std::string &line) const
+{
+    auto pos = line.find("=");
+    if (pos == 0 || pos == std::string::npos) return "";
+
+    return line.substr(0, pos);
+}
+
+std::string Mere::Config::KVConfig::value(const std::string &line) const
+{
+    auto pos = line.find("=");
+    if (pos == 0 || pos == std::string::npos) return "";
+
+    return line.substr(pos + 1);
 }
