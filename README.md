@@ -31,4 +31,4 @@
   note=a simple configuration file manager
   
   ```
-*note* - no write operations is supported yet!
+*note* - write operations yet to supported!
