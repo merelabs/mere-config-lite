@@ -9,7 +9,7 @@
   
   Example: config.conf
   name=config-lite
-  note=a simple configuration file manager
+  note=a simple library to work with configuration file
   ```
 **doted key-value pair**
   ```
@@ -19,7 +19,7 @@
   
   Example: config.dot
   mere.config.name=config-lite
-  mere.config.note=a simple configuration file manager
+  mere.config.note=a simple library to work with configuration file
   ```
 **group wise key-value pair**
   ```
@@ -28,7 +28,7 @@
   Example: config.ini
   [General]
   name=config-lite
-  note=a simple configuration file manager
+  note=a simple library to work with configuration file
   
   ```
 *note* - write operations yet to supported!
