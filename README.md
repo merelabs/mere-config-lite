@@ -3,7 +3,7 @@
 
 `mere-config-lite` is currently suporting reading configuration files of following characteristics:
 
-**key-value paired**
+**key-value pair**
   ```
   simple, easy and convenient way of writing configuration. does not support any grouping.
   
@@ -11,7 +11,7 @@
   name=config-lite
   note=a simple configuration file manager
   ```
-**doted key-vallue paired**
+**doted key-value pair**
   ```
   another simple and easy way of writing configurations or properties with grouping facilities - where 
   propeties are groupped using dot notation; its very convenient way of writing properties  though its 
@@ -21,7 +21,7 @@
   mere.config.name=config-lite
   mere.config.note=a simple configuration file manager
   ```
-**group wise key-value paired**
+**group wise key-value pair**
   ```
   pairs are groups using group or section name that appears on a line by itself in square brakets
   
