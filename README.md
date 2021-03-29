@@ -13,9 +13,9 @@
   ```
 **doted key-value pair**
   ```
-  another simple and easy way of writing configurations or properties with grouping facilities - where 
-  propeties are groupped using dot notation; its very convenient way of writing properties  though its 
-  bit more vervose.
+  another simple and easy way of writing configurations or properties with grouping facilities - 
+  where propeties are groupped using dot notation; its very convenient way of writing properties
+  though its bit more vervose.
   
   Example: config.dot
   mere.config.name=config-lite
