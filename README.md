@@ -11,7 +11,7 @@
   name=config-lite
   note=a simple library to work with configuration file
   ```
-**doted key-value pair**
+**dotted key-value pair**
   ```
   another simple and easy way of writing configurations or properties with grouping facilities - 
   where propeties are groupped using dot notation; its very convenient way of writing properties
