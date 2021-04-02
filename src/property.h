@@ -15,6 +15,7 @@ public:
     ~Property() = default;
     Property() = default;
     explicit Property(const std::string &name);
+    explicit Property(const std::string &name, const std::string &value);
 
     Property(const Property &that) = default;
     Property& operator=(const Property &that) = default;

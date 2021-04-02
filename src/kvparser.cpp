@@ -9,9 +9,9 @@ Mere::Config::KVParser::KVParser(const KVConfig &config, QObject *parent)
 
 }
 
-std::map<std::string, std::string> Mere::Config::KVParser::parse() const
+std::vector<Mere::Config::Property> Mere::Config::KVParser::parse() const
 {
-    std::map<std::string, std::string> properties;
+    std::vector<Mere::Config::Property> properties;
 
     std::string path = this->config().path();
 
@@ -32,14 +32,14 @@ std::map<std::string, std::string> Mere::Config::KVParser::parse() const
         Mere::Utils::StringUtils::trim(line);
 
         if (line.empty()) continue;
-        if (this->comment(line)) continue;
+        if (this->isComment(line)) continue;
 
         std::string key   = this->key(line);
         if(key.empty()) continue;
 
         std::string value = this->value(line);
 
-        properties.insert({key, value});
+        properties.push_back(Property(key, value));
     }
 
     return properties;
@@ -70,7 +70,7 @@ std::string Mere::Config::KVParser::parse(const std::string &key, int *set) cons
         Mere::Utils::StringUtils::trim(line);
 
         if (line.empty()) continue;
-        if (this->comment(line)) continue;
+        if (this->isComment(line)) continue;
 
         std::string k   = this->key(line);
         if(k.empty()) continue;

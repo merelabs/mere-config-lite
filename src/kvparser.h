@@ -3,6 +3,7 @@
 
 #include "kvconfig.h"
 #include "parser.h"
+#include "property.h"
 
 namespace Mere
 {
@@ -15,11 +16,12 @@ class MERE_CONFIG_LIB_SPEC KVParser : public Parser
 public:
     explicit KVParser(const KVConfig &config, QObject *parent = nullptr);
 
-    std::string key(const std::string &line) const;
-    std::string value(const std::string &line) const;
+    virtual std::vector<Property> parse() const;
+    virtual std::string parse(const std::string &key, int *set) const;
 
-    std::map<std::string, std::string> parse() const;
-    std::string parse(const std::string &key, int *set = nullptr) const;
+protected:
+    virtual std::string key(const std::string &line) const;
+    virtual std::string value(const std::string &line) const;
 
 signals:
 

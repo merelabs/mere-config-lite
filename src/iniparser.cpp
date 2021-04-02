@@ -1,51 +1,62 @@
 #include "iniparser.h"
+#include "property.h"
 #include "mere/utils/stringutils.h"
 
 #include <fstream>
 #include <QDebug>
 
 Mere::Config::IniParser::IniParser(const GroupConfig &config, QObject *parent)
-    : GroupParser(config, parent)
+    : GroupParser(config, parent),
+      m_config(config)
 {
 
 }
 
-std::map<std::string, std::map<std::string, std::string>> Mere::Config::IniParser::parse() const
+bool Mere::Config::IniParser::isGroup(const std::string &line) const
 {
+    return m_config.isGroup(line);
+}
 
-    std::map<std::string, std::map<std::string, std::string>> properties;
+std::vector<Mere::Config::Group> Mere::Config::IniParser::parse() const
+{
+    std::vector<Mere::Config::Group> groups;
+
+//    std::map<std::string, std::map<std::string, std::string>> properties;
 
     std::string path = this->config().path();
 
     std::ifstream file(path);
 
     // check for the file existance
-    if (!file.good()) return properties;
+    if (!file.good()) return groups;
 
-    std::string section;
+    std::vector<Property> properties;
+
     std::string line;
     while (std::getline(file, line))
     {
         Mere::Utils::StringUtils::trim(line);
 
         if (line.empty()) continue;
-        if (this->comment(line)) continue;
+        if (this->isComment(line)) continue;
 
-        if (this->section(line))
+        if (this->isGroup(line))
         {
-            section = line.substr(1, line.length() - 2);
-            properties.insert({section, {}});
+            std::string name = line.substr(1, line.length() - 2);
+
+            Group group(name);
+            groups.push_back(group);
             continue;
         }
-        if (section.empty()) continue;
+        if (groups.empty()) continue;
 
         std::string key = this->key(line);
         if(key.empty()) continue;
 
         std::string value = this->value(line);
 
-        properties[section].insert({key, value});
+        groups.back().property(Property(key, value));
     }
 
-    return properties;
+    return groups;
 }

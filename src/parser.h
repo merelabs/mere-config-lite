@@ -18,7 +18,7 @@ public:
     const Config& config() const;
 
 protected:
-    bool comment(const std::string &line) const;
+    bool isComment(const std::string &line) const;
     std::string key(const std::string &line) const;
     std::string value(const std::string &line) const;
 

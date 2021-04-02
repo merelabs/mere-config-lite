@@ -5,10 +5,3 @@ Mere::Config::GroupParser::GroupParser(const GroupConfig &config, QObject *paren
 {
 
 }
-
-//bool Mere::Config::GroupParser::parse()
-//{
-//    Mere::Config::Group group;
-
-//    return true;
-//}

@@ -6,6 +6,13 @@ Mere::Config::Property::Property(const std::string &name)
 
 }
 
+Mere::Config::Property::Property(const std::string &name, const std::string &value)
+    : m_name(name),
+      m_value(value)
+{
+
+}
+
 std::string Mere::Config::Property::name() const
 {
     return m_name;

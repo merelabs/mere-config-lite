@@ -2,6 +2,7 @@
 #define MERE_CONFIG_KVCONFIG_H
 
 #include "config.h"
+#include "property.h"
 
 namespace Mere
 {
@@ -34,13 +35,13 @@ public:
      * if you already read it, use get for the property value
      * @return
      */
-    std::map<std::string, std::string> properties() const;
+    std::vector<Mere::Config::Property> properties() const;
 
 protected:
     virtual void load();
 
 private:
-    std::map<std::string, std::string> m_config;
+    std::vector<Mere::Config::Property> m_properties;
 };
 
 }

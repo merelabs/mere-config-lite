@@ -15,7 +15,7 @@ const Mere::Config::Config& Mere::Config::Parser::config() const
     return m_config;
 }
 
-bool Mere::Config::Parser::comment(const std::string &line) const
+bool Mere::Config::Parser::isComment(const std::string &line) const
 {
     return m_config.isCommnet(line);
 }
