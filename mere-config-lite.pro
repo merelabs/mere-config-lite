@@ -14,6 +14,7 @@ DEFINES += QT_DEPRECATED_WARNINGS MERE_CONFIG_LITE_LIB
 
 SOURCES += \
     src/config.cpp \
+    src/configtraverser.cpp \
     src/dotconfig.cpp \
     src/dotparser.cpp \
     src/group.cpp \
@@ -33,6 +34,7 @@ SOURCES += \
 
 HEADERS += \
     src/config.h \
+    src/configtraverser.h \
     src/dotconfig.h \
     src/dotparser.h \
     src/group.h \

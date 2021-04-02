@@ -18,6 +18,7 @@ private slots:
     void cleanupTestCase();
     void test_parseEmpty();
     void test_parseOnlyComment();
+    void test_parse4Properties();
 };
 
 TestKVParser::TestKVParser()
@@ -42,7 +43,8 @@ void TestKVParser::cleanupTestCase()
 
 void TestKVParser::test_parseEmpty()
 {
-    const Mere::Config::KVConfig config(":/tests/res/config/kv/empty.conf");
+    std::string base(QDir::currentPath().toStdString());
+    const Mere::Config::KVConfig config(base.append("/data/config/kv/empty.conf"));
     Mere::Config::KVParser parser(config);
 
     std::map<std::string, std::string> properties = parser.parse();
@@ -51,11 +53,22 @@ void TestKVParser::test_parseEmpty()
 
 void TestKVParser::test_parseOnlyComment()
 {
-    const Mere::Config::KVConfig config(":/tests/res/config/kv/only-commnet.conf");
+    std::string base(QDir::currentPath().toStdString());
+    const Mere::Config::KVConfig config(base.append("/data/config/kv/only-commnet.conf"));
     Mere::Config::KVParser parser(config);
 
     std::map<std::string, std::string> properties = parser.parse();
     assert(properties.size() == 0);
+}
+
+void TestKVParser::test_parse4Properties()
+{
+    std::string base(QDir::currentPath().toStdString());
+    const Mere::Config::KVConfig config(base.append("/data/config/kv/4-properties.conf"));
+    Mere::Config::KVParser parser(config);
+
+    std::map<std::string, std::string> properties = parser.parse();
+    assert(properties.size() == 4);
 }
 
 QTEST_MAIN(TestKVParser)

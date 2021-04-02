@@ -2,5 +2,6 @@
     <qresource prefix="/tests">
         <file>res/config/kv/empty.conf</file>
         <file>res/config/kv/only-comment.conf</file>
+        <file>res/config/kv/4-properties.conf</file>
     </qresource>
 </RCC>

@@ -14,6 +14,3 @@ SOURCES +=  testgroupparser.cpp \
 
 INCLUDEPATH += /usr/local/include
 LIBS += -lmere-config-lite
-
-RESOURCES += \
-    tests.qrc
