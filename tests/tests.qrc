@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/tests">
+        <file>res/config/kv/empty.conf</file>
+        <file>res/config/kv/only-comment.conf</file>
+    </qresource>
+</RCC>

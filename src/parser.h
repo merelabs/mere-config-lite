@@ -1,6 +1,8 @@
 #ifndef MERE_CONFIG_PARSER_H
 #define MERE_CONFIG_PARSER_H
 
+#include "global.h"
+#include "config.h"
 #include <QObject>
 
 namespace Mere
@@ -8,15 +10,14 @@ namespace Mere
 namespace Config
 {
 
-class Parser : public QObject
+class MERE_CONFIG_LIB_SPEC Parser : public QObject
 {
     Q_OBJECT
 public:
-    explicit Parser(const std::string &path, QObject *parent = nullptr);
-    std::map<std::string, std::string> parse() const;
-    std::string parse(const std::string &key, int *set = nullptr) const;
+    explicit Parser(const Config &config, QObject *parent = nullptr);
+    const Config& config() const;
 
-private:
+protected:
     bool comment(const std::string &line) const;
     std::string key(const std::string &line) const;
     std::string value(const std::string &line) const;
@@ -24,7 +25,7 @@ private:
 signals:
 
 private:
-    const std::string &m_path;
+    const Config &m_config;
 };
 }
 }

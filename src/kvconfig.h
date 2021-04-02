@@ -1,21 +1,18 @@
 #ifndef MERE_CONFIG_KVCONFIG_H
 #define MERE_CONFIG_KVCONFIG_H
 
-#include "global.h"
-
-#include <QObject>
+#include "config.h"
 
 namespace Mere
 {
 namespace Config
 {
 
-class MERE_CONFIG_LIB_SPEC KVConfig : public QObject
+class MERE_CONFIG_LIB_SPEC KVConfig : public Config
 {
     Q_OBJECT
 public:
     virtual ~KVConfig();
-    explicit KVConfig(QObject *parent = 0);
     explicit KVConfig(const std::string &path, QObject *parent = 0);
     explicit KVConfig(const std::string &path, const std::string &type, QObject *parent = 0);
 
@@ -43,15 +40,7 @@ protected:
     virtual void load();
 
 private:
-    bool comment(const std::string &line) const;
-    std::string key(const std::string &line) const;
-    std::string value(const std::string &line) const;
-
-private:
-    std::string m_path;
-    std::string m_type;
-
-    std::map<std::string, std::string> m_properties;
+    std::map<std::string, std::string> m_config;
 };
 
 }

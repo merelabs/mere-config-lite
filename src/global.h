@@ -1,5 +1,5 @@
-#ifndef MERECONFIGGLOBAL_H
-#define MERECONFIGGLOBAL_H
+#ifndef MERE_CONFIG_GLOBAL_H
+#define MERE_CONFIG_GLOBAL_H
 
 #include <QtCore/QtGlobal>
 
@@ -9,4 +9,4 @@
 # define MERE_CONFIG_LIB_SPEC Q_DECL_IMPORT
 #endif
 
-#endif // MERECONFIGGLOBAL_H
+#endif // MERE_CONFIG_GLOBAL_H

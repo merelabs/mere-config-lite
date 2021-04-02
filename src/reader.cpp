@@ -1,6 +1,6 @@
 #include "reader.h"
 
-Reader::Reader(QObject *parent) : QObject(parent)
+Mere::Config::Reader::Reader(QObject *parent) : QObject(parent)
 {
 
 }

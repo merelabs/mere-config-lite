@@ -1,6 +1,6 @@
 #include "writer.h"
 
-Writer::Writer(QObject *parent) : QObject(parent)
+Mere::Config::Writer::Writer(QObject *parent) : QObject(parent)
 {
 
 }

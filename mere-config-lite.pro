@@ -13,25 +13,48 @@ DEFINES += LIB_VERSION=\\\"$$VERSION\\\"
 DEFINES += QT_DEPRECATED_WARNINGS MERE_CONFIG_LITE_LIB
 
 SOURCES += \
+    src/config.cpp \
+    src/dotconfig.cpp \
+    src/dotparser.cpp \
+    src/group.cpp \
+    src/groupconfig.cpp \
+    src/groupparser.cpp \
     src/homespec.cpp \
+    src/iniconfig.cpp \
+    src/iniparser.cpp \
     src/kvconfig.cpp \
+    src/kvparser.cpp \
     src/parser.cpp \
     src/pathresolver.cpp \
+    src/property.cpp \
     src/reader.cpp \
+    src/traverser.cpp \
     src/writer.cpp
 
 HEADERS += \
+    src/config.h \
+    src/dotconfig.h \
+    src/dotparser.h \
+    src/group.h \
+    src/groupconfig.h \
+    src/groupparser.h \
     src/homespec.h \
+    src/iniconfig.h \
+    src/iniparser.h \
     src/kvconfig.h \
+    src/kvparser.h \
     src/parser.h \
     src/pathresolver.h \
     src/global.h \
+    src/property.h \
     src/reader.h \
+    src/traverser.h \
     src/writer.h
 
 INCLUDEPATH += /usr/local/include
 
-#LIBS += -lmere-xdg -lmere-utils
+
+LIBS += -lmere-xdg -lmere-utils
 
 #
 # Install
