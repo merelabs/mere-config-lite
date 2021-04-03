@@ -2,6 +2,8 @@
 #include <QCoreApplication>
 
 // add necessary includes here
+#include "mere/config/kvconfig.h"
+#include "mere/config/kvparser.h"
 
 class TestGroupParser : public QObject
 {
@@ -14,7 +16,6 @@ public:
 private slots:
     void initTestCase();
     void cleanupTestCase();
-    void test_case1();
 };
 
 TestGroupParser::TestGroupParser()
@@ -37,10 +38,6 @@ void TestGroupParser::cleanupTestCase()
 
 }
 
-void TestGroupParser::test_case1()
-{
-
-}
 
 //QTEST_MAIN(TestGroupParser)
 #include "testgroupparser.moc"
