@@ -19,7 +19,6 @@ Mere::Config::Config::Config(const std::string &path, const std::string &type, Q
 {
     PathResolver resolver;
     std::string fqpath = resolver.resolve(path, type);
-
 }
 
 std::string Mere::Config::Config::path() const

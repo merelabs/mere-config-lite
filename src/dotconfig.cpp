@@ -9,7 +9,28 @@ Mere::Config::DotConfig::DotConfig(const std::string &path, QObject *parent)
 
 void Mere::Config::DotConfig::load()
 {
-//    DotParser parser(path(), *this);
+    m_properties = this->properties();
+}
 
-//    parser.parse();
+
+std::vector<Mere::Config::Property> Mere::Config::DotConfig::properties() const
+{
+    DotParser parser(*this);
+    return parser.parse();
+}
+
+bool Mere::Config::DotConfig::isGroup(const std::string &line) const
+{
+    auto pos = line.find("=");
+    if (pos == std::string::npos)
+        return false;
+
+    auto dot = line.find(".");
+    if (dot == std::string::npos)
+        return false;
+
+    if (dot > pos)
+        return false;
+
+    return true;
 }

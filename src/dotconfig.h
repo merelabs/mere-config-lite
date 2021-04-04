@@ -14,11 +14,17 @@ class MERE_CONFIG_LIB_SPEC DotConfig : public GroupConfig
 public:
     explicit DotConfig(const std::string &path, QObject *parent = nullptr);
 
-protected:
-    void load() override;
+    std::vector<Mere::Config::Property> properties() const;
+
+    virtual bool isGroup(const std::string &line) const override;
+
+private:
+    void load();
 
 signals:
 
+private:
+    std::vector<Mere::Config::Property> m_properties;
 };
 
 }

@@ -16,8 +16,9 @@ class Traverser : public QObject
 public:
     explicit Traverser(const std::string &path, const Config &config, QObject *parent = nullptr);
 
-//    std::string next();
-//    std::string prev();
+    std::istream_iterator<std::string> traverse();
+    std::istream_iterator<std::string> next();
+    std::istream_iterator<std::string> prev();
 
 //    iterrator;
 

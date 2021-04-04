@@ -46,6 +46,11 @@ void Mere::Config::KVConfig::set(const std::string &key, const std::string &valu
     m_properties.push_back(Property(key, value));
 }
 
+std::string Mere::Config::KVConfig::property(const std::string &property, int *set) const
+{
+    KVParser parser(*this);
+    return parser.parse(property, set);
+}
 
 std::vector<Mere::Config::Property> Mere::Config::KVConfig::properties() const
 {

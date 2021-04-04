@@ -21,25 +21,9 @@ std::vector<Mere::Config::Group> Mere::Config::IniParser::parse() const
 {
     std::vector<Mere::Config::Group> groups;
 
-//    std::map<std::string, std::map<std::string, std::string>> properties;
-
-    std::string path = this->config().path();
-
-    std::ifstream file(path);
-
-    // check for the file existance
-    if (!file.good()) return groups;
-
-    std::vector<Property> properties;
-
-    std::string line;
-    while (std::getline(file, line))
+    std::vector<std::string> lines = Parser::parse();
+    for(const std::string &line : lines)
     {
-        Mere::Utils::StringUtils::trim(line);
-
-        if (line.empty()) continue;
-        if (this->isComment(line)) continue;
-
         if (this->isGroup(line))
         {
             std::string name = line.substr(1, line.length() - 2);
@@ -59,4 +43,46 @@ std::vector<Mere::Config::Group> Mere::Config::IniParser::parse() const
     }
 
     return groups;
+}
+
+Mere::Config::Group Mere::Config::IniParser::parse(const std::string &match) const
+{
+    Mere::Config::Group group;
+
+    std::string path = this->config().path();
+
+    std::ifstream file(path);
+    if (!file.good()) return group;
+
+    bool found = false;
+
+    std::string line;
+    while (next(file, line))
+    {
+        if (this->isGroup(line))
+        {
+            if (found) break;
+
+            std::string name = line.substr(1, line.length() - 2);
+
+            if(line.compare(match) != 0)
+                continue;
+
+            group.name(name);
+
+            found = true;
+            continue;
+        }
+
+        if (!found) continue;
+
+        std::string key = this->key(line);
+        if(key.empty()) continue;
+
+        std::string value = this->value(line);
+
+        group.property(Property(key, value));
+    }
+
+    return group;
 }

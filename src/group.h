@@ -37,6 +37,8 @@ public:
     void group(const Group &group);
     void groups(const std::vector<Group> &groups);
 
+    bool valid() const;
+
 private:
     std::string           m_name;
     std::vector<Property> m_properties;

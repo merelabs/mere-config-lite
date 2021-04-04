@@ -64,3 +64,8 @@ void Mere::Config::Group::groups(const std::vector<Group> &groups)
     m_subgroups.clear();
     m_subgroups.insert(m_subgroups.end(), groups.begin(), groups.end());
 }
+
+bool Mere::Config::Group::valid() const
+{
+    return !m_name.empty();
+}

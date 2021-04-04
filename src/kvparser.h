@@ -5,6 +5,8 @@
 #include "parser.h"
 #include "property.h"
 
+#include <string>
+
 namespace Mere
 {
 namespace Config
@@ -17,7 +19,7 @@ public:
     explicit KVParser(const KVConfig &config, QObject *parent = nullptr);
 
     virtual std::vector<Property> parse() const;
-    virtual std::string parse(const std::string &key, int *set) const;
+    virtual std::string parse(const std::string &key, int *set = nullptr) const;
 
 protected:
     virtual std::string key(const std::string &line) const;

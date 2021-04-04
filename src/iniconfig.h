@@ -22,8 +22,8 @@ public:
 
     bool isGroup(const std::string &line) const override;
 
-protected:
-    void load() override;
+private:
+    void load();
 
 signals:
 

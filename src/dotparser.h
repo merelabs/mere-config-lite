@@ -1,7 +1,7 @@
 #ifndef DOTPARSER_H
 #define DOTPARSER_H
 
-#include "groupconfig.h"
+#include "dotconfig.h"
 #include "groupparser.h"
 
 namespace Mere
@@ -13,10 +13,17 @@ class DotParser : public GroupParser
 {
     Q_OBJECT
 public:
-    explicit DotParser(const GroupConfig &config, QObject *parent = nullptr);
+    explicit DotParser(const DotConfig &config, QObject *parent = nullptr);
+
+    std::vector<Property> parse() const;
+
+protected:
+    bool isGroup(const std::string &line) const override;
 
 signals:
 
+private:
+    const DotConfig &m_config;
 };
 
 }

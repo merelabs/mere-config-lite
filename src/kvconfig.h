@@ -37,7 +37,7 @@ public:
      */
     std::vector<Mere::Config::Property> properties() const;
 
-protected:
+private:
     virtual void load();
 
 private:

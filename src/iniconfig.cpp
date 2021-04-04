@@ -36,7 +36,6 @@ std::string Mere::Config::IniConfig::get(const std::string &section, const std::
     Group group = this->group(section, set);
     if (!set) return "";
 
-
     for(const auto &_property : group.properties())
         if(_property.name().compare(property) == 0)
             return _property.value();

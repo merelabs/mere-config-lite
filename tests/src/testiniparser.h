@@ -1,0 +1,4 @@
+#ifndef TESTINIPARSER_H
+#define TESTINIPARSER_H
+
+#endif // TESTINIPARSER_H

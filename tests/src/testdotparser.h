@@ -1,0 +1,4 @@
+#ifndef TESTDOTPARSER_H
+#define TESTDOTPARSER_H
+
+#endif // TESTDOTPARSER_H
