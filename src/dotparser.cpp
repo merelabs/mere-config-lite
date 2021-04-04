@@ -15,6 +15,11 @@ bool Mere::Config::DotParser::isGroup(const std::string &line) const
     return m_config.isGroup(line);
 }
 
+std::string Mere::Config::DotParser::group(const std::string &line) const
+{
+    throw std::runtime_error("yet to implemenet");
+}
+
 std::vector<Mere::Config::Property> Mere::Config::DotParser::parse() const
 {
     std::vector<Mere::Config::Property> properties;

@@ -14,7 +14,6 @@ void TestParser::initTestCase()
     file << "#this is a commnet" << "\n";
     file << "name=parser" << "\n";
     file.close();
-
 }
 
 void TestParser::cleanupTestCase()

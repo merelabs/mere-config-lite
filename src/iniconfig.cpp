@@ -5,7 +5,7 @@
 Mere::Config::IniConfig::IniConfig(const std::string &path, QObject *parent)
     : GroupConfig(path, ".ini", parent)
 {
-    load();
+
 }
 
 std::vector<std::string> Mere::Config::IniConfig::sections() const

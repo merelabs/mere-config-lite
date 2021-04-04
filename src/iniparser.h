@@ -14,11 +14,14 @@ class IniParser : public GroupParser
     Q_OBJECT
 public:
     explicit IniParser(const GroupConfig &config, QObject *parent = nullptr);
+
     std::vector<Group> parse() const;
-    Group parse(const std::string &match) const;
+    std::vector<Property> parse(const std::string &section, int *set = nullptr) const;
+    std::string parse(const std::string &section, const std::string &property, int *set = nullptr) const;
 
 protected:
     bool isGroup(const std::string &line) const override;
+    std::string group(const std::string &line) const override;
 
 signals:
 

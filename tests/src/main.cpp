@@ -1,5 +1,6 @@
 #include "testparser.h"
 #include "testkvparser.h"
+#include "testiniparser.h"
 
 int main(int argc, char** argv)
 {
@@ -10,6 +11,10 @@ int main(int argc, char** argv)
    }
    {
       TestKVParser test;
+      status |= QTest::qExec(&test, argc, argv);
+   }
+   {
+      TestIniParser test;
       status |= QTest::qExec(&test, argc, argv);
    }
    return status;

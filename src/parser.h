@@ -26,10 +26,10 @@ public:
 
 protected:
     bool isComment(const std::string &line) const;
+    bool next(std::ifstream &file, std::string &line) const;
+
     std::string key(const std::string &line) const;
     std::string value(const std::string &line) const;
-
-    bool next(std::ifstream &file, std::string &line) const;
 
 signals:
 

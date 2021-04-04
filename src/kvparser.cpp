@@ -42,18 +42,18 @@ std::string Mere::Config::KVParser::parse(const std::string &key, int *set) cons
     return this->value(line);
 }
 
-std::string Mere::Config::KVParser::key(const std::string &line) const
-{
-    auto pos = line.find("=");
-    if (pos == 0 || pos == std::string::npos) return "";
+//std::string Mere::Config::KVParser::key(const std::string &line) const
+//{
+//    auto pos = line.find("=");
+//    if (pos == 0 || pos == std::string::npos) return "";
 
-    return line.substr(0, pos);
-}
+//    return line.substr(0, pos);
+//}
 
-std::string Mere::Config::KVParser::value(const std::string &line) const
-{
-    auto pos = line.find("=");
-    if (pos == 0 || pos == std::string::npos) return "";
+//std::string Mere::Config::KVParser::value(const std::string &line) const
+//{
+//    auto pos = line.find("=");
+//    if (pos == 0 || pos == std::string::npos) return "";
 
-    return line.substr(pos + 1);
-}
+//    return line.substr(pos + 1);
+//}

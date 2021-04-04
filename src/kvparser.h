@@ -21,9 +21,9 @@ public:
     virtual std::vector<Property> parse() const;
     virtual std::string parse(const std::string &key, int *set = nullptr) const;
 
-protected:
-    virtual std::string key(const std::string &line) const;
-    virtual std::string value(const std::string &line) const;
+//protected:
+//    virtual std::string key(const std::string &line) const;
+//    virtual std::string value(const std::string &line) const;
 
 signals:
 

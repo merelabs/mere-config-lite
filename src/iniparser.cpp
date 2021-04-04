@@ -1,5 +1,7 @@
 #include "iniparser.h"
 #include "property.h"
+#include "exception.h"
+
 #include "mere/utils/stringutils.h"
 
 #include <fstream>
@@ -17,6 +19,11 @@ bool Mere::Config::IniParser::isGroup(const std::string &line) const
     return m_config.isGroup(line);
 }
 
+std::string Mere::Config::IniParser::group(const std::string &line) const
+{
+    return isGroup(line) ? line.substr(1, line.length() - 2) : "";
+}
+
 std::vector<Mere::Config::Group> Mere::Config::IniParser::parse() const
 {
     std::vector<Mere::Config::Group> groups;
@@ -26,16 +33,23 @@ std::vector<Mere::Config::Group> Mere::Config::IniParser::parse() const
     {
         if (this->isGroup(line))
         {
-            std::string name = line.substr(1, line.length() - 2);
-
-            Group group(name);
+            Group group(this->group(line));
             groups.push_back(group);
             continue;
         }
-        if (groups.empty()) continue;
+
+        if (groups.empty())
+        {
+            if (strict()) throw Exception("malformed configuration");
+            continue;
+        }
 
         std::string key = this->key(line);
-        if(key.empty()) continue;
+        if(key.empty())
+        {
+            if (strict()) throw Exception("malformed configuration");
+            continue;
+        }
 
         std::string value = this->value(line);
 
@@ -45,14 +59,16 @@ std::vector<Mere::Config::Group> Mere::Config::IniParser::parse() const
     return groups;
 }
 
-Mere::Config::Group Mere::Config::IniParser::parse(const std::string &match) const
+std::vector<Mere::Config::Property> Mere::Config::IniParser::parse(const std::string &section, int *set) const
 {
-    Mere::Config::Group group;
+    std::ifstream file(config().path());
+    if (!file.good())
+    {
+        if (set) *set = 0;
+        return {};
+    }
 
-    std::string path = this->config().path();
-
-    std::ifstream file(path);
-    if (!file.good()) return group;
+    std::vector<Mere::Config::Property> properties;
 
     bool found = false;
 
@@ -63,12 +79,9 @@ Mere::Config::Group Mere::Config::IniParser::parse(const std::string &match) con
         {
             if (found) break;
 
-            std::string name = line.substr(1, line.length() - 2);
-
-            if(line.compare(match) != 0)
+            std::string group = this->group(line);
+            if(group.compare(section) != 0)
                 continue;
-
-            group.name(name);
 
             found = true;
             continue;
@@ -77,12 +90,69 @@ Mere::Config::Group Mere::Config::IniParser::parse(const std::string &match) con
         if (!found) continue;
 
         std::string key = this->key(line);
-        if(key.empty()) continue;
+        if(key.empty())
+        {
+            if (strict()) throw Exception("malformed configuration");
+            continue;
+        }
 
         std::string value = this->value(line);
-
-        group.property(Property(key, value));
+        properties.push_back(Property(key, value));
     }
 
-    return group;
+    if (set) *set = found;
+
+    return properties;
+}
+
+
+std::string Mere::Config::IniParser::parse(const std::string &section, const std::string &property, int *set) const
+{
+    std::ifstream file(config().path());
+    if (!file.good())
+    {
+        if (set) *set = 0;
+        return "";
+    }
+
+    std::string value;
+
+    bool gfound = false;
+    bool pfound = false;
+
+    std::string line;
+    while (next(file, line))
+    {
+        if (this->isGroup(line))
+        {
+            if (gfound) break;
+
+            std::string group = this->group(line);
+            if(group.compare(section) != 0)
+                continue;
+
+            gfound = true;
+            continue;
+        }
+
+        if (!gfound) continue;
+
+        std::string key = this->key(line);
+        if(key.empty())
+        {
+            if (strict()) throw Exception("malformed configuration");
+            continue;
+        }
+
+        if (key.compare(property) != 0)
+            continue;
+
+        value = this->value(line);
+        pfound = true;
+        break;
+    }
+
+    if (set) *set = pfound;
+
+    return value;
 }

@@ -78,3 +78,19 @@ bool Mere::Config::Parser::next(std::ifstream &file, std::string &line) const
 
     return static_cast<bool>(file);
 }
+
+std::string Mere::Config::Parser::key(const std::string &line) const
+{
+    auto pos = line.find("=");
+    if (pos == 0 || pos == std::string::npos) return "";
+
+    return line.substr(0, pos);
+}
+
+std::string Mere::Config::Parser::value(const std::string &line) const
+{
+    auto pos = line.find("=");
+    if (pos == 0 || pos == std::string::npos) return "";
+
+    return line.substr(pos + 1);
+}

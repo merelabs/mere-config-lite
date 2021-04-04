@@ -19,6 +19,7 @@ public:
 
 protected:
     bool isGroup(const std::string &line) const override;
+    std::string group(const std::string &line) const override;
 
 signals:
 

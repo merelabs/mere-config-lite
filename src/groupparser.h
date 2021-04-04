@@ -17,6 +17,7 @@ public:
     explicit GroupParser(const GroupConfig &config, QObject *parent = nullptr);
 
     virtual bool isGroup(const std::string &line) const = 0;
+    virtual std::string group(const std::string &line) const = 0;
 
 signals:
 

@@ -38,7 +38,7 @@ public:
     std::vector<Mere::Config::Property> properties() const;
 
 private:
-    virtual void load();
+    void load();
 
 private:
     std::vector<Mere::Config::Property> m_properties;
