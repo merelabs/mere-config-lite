@@ -17,6 +17,7 @@ SOURCES += \
     src/configtraverser.cpp \
     src/dotconfig.cpp \
     src/dotparser.cpp \
+    src/exception.cpp \
     src/group.cpp \
     src/groupconfig.cpp \
     src/groupparser.cpp \
@@ -37,6 +38,7 @@ HEADERS += \
     src/configtraverser.h \
     src/dotconfig.h \
     src/dotparser.h \
+    src/exception.h \
     src/group.h \
     src/groupconfig.h \
     src/groupparser.h \
