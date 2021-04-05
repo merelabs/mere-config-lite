@@ -84,6 +84,6 @@ void TestIniParser::test_section_property_value()
     const Mere::Config::IniConfig config(m_file2);
     Mere::Config::IniParser parser(config);
 
-    std::string value = parser.parse("group3", "site");
-    QVERIFY(value.compare("any") == 0);
+    std::string value = parser.parse("group2", "name");
+    QVERIFY(value.compare("kvparser") == 0);
 }

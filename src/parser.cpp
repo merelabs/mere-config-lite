@@ -79,6 +79,26 @@ bool Mere::Config::Parser::next(std::ifstream &file, std::string &line) const
     return static_cast<bool>(file);
 }
 
+bool Mere::Config::Parser::seek(std::ifstream &file, std::string &line) const
+{
+    std::string seek(line);
+
+    while(std::getline(file, line))
+    {
+        Mere::Utils::StringUtils::trim(line);
+
+        if (line.empty()) continue;
+        if (this->isComment(line)) continue;
+
+        if (seek.compare(line) != 0)
+            continue;
+
+        break;
+    }
+
+    return static_cast<bool>(file);
+}
+
 std::string Mere::Config::Parser::key(const std::string &line) const
 {
     auto pos = line.find("=");

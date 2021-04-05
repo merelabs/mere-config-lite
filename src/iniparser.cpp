@@ -68,26 +68,21 @@ std::vector<Mere::Config::Property> Mere::Config::IniParser::parse(const std::st
         return {};
     }
 
-    std::vector<Mere::Config::Property> properties;
+    std::string match("[" + section + "]");
+    bool found = seek(file, match);
+    if (!found)
+    {
+        if (set) *set = 0;
+        return {};
+    }
 
-    bool found = false;
+    std::vector<Mere::Config::Property> properties;
 
     std::string line;
     while (next(file, line))
     {
         if (this->isGroup(line))
-        {
-            if (found) break;
-
-            std::string group = this->group(line);
-            if(group.compare(section) != 0)
-                continue;
-
-            found = true;
-            continue;
-        }
-
-        if (!found) continue;
+            break;
 
         std::string key = this->key(line);
         if(key.empty())
@@ -115,27 +110,23 @@ std::string Mere::Config::IniParser::parse(const std::string &section, const std
         return "";
     }
 
-    std::string value;
+    std::string match("[" + section + "]");
+    bool found = seek(file, match);
+    if (!found)
+    {
+        if (set) *set = 0;
+        return "";
+    }
 
-    bool gfound = false;
-    bool pfound = false;
+    std::string value;
+    // to indicate property
+    found = false;
 
     std::string line;
     while (next(file, line))
     {
         if (this->isGroup(line))
-        {
-            if (gfound) break;
-
-            std::string group = this->group(line);
-            if(group.compare(section) != 0)
-                continue;
-
-            gfound = true;
-            continue;
-        }
-
-        if (!gfound) continue;
+            break;
 
         std::string key = this->key(line);
         if(key.empty())
@@ -148,11 +139,11 @@ std::string Mere::Config::IniParser::parse(const std::string &section, const std
             continue;
 
         value = this->value(line);
-        pfound = true;
+        found = true;
         break;
     }
 
-    if (set) *set = pfound;
+    if (set) *set = found;
 
     return value;
 }
