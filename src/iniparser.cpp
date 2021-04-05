@@ -16,11 +16,13 @@ Mere::Config::IniParser::IniParser(const GroupConfig &config, QObject *parent)
 
 bool Mere::Config::IniParser::isGroup(const std::string &line) const
 {
-    return m_config.isGroup(line);
+    //return m_config.isGroup(line);
+    return line.front() == '[' && line.back() == ']';
 }
 
 std::string Mere::Config::IniParser::group(const std::string &line) const
 {
+    //return m_config.group(line);
     return isGroup(line) ? line.substr(1, line.length() - 2) : "";
 }
 
@@ -99,7 +101,6 @@ std::vector<Mere::Config::Property> Mere::Config::IniParser::parse(const std::st
 
     return properties;
 }
-
 
 std::string Mere::Config::IniParser::parse(const std::string &section, const std::string &property, int *set) const
 {

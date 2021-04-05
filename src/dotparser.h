@@ -16,6 +16,8 @@ public:
     explicit DotParser(const DotConfig &config, QObject *parent = nullptr);
 
     std::vector<Property> parse() const;
+    std::vector<Property> parse(const std::string &group, int *set = nullptr) const override;
+    std::string parse(const std::string &group, const std::string &property, int *set = nullptr) const;
 
 protected:
     bool isGroup(const std::string &line) const override;

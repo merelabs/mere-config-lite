@@ -25,7 +25,8 @@ public:
     std::vector<Group> groups() const;
     void groups(const std::vector<Group> &groups);
 
-    virtual bool isGroup(const std::string &line) const = 0;
+//    virtual bool isGroup(const std::string &line) const = 0;
+//    virtual std::string group(const std::string &line) const = 0;
 
 signals:
 

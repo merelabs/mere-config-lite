@@ -16,8 +16,8 @@ public:
     explicit IniParser(const GroupConfig &config, QObject *parent = nullptr);
 
     std::vector<Group> parse() const;
-    std::vector<Property> parse(const std::string &section, int *set = nullptr) const;
-    std::string parse(const std::string &section, const std::string &property, int *set = nullptr) const;
+    std::vector<Property> parse(const std::string &section, int *set = nullptr) const override;
+    std::string parse(const std::string &section, const std::string &property, int *set = nullptr) const override;
 
 protected:
     bool isGroup(const std::string &line) const override;

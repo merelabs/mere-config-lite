@@ -8,6 +8,16 @@ Mere::Config::IniConfig::IniConfig(const std::string &path, QObject *parent)
 
 }
 
+//bool Mere::Config::IniConfig::isGroup(const std::string &line) const
+//{
+//    return line.front() == '[' && line.back() == ']';
+//}
+
+//std::string Mere::Config::IniConfig::group(const std::string &line) const
+//{
+//    return isGroup(line) ? line.substr(1, line.length() - 2) : "";
+//}
+
 std::vector<std::string> Mere::Config::IniConfig::sections() const
 {
     std::vector<std::string> names;
@@ -55,9 +65,4 @@ std::map<std::string, std::map<std::string, std::string>> Mere::Config::IniConfi
 //    return parser.parse();
 //    return {};
 
-}
-
-bool Mere::Config::IniConfig::isGroup(const std::string &line) const
-{
-    return line.front() == '[' && line.back() == ']';
 }

@@ -20,7 +20,8 @@ public:
 
     std::map<std::string, std::map<std::string, std::string>> properties() const;
 
-    bool isGroup(const std::string &line) const override;
+//    bool isGroup(const std::string &line) const override;
+//    std::string group(const std::string &line) const override;
 
 private:
     void load();

@@ -1,43 +1,22 @@
-#include <QtTest>
-#include <QCoreApplication>
+#include "testgroupparser.h"
 
-// add necessary includes here
-#include "mere/config/kvconfig.h"
-#include "mere/config/kvparser.h"
+#include "mere/config/groupconfig.h"
+#include "mere/config/groupparser.h"
 
-class TestGroupParser : public QObject
-{
-    Q_OBJECT
-
-public:
-    TestGroupParser();
-    ~TestGroupParser();
-
-private slots:
-    void initTestCase();
-    void cleanupTestCase();
-};
-
-TestGroupParser::TestGroupParser()
-{
-
-}
-
-TestGroupParser::~TestGroupParser()
-{
-
-}
+#include <fstream>
 
 void TestGroupParser::initTestCase()
 {
+    m_file1 = std::tmpnam(nullptr);
 
+    std::ofstream file(m_file1);
+    file << "\n";
+    file << "#this is a commnet" << "\n";
+    file << "name=parser" << "\n";
+    file.close();
 }
 
 void TestGroupParser::cleanupTestCase()
 {
-
+    remove(m_file1.c_str());
 }
-
-
-//QTEST_MAIN(TestGroupParser)
-#include "testgroupparser.moc"

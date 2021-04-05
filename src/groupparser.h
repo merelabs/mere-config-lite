@@ -1,5 +1,5 @@
-#ifndef GROUPPARSER_H
-#define GROUPPARSER_H
+#ifndef MERE_CONFIG_GROUPPARSER_H
+#define MERE_CONFIG_GROUPPARSER_H
 
 #include "groupconfig.h"
 #include "parser.h"
@@ -19,11 +19,11 @@ public:
     virtual bool isGroup(const std::string &line) const = 0;
     virtual std::string group(const std::string &line) const = 0;
 
-signals:
-
+    virtual std::vector<Property> parse(const std::string &group, int *set = nullptr) const = 0;
+    virtual std::string parse(const std::string &group, const std::string &property, int *set = nullptr) const = 0;
 };
 
 }
 }
 
-#endif // GROUPPARSER_H
+#endif // MERE_CONFIG_GROUPPARSER_H

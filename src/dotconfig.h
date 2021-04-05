@@ -16,7 +16,8 @@ public:
 
     std::vector<Mere::Config::Property> properties() const;
 
-    virtual bool isGroup(const std::string &line) const override;
+//    virtual bool isGroup(const std::string &line) const override;
+//    virtual std::string group(const std::string &line) const override;
 
 private:
     void load();
