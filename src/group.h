@@ -21,8 +21,11 @@ public:
     Group(const Group &that) = default;
     Group& operator=(const Group &that) = default;
 
-    Group(Group &&thst) = default;
+    Group(Group &&that) = default;
     Group& operator=(Group &&that) = default;
+
+    std::string base() const;
+    void base(const std::string &base);
 
     std::string name() const;
     void name(const std::string &name);
@@ -37,12 +40,16 @@ public:
     void group(const Group &group);
     void groups(const std::vector<Group> &groups);
 
-    bool valid() const;
+    std::vector<Group>& groups();
+
+    virtual bool valid() const;
+    void dump() const;
 
 private:
     std::string           m_name;
+    std::string           m_base;
     std::vector<Property> m_properties;
-    std::vector<Group>    m_subgroups;
+    std::vector<Group>    m_groups;
 };
 
 }

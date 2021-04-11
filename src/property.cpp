@@ -32,3 +32,8 @@ void Mere::Config::Property::value(const std::string &value)
 {
     m_value = value;
 }
+
+bool Mere::Config::Property::valid() const
+{
+    return !m_name.empty();
+}

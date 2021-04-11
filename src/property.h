@@ -29,6 +29,8 @@ public:
     std::string value() const;
     void value(const std::string &value);
 
+    bool valid() const;
+
 private:
     std::string m_name;
     std::string m_value;

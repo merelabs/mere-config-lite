@@ -1,5 +1,7 @@
 #include "group.h"
 
+#include <iostream>
+
 Mere::Config::Group::Group(const std::string &name)
     : m_name(name)
 {
@@ -51,21 +53,50 @@ void Mere::Config::Group::properties(const std::vector<Property> &properties)
 
 std::vector<Mere::Config::Group> Mere::Config::Group::groups() const
 {
-    return m_subgroups;
+    return m_groups;
+}
+
+std::vector<Mere::Config::Group>& Mere::Config::Group::groups()
+{
+    return m_groups;
 }
 
 void Mere::Config::Group::group(const Group &group)
 {
-    m_subgroups.push_back(group);
+    m_groups.push_back(group);
 }
 
 void Mere::Config::Group::groups(const std::vector<Group> &groups)
 {
-    m_subgroups.clear();
-    m_subgroups.insert(m_subgroups.end(), groups.begin(), groups.end());
+    m_groups.clear();
+    m_groups.insert(m_groups.end(), groups.begin(), groups.end());
+}
+
+std::string Mere::Config::Group::base() const
+{
+    return m_base;
+}
+
+void Mere::Config::Group::base(const std::string &base)
+{
+    m_base = base;
 }
 
 bool Mere::Config::Group::valid() const
 {
     return !m_name.empty();
+}
+
+void Mere::Config::Group::dump() const
+{
+    std::cout << "Name::" << name() << std::endl;
+    for(const auto &property : properties())
+        std::cout << "Property::" << property.name() << " => " << property.value() << std::endl;
+
+    for(const auto &subgroup : groups())
+    {
+        std::cout << "Subgroup::" << subgroup.name() << std::endl;
+        for(const auto &property : subgroup.properties())
+            std::cout << "Property::" << property.name() << " => " << property.value() << std::endl;
+    }
 }
