@@ -32,3 +32,17 @@
   
   ```
 *note* - write operations yet to supported!
+
+### APIs
+A simple set of apis to read and write configuration files(see *note* above). 
+We need four apis, get/set and read/write, are quite enogh for most of the cases; most of the simple 
+applications actually confiuration properties values - in that case get and read are fine.
+```
+- std::string get(const std::string &key) 
+  to read property from alrady loaded configuration; 
+- std::string read(const std::string &key)
+  to read value of the poperty from the presistance system;
+
+to indicate property of a group use flatten fully qualified key name - ie. window/height saying height
+of the window.
+```
