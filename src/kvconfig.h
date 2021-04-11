@@ -11,18 +11,16 @@ namespace Config
 
 class MERE_CONFIG_LIB_SPEC KVConfig : public PropertyConfig
 {
-    Q_OBJECT
 public:
     virtual ~KVConfig();
-    explicit KVConfig(const std::string &path, QObject *parent = 0);
-    explicit KVConfig(const std::string &path, const std::string &type, QObject *parent = 0);
+    explicit KVConfig(const std::string &path);
+    explicit KVConfig(const std::string &path, const std::string &type);
 
     virtual std::string get(const std::string &key, int *set = nullptr) const override;
     virtual void set(const std::string &key, const std::string &value) override;
 
     virtual std::string read(const std::string &key, int *set = nullptr) const override;
     //virtual void write(const std::string &key, const std::string &value) override;
-
 
     //
     // in-memory query
