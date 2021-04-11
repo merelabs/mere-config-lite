@@ -1,49 +1,51 @@
 #include "testparser.h"
 
-#include "mere/config/config.h"
-#include "mere/config/parser.h"
+#include "../src/parser/parser.h"
+#include "../src/parser/config.h"
 
 #include <fstream>
 
 void TestParser::initTestCase()
 {
-    m_path = std::tmpnam(nullptr);
+    m_file1 = std::tmpnam(nullptr);
 
-    std::ofstream file(m_path);
-    file << "\n";
-    file << "#this is a commnet" << "\n";
-    file << "name=parser" << "\n";
-    file.close();
+    std::ofstream file1(m_file1);
+    file1 << "\n";
+    file1 << "#this is a commnet" << "\n";
+    file1 << "name=parser" << "\n";
+    file1.close();
+
+    m_file2 = std::tmpnam(nullptr);
+
+    std::ofstream file2(m_file2);
+    file2 << "\n";
+    file2 << "#this is a commnet" << "\n";
+    file2 << "name=parser" << "\n";
+    file2 << "#this is aother comment line" << "\n";
+    file2 << "note=checking to grab two valid lines" << "\n";
+    file2 << "\n";
+    file2.close();
 }
 
 void TestParser::cleanupTestCase()
 {
-    remove(m_path.c_str());
+    remove(m_file1.c_str());
+    remove(m_file2.c_str());
 }
 
-void TestParser::test_line()
+void TestParser::test_config_lines()
 {
-    const Mere::Config::Config config(m_path);
-    Mere::Config::Parser parser(config);
+    Mere::Config::Parser::Config config(m_file1);
+    config.comment("^#.*");
 
-    std::string line = parser.parse("name=");
-    QVERIFY(!line.empty());
-}
+    Mere::Config::Parser::Parser parser1(config);
 
-void TestParser::test_line_none()
-{
-    const Mere::Config::Config config(m_path);
-    Mere::Config::Parser parser(config);
-
-    std::string line = parser.parse("xname=");
-    QVERIFY(line.empty());
-}
-
-void TestParser::test_lines()
-{
-    const Mere::Config::Config config(m_path);
-    Mere::Config::Parser parser(config);
-
-    std::vector<std::string> lines = parser.parse();
+    std::vector<std::string> lines = parser1.parse();
     QVERIFY(lines.size() == 1);
+
+    config.path(m_file2);
+    Mere::Config::Parser::Parser parser2(config);
+
+    lines = parser2.parse();
+    QVERIFY(lines.size() == 2);
 }

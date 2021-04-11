@@ -1,9 +1,7 @@
 #include "testkvparser.h"
 
-#include "mere/config/kvconfig.h"
-#include "mere/config/kvparser.h"
-#include "mere/config/property.h"
-#include "mere/config/exception.h"
+#include "../src/parser/config.h"
+#include "../src/parser/kvparser.h"
 
 #include <fstream>
 
@@ -34,30 +32,27 @@ void TestKVParser::cleanupTestCase()
 
 void TestKVParser::test_strict_on()
 {
-    const Mere::Config::KVConfig config(m_file2);
+    Mere::Config::Parser::PropertyConfig config(m_file2);
+    config.strict(true);
 
-    Mere::Config::KVParser parser(config);
-    parser.strict(true);
-
+    Mere::Config::Parser::KVParser parser(config);
     QVERIFY_EXCEPTION_THROWN(parser.parse(), std::exception);
 }
 
 void TestKVParser::test_strict_off()
 {
-    const Mere::Config::KVConfig config(m_file2);
+    Mere::Config::Parser::PropertyConfig config(m_file2);
+    Mere::Config::Parser::KVParser parser(config);
 
-    Mere::Config::KVParser parser(config);
-    parser.strict(false);
-
-    std::vector<Mere::Config::Property> properties = parser.parse();
-    QVERIFY(properties.size() == 0);
+    QVERIFY(parser.parse().size() == 0);
 }
 
 void TestKVParser::test_property_number()
 {
-    const Mere::Config::KVConfig config(m_file1);
+    Mere::Config::Parser::PropertyConfig config(m_file1);
+    config.strict(true);
 
-    Mere::Config::KVParser parser(config);
+    Mere::Config::Parser::KVParser parser(config);
 
     std::vector<Mere::Config::Property> properties = parser.parse();
     QVERIFY(properties.size() == 1);
@@ -65,9 +60,10 @@ void TestKVParser::test_property_number()
 
 void TestKVParser::test_property_value()
 {
-    const Mere::Config::KVConfig config(m_file1);
-    Mere::Config::KVParser parser(config);
+    Mere::Config::Parser::PropertyConfig config(m_file1);
+    config.strict(true);
 
-    std::string value = parser.parse("name");
-    QVERIFY(value.compare("parser") == 0);
+    Mere::Config::Parser::KVParser parser(config);
+    Mere::Config::Property property = parser.parse("name");
+    QVERIFY(property.value().compare("parser") == 0);
 }

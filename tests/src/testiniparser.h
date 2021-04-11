@@ -18,11 +18,13 @@ private slots:
     void test_strict_off();
     void test_section_number_strict();
     void test_section_property_number();
+    void test_section_section_number();
     void test_section_property_value();
 
 private:
     std::string m_file1;
     std::string m_file2;
+    std::string m_file3;
 };
 
 

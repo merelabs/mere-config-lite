@@ -13,12 +13,12 @@ public:
 private slots:
     void initTestCase();
     void cleanupTestCase();
-    void test_line();
-    void test_line_none();
-    void test_lines();
+    void test_config_lines();
 
 private:
-    std::string m_path;
+    std::string m_file1;
+    std::string m_file2;
+
 };
 
 #endif // TESTPARSER_H
