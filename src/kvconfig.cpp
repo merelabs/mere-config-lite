@@ -9,13 +9,13 @@ Mere::Config::KVConfig::~KVConfig()
 
 }
 
-Mere::Config::KVConfig::KVConfig(const std::string &path, QObject *parent)
-    : KVConfig(path, ".conf", parent)
+Mere::Config::KVConfig::KVConfig(const std::string &path)
+    : KVConfig(path, ".conf")
 {
 }
 
-Mere::Config::KVConfig::KVConfig(const std::string &path, const std::string &type, QObject *parent)
-    : PropertyConfig(path, type, parent)
+Mere::Config::KVConfig::KVConfig(const std::string &path, const std::string &type)
+    : PropertyConfig(path, type)
 {
 }
 
@@ -23,7 +23,7 @@ std::string Mere::Config::KVConfig::get(const std::string &key, int *set) const
 {
     std::string value;
 
-    auto it = std::find_if(m_properties.begin(), m_properties.end(), [&](const Property &property){
+    auto it = std::find_if(m_properties.cbegin(), m_properties.cend(), [&](const Property &property){
         return property.name().compare(key) == 0;
     });
 
@@ -37,7 +37,14 @@ std::string Mere::Config::KVConfig::get(const std::string &key, int *set) const
 
 void Mere::Config::KVConfig::set(const std::string &key, const std::string &value)
 {
-    setValue(key, value);
+    auto it = std::find_if(m_properties.begin(), m_properties.end(), [&](const Property &property){
+        return property.name().compare(key) == 0;
+    });
+
+    if (it != m_properties.end())
+        it->value(value);
+    else if (it == m_properties.end())
+        m_properties.push_back(Property(key, value));
 }
 
 std::string Mere::Config::KVConfig::read(const std::string &key, int *set) const
@@ -49,10 +56,6 @@ std::string Mere::Config::KVConfig::read(const std::string &key, int *set) const
 
     return property.value();
 }
-
-//
-//---------------------------------------------------------------------------------
-//
 
 std::vector<std::string> Mere::Config::KVConfig::getKeys() const
 {
@@ -81,12 +84,12 @@ std::vector<Mere::Config::Property> Mere::Config::KVConfig::getProperties() cons
 
 void Mere::Config::KVConfig::setProperty(const Property &property)
 {
-    m_properties.push_back(property);
+    set(property.name(), property.value());
 }
 
 void Mere::Config::KVConfig::setValue(const std::string &key, const std::string &value)
 {
-    setProperty(Property(key, value));
+    set(key, value);
 }
 
 std::vector<Mere::Config::Property> Mere::Config::KVConfig::readProperties() const
