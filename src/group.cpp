@@ -92,6 +92,18 @@ std::vector<std::string> Mere::Config::Group::keys() const
     return keys;
 }
 
+Mere::Config::Group Mere::Config::Group::group(const std::string &name) const
+{
+    auto it = std::find_if(m_groups.cbegin(), m_groups.cend(), [&](const Group &group){
+        return group.name().compare(name) == 0;
+    });
+
+    if (it == m_groups.cend())
+        return Group();
+
+    return *it;
+}
+
 bool Mere::Config::Group::valid() const
 {
     return !m_name.empty();

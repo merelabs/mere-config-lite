@@ -42,6 +42,8 @@ public:
     void group(const Group &group);
     void groups(const std::vector<Group> &groups);
 
+    Group group(const std::string &name) const;
+
     std::vector<Group>& groups();
 
     virtual bool valid() const;
