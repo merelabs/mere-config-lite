@@ -82,6 +82,16 @@ void Mere::Config::Group::base(const std::string &base)
     m_base = base;
 }
 
+std::vector<std::string> Mere::Config::Group::keys() const
+{
+    std::vector<std::string> keys;
+
+    for(const auto &property : m_properties)
+        keys.push_back(property.name());
+
+    return keys;
+}
+
 bool Mere::Config::Group::valid() const
 {
     return !m_name.empty();

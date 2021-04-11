@@ -30,6 +30,8 @@ public:
     std::string name() const;
     void name(const std::string &name);
 
+    std::vector<std::string> keys() const;
+
     Property property(const std::string &name, int *set = nullptr);
     void property(const Property &property);
 
