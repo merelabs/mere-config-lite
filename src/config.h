@@ -16,20 +16,33 @@ public:
     explicit Config(const std::string &path);
     explicit Config(const std::string &path, const std::string &type);
 
+    // get the absolute path of the configuration
     std::string path() const;
+
+    // get the type of the configuration
     std::string type() const;
 
-    // get value of fully qualified key's value
+    // get the value of fully qualified key's value
+    // if the specified property key is not present, return empty string.
+    // if 'set' flag specified, it will set the value of 'set' as
+    // 0 - property with specified key is not present
+    // 1 - otherwise
     virtual std::string get(const std::string &key, int *set = nullptr) const = 0;
 
-    // set value for a fully qualified key
+    // set the value for a fully qualified key
+    // if the specified property key is not present, it will add one othewise
+    // update the value of the property associated with the specified key
     virtual void set(const std::string &key, const std::string &value) = 0;
 
-    // read value of fully qualified key's value
+    // read the value of fully qualified key's value from persistence system
+    // if the specified property key is not present, return empty string.
+    // if 'set' flag specified, it will set the value of 'set' as
+    // 0 - property with specified key is not present
+    // 1 - otherwise
     virtual std::string read(const std::string &key, int *set = nullptr) const = 0;
 
-    // write value for a fully qualified key
-    virtual void write(const std::string &key, const std::string &value) = 0;
+    // write the value for a fully qualified key to the persistence system
+    //virtual void write(const std::string &key, const std::string &value) = 0;
 
 private:
     std::string m_path;
