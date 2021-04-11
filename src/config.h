@@ -30,7 +30,7 @@ public:
     virtual std::string get(const std::string &key, int *set = nullptr) const = 0;
 
     // set the value for a fully qualified key
-    // if the specified property key is not present, it will add one othewise
+    // if the peoperty with specified key is not present, add one othewise
     // update the value of the property associated with the specified key
     virtual void set(const std::string &key, const std::string &value) = 0;
 
