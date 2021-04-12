@@ -29,8 +29,24 @@
   [General]
   name=config-lite
   note=a simple library to work with configuration file
-  
+  [Panel]
+  background=red
+  [Panel/Left]
+  width=100px
   ```
+**cross key-value pair**
+  ```
+  in this flexible format, pairs may, but need not, grouped using group name;
+  
+  Example: config.ini
+  name=config-lite
+  note=a simple library to work with configuration file
+  [Panel]
+  type=float
+  width=200px
+  height=auto
+  ```
+
 *note* - write operations yet to supported!
 
 ### APIs
@@ -39,7 +55,7 @@ We need four apis, get/set and read/write, are quite enogh for most of the cases
 applications actually confiuration properties values - in that case get and read are fine.
 ```
 - std::string get(const std::string &key) 
-  to read property from alrady loaded configuration; 
+  to read property from already loaded configuration; 
 - std::string read(const std::string &key)
   to read value of the poperty from the presistance system;
 
