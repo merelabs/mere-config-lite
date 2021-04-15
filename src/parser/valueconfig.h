@@ -1,5 +1,7 @@
-#ifndef VALUECONFIG_H
-#define VALUECONFIG_H
+#ifndef MERE_CONFIG_PARSER_VALUECONFIG_H
+#define MERE_CONFIG_PARSER_VALUECONFIG_H
+
+#include <string>
 
 namespace Mere
 {
@@ -12,9 +14,14 @@ class ValueConfig
 {
 public:
     ValueConfig();
+    std::string pattern() const;
+    void pattern(const std::string &pattern);
+
+private:
+    std::string m_pattern;
 };
 
 }
 }
 }
-#endif // VALUECONFIG_H
+#endif // MERE_CONFIG_PARSER_VALUECONFIG_H
