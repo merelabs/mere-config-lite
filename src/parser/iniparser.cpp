@@ -19,17 +19,17 @@ std::string Mere::Config::Parser::IniParser::group(const std::string &line) cons
 
 std::string Mere::Config::Parser::IniParser::subgroup(const std::string &group) const
 {
-    auto pos = group.find_last_of(m_config.delimiter());
+    auto pos = group.find_last_of(m_config.group().delimiter());
     return group.substr(pos + 1);
 }
 
 std::string Mere::Config::Parser::IniParser::parent(const std::string &group) const
 {
-    auto pos2 = group.find_last_of(m_config.delimiter());
+    auto pos2 = group.find_last_of(m_config.group().delimiter());
     if (pos2 == std::string::npos)
         return "";
 
-    auto pos1 = group.find_last_of(m_config.delimiter(), pos2 - 1);
+    auto pos1 = group.find_last_of(m_config.group().delimiter(), pos2 - 1);
     if (pos1 == std::string::npos)
         pos1 = -1;
 
@@ -38,7 +38,7 @@ std::string Mere::Config::Parser::IniParser::parent(const std::string &group) co
 
 std::string Mere::Config::Parser::IniParser::base(const std::string &group) const
 {
-    auto pos = group.find_last_of(m_config.delimiter());
+    auto pos = group.find_last_of(m_config.group().delimiter());
     if (pos == std::string::npos)
         return "";
 
@@ -71,7 +71,7 @@ Mere::Config::Document* Mere::Config::Parser::IniParser::parse() const
             std::string name = this->group(line);
 
             // is sub group?
-            if (m_config.isSubGroup(line))
+            if (m_config.group().isSubGroup(line))
             {
                 std::string subgroup = this->subgroup(name);
                 std::string parent   = this->parent(name);
@@ -152,7 +152,7 @@ Mere::Config::Group* Mere::Config::Parser::IniParser::parse(const std::string &n
         if (m_config.isGroup(line))
         {
             std::string name = this->group(line);
-            if (!m_config.isSubGroup(line))
+            if (!m_config.group().isSubGroup(line))
                 break;
 
             // is sub group?

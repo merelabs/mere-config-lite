@@ -14,6 +14,8 @@ class ValueConfig
 {
 public:
     ValueConfig();
+    explicit ValueConfig(const std::string &pattern);
+
     std::string pattern() const;
     void pattern(const std::string &pattern);
 

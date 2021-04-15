@@ -2,11 +2,11 @@
 
 #include <regex>
 
-Mere::Config::Parser::GroupConfig::GroupConfig(const std::string &path)
-    : PropertyConfig(path),
-      m_delimiter("/"),
-      m_group("^\\\[(\\\w+(\\/\\\w+)*)\\\]$")
+Mere::Config::Parser::GroupConfig::GroupConfig(const std::string &pattern)
+    : m_delimiter("/"),
+      m_pattern(pattern)
 {
+    //m_pattern("^\\\[(\\\w+(\\/\\\w+)*)\\\]$")
 
 }
 
@@ -20,20 +20,20 @@ void Mere::Config::Parser::GroupConfig::delimiter(const std::string &delimiter)
     m_delimiter = delimiter;
 }
 
-std::string Mere::Config::Parser::GroupConfig::group() const
+std::string Mere::Config::Parser::GroupConfig::pattern() const
 {
-    return m_group;
+    return m_pattern;
 }
 
-void Mere::Config::Parser::GroupConfig::group(const std::string &group)
+void Mere::Config::Parser::GroupConfig::pattern(const std::string &pattern)
 {
-    m_group = group;
+    m_pattern = pattern;
 }
 
 bool Mere::Config::Parser::GroupConfig::isGroup(const std::string &line) const
 {
     // make sure m_propertyt is a valid regex while setting it!
-    const std::regex regex(m_group);
+    const std::regex regex(m_pattern);
 
     return std::regex_match(line, regex);
 }

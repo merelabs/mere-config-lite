@@ -1,6 +1,13 @@
 #include "keyconfig.h"
 
 Mere::Config::Parser::KeyConfig::KeyConfig()
+    : KeyConfig("^\\\w+")
+{
+
+}
+
+Mere::Config::Parser::KeyConfig::KeyConfig(const std::string &pattern)
+    : m_pattern(pattern)
 {
 
 }

@@ -1,9 +1,8 @@
 #include "dotconfig.h"
 
 Mere::Config::Parser::DotConfig::DotConfig(const std::string &path)
-    : PropertyConfig(path)
+    : Config(path)
 {
-    delimiter("=");
-    property("^\\\w+(\\\.\\\w)+=.*$");
+    property().pattern("^\\\w+(\\\.\\\w)+=.*$");
 }
 

@@ -5,7 +5,7 @@ Mere::Config::IniConfig::IniConfig(const std::string &path)
     : CrossConfig(path, ".ini"),
       m_config(path)
 {
-    m_config.group("^\\\[\\\w+(\\\s+\\\w+)*(\\\/\\\w+(\\\s+\\\w+)*)*\\\]$");
+    m_config.group().pattern("^\\\[\\\w+(\\\s+\\\w+)*(\\\/\\\w+(\\\s+\\\w+)*)*\\\]$");
 }
 
 std::string Mere::Config::IniConfig::get(const std::string &fqkp, int *set) const
@@ -32,7 +32,7 @@ void Mere::Config::IniConfig::set(const std::string &fqkp, const std::string &va
         return;
     }
 
-    auto pos = fqkp.find_last_of(m_config.delimiter());
+    auto pos = fqkp.find_last_of(m_config.group().delimiter());
     if (pos == std::string::npos)
     {
         m_document->root()->property(new Property(fqkp, value));
@@ -52,7 +52,7 @@ std::string Mere::Config::IniConfig::read(const std::string &fqkp, int *set) con
 
     std::string path, key(fqkp);
 
-    auto pos = fqkp.find_last_of(m_config.delimiter());
+    auto pos = fqkp.find_last_of(m_config.group().delimiter());
     if (pos != std::string::npos)
     {
         path = fqkp.substr(0, pos);

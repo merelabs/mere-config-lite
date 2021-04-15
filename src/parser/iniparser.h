@@ -29,7 +29,7 @@ protected:
 signals:
 
 private:
-    const GroupConfig &m_config;
+    const ConfigEx &m_config;
 };
 
 }

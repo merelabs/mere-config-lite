@@ -5,7 +5,7 @@
 
 #include <fstream>
 
-Mere::Config::Parser::KVParser::KVParser(const PropertyConfig &config)
+Mere::Config::Parser::KVParser::KVParser(const Config &config)
     : PropertyParser(config),
       m_config(config)
 {
@@ -49,7 +49,7 @@ Mere::Config::Property* Mere::Config::Parser::KVParser::parse(const std::string 
 {
     std::string match(key);
     // append property delimiter
-    match.append(m_config.delimiter());
+    match.append(m_config.property().delimiter());
 
     int set;
     std::string line = Parser::parse(match, &set);

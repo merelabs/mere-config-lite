@@ -14,6 +14,7 @@ class KeyConfig
 {
 public:
     KeyConfig();
+    explicit KeyConfig(const std::string &pattern);
 
     std::string pattern() const;
     void pattern(const std::string &pattern);

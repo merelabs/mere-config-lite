@@ -46,3 +46,18 @@ bool Mere::Config::Parser::Config::isComment(const std::string &line) const
 {
     return m_comment.isComment(line);
 }
+
+Mere::Config::Parser::PropertyConfig Mere::Config::Parser::Config::property() const
+{
+    return m_property;
+}
+
+void Mere::Config::Parser::Config::property(const PropertyConfig &property)
+{
+    m_property = property;
+}
+
+bool Mere::Config::Parser::Config::isProperty(const std::string &line) const
+{
+    return m_property.isProperty(line);
+}

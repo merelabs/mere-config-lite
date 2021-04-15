@@ -3,6 +3,7 @@
 
 #include "../global.h"
 #include "commentconfig.h"
+#include "propertyconfig.h"
 
 #include <string>
 
@@ -26,8 +27,12 @@ public:
     void strict(bool strict);
 
     CommentConfig comment() const;
-    void comment(const CommentConfig  &comment);
+    void comment(const CommentConfig &comment);
     bool isComment(const std::string &line) const;
+
+    PropertyConfig property() const;
+    void property(const PropertyConfig &property);
+    bool isProperty(const std::string &line) const;
 
 private:
     std::string m_path;
@@ -35,7 +40,7 @@ private:
     bool m_strict;
 
     CommentConfig m_comment;
-
+    PropertyConfig m_property;
 };
 
 }

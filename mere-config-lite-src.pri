@@ -1,13 +1,11 @@
 SOURCES += \
-    $$PWD/src/parser/ckparser.cpp \
+    $$PWD/src/parser/commentconfig.cpp \
     $$PWD/src/parser/config.cpp \
-    $$PWD/src/parser/crossconfig.cpp \
-    $$PWD/src/parser/crossparser.cpp \
+    $$PWD/src/parser/configex.cpp \
     $$PWD/src/parser/documentconfig.cpp \
     $$PWD/src/parser/documentparser.cpp \
     $$PWD/src/parser/dotconfig.cpp \
     $$PWD/src/parser/dotparser.cpp \
-    $$PWD/src/parser/gkparser.cpp \
     $$PWD/src/parser/groupconfig.cpp \
     $$PWD/src/parser/groupparser.cpp \
     $$PWD/src/parser/iniparser.cpp \
@@ -36,15 +34,13 @@ SOURCES += \
     $$PWD/src/value.cpp
 
 HEADERS += \
-    $$PWD/src/parser/ckparser.h \
+    $$PWD/src/parser/commentconfig.h \
     $$PWD/src/parser/config.h \
-    $$PWD/src/parser/crossconfig.h \
-    $$PWD/src/parser/crossparser.h \
     $$PWD/src/parser/documentconfig.h \
     $$PWD/src/parser/documentparser.h \
     $$PWD/src/parser/dotconfig.h \
     $$PWD/src/parser/dotparser.h \
-    $$PWD/src/parser/gkparser.h \
+    $$PWD/src/parser/exconfig.h \
     $$PWD/src/parser/groupconfig.h \
     $$PWD/src/parser/groupparser.h \
     $$PWD/src/parser/iniparser.h \
@@ -75,8 +71,4 @@ HEADERS += \
 
 INCLUDEPATH += /usr/local/include
 
-
 LIBS += -lmere-utils
-
-#DISTFILES +=
-

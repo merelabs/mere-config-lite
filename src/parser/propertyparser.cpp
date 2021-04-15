@@ -2,7 +2,7 @@
 
 #include <fstream>
 
-Mere::Config::Parser::PropertyParser::PropertyParser(const PropertyConfig &config)
+Mere::Config::Parser::PropertyParser::PropertyParser(const Config &config)
     : Parser(config),
       m_config(config)
 {

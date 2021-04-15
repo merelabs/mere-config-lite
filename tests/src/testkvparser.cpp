@@ -32,7 +32,7 @@ void TestKVParser::cleanupTestCase()
 
 void TestKVParser::test_strict_on()
 {
-    Mere::Config::Parser::PropertyConfig config(m_file2);
+    Mere::Config::Parser::Config config(m_file2);
     config.strict(true);
 
     Mere::Config::Parser::KVParser parser(config);
@@ -41,7 +41,7 @@ void TestKVParser::test_strict_on()
 
 void TestKVParser::test_strict_off()
 {
-    Mere::Config::Parser::PropertyConfig config(m_file2);
+    Mere::Config::Parser::Config config(m_file2);
     Mere::Config::Parser::KVParser parser(config);
 
     QVERIFY(parser.parse().size() == 0);
@@ -49,7 +49,7 @@ void TestKVParser::test_strict_off()
 
 void TestKVParser::test_property_number()
 {
-    Mere::Config::Parser::PropertyConfig config(m_file1);
+    Mere::Config::Parser::Config config(m_file1);
     config.strict(true);
 
     Mere::Config::Parser::KVParser parser(config);
@@ -60,7 +60,7 @@ void TestKVParser::test_property_number()
 
 void TestKVParser::test_property_value()
 {
-    Mere::Config::Parser::PropertyConfig config(m_file1);
+    Mere::Config::Parser::Config config(m_file1);
     config.strict(true);
 
     Mere::Config::Parser::KVParser parser(config);

@@ -54,16 +54,8 @@ public:
     Group* readGroup(const std::string &name) const override;
     Property* readProperty(const std::string &name, const std::string &key) const override;
 
-    // cross config
-
     //
     void load();
-
-private:
-//    std::vector<Mere::Config::Property> getProperties(std::vector<Group> groups) const;
-
-//    std::string get(const Group *group, const std::string &key, int *set = nullptr) const;
-//    void set(Group *group, const std::string &key, const std::string &value);
 
 private:
     Document *m_document;

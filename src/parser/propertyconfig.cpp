@@ -2,10 +2,15 @@
 
 #include <regex>
 
-Mere::Config::Parser::PropertyConfig::PropertyConfig(const std::string &path)
-    : Config(path),
-      m_delimiter("="),
-      m_property("^([\\\w._]+)=(.*)$")
+Mere::Config::Parser::PropertyConfig::PropertyConfig()
+    : PropertyConfig("^([\\\w._]+)=(.*)$")
+{
+
+}
+
+Mere::Config::Parser::PropertyConfig::PropertyConfig(const std::string &pattern)
+    : m_delimiter("="),
+      m_pattern(pattern)
 {
 
 }
@@ -20,20 +25,19 @@ void Mere::Config::Parser::PropertyConfig::delimiter(const std::string &delimite
     m_delimiter = delimiter;
 }
 
-std::string Mere::Config::Parser::PropertyConfig::property() const
+std::string Mere::Config::Parser::PropertyConfig::pattern() const
 {
-    return m_property;
+    return m_pattern;
 }
 
-void Mere::Config::Parser::PropertyConfig::property(const std::string &property)
+void Mere::Config::Parser::PropertyConfig::pattern(const std::string &property)
 {
-    m_property = property;
+    m_pattern = property;
 }
 
 bool Mere::Config::Parser::PropertyConfig::isProperty(const std::string &line) const
 {
-    // make sure m_propertyt is a valid regex while setting it!
-    const std::regex regex(m_property);
+    const std::regex regex(m_pattern);
 
     return std::regex_match(line, regex);
 }

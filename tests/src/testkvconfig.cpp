@@ -44,7 +44,6 @@ void TestKVConfig::test_propery_count()
     Mere::Config::KVConfig config2(m_file2);
     config2.load();
 
-    qDebug() << ">>>>>>" << config2.getProperties().size();
     QVERIFY(config2.getProperties().size() == 6);
 }
 

@@ -1,7 +1,7 @@
 #ifndef DOCUMENTCONFIG_H
 #define DOCUMENTCONFIG_H
 
-#include "groupconfig.h"
+#include "configex.h"
 
 namespace Mere
 {
@@ -10,7 +10,7 @@ namespace Config
 namespace Parser
 {
 
-class MERE_CONFIG_LIB_SPEC DocumentConfig : public GroupConfig
+class MERE_CONFIG_LIB_SPEC DocumentConfig : public ConfigEx
 {
 public:
     DocumentConfig(const std::string &path);

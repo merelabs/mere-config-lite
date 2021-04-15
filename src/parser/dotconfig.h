@@ -1,7 +1,7 @@
 #ifndef MERE_CONFIG_PARSER_DOTCONFIG_H
 #define MERE_CONFIG_PARSER_DOTCONFIG_H
 
-#include "propertyconfig.h"
+#include "config.h"
 
 namespace Mere
 {
@@ -10,7 +10,7 @@ namespace Config
 namespace Parser
 {
 
-class DotConfig : public PropertyConfig
+class DotConfig : public Config
 {
 public:
     DotConfig(const std::string &path);

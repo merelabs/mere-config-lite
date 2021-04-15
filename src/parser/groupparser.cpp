@@ -3,7 +3,7 @@
 
 #include <fstream>
 
-Mere::Config::Parser::GroupParser::GroupParser(const GroupConfig &config)
+Mere::Config::Parser::GroupParser::GroupParser(const ConfigEx &config)
     : Parser(config),
       m_config(config)
 {

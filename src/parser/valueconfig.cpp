@@ -1,6 +1,13 @@
 #include "valueconfig.h"
 
 Mere::Config::Parser::ValueConfig::ValueConfig()
+    : ValueConfig(".*")
+{
+
+}
+
+Mere::Config::Parser::ValueConfig::ValueConfig(const std::string &pattern)
+    : m_pattern(pattern)
 {
 
 }
