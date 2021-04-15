@@ -2,12 +2,15 @@
 
 #include <regex>
 
+Mere::Config::Parser::GroupConfig::GroupConfig()
+    : GroupConfig("^\\\[(\\\w+(\\/\\\w+)*)\\\]$")
+{
+}
+
 Mere::Config::Parser::GroupConfig::GroupConfig(const std::string &pattern)
     : m_delimiter("/"),
       m_pattern(pattern)
 {
-    //m_pattern("^\\\[(\\\w+(\\/\\\w+)*)\\\]$")
-
 }
 
 std::string Mere::Config::Parser::GroupConfig::delimiter() const

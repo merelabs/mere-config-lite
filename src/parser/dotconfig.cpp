@@ -3,6 +3,6 @@
 Mere::Config::Parser::DotConfig::DotConfig(const std::string &path)
     : Config(path)
 {
-    property().pattern("^\\\w+(\\\.\\\w)+=.*$");
+    property()->pattern("^\\\w+(\\\.\\\w)+=.*$");
 }
 

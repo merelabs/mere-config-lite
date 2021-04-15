@@ -26,12 +26,12 @@ public:
     bool strict() const;
     void strict(bool strict);
 
-    CommentConfig comment() const;
-    void comment(const CommentConfig &comment);
+    CommentConfig* comment() const;
+    void comment(CommentConfig *comment);
     bool isComment(const std::string &line) const;
 
-    PropertyConfig property() const;
-    void property(const PropertyConfig &property);
+    PropertyConfig* property() const;
+    void property(PropertyConfig *property);
     bool isProperty(const std::string &line) const;
 
 private:
@@ -39,8 +39,8 @@ private:
 
     bool m_strict;
 
-    CommentConfig m_comment;
-    PropertyConfig m_property;
+    CommentConfig *m_comment;
+    PropertyConfig *m_property;
 };
 
 }

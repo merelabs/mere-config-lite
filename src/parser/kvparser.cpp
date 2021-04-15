@@ -49,7 +49,7 @@ Mere::Config::Property* Mere::Config::Parser::KVParser::parse(const std::string 
 {
     std::string match(key);
     // append property delimiter
-    match.append(m_config.property().delimiter());
+    match.append(m_config.property()->delimiter());
 
     int set;
     std::string line = Parser::parse(match, &set);

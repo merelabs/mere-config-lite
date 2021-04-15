@@ -36,11 +36,11 @@ SOURCES += \
 HEADERS += \
     $$PWD/src/parser/commentconfig.h \
     $$PWD/src/parser/config.h \
+    $$PWD/src/parser/configex.h \
     $$PWD/src/parser/documentconfig.h \
     $$PWD/src/parser/documentparser.h \
     $$PWD/src/parser/dotconfig.h \
     $$PWD/src/parser/dotparser.h \
-    $$PWD/src/parser/exconfig.h \
     $$PWD/src/parser/groupconfig.h \
     $$PWD/src/parser/groupparser.h \
     $$PWD/src/parser/iniparser.h \

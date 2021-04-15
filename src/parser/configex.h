@@ -14,14 +14,15 @@ namespace Parser
 class MERE_CONFIG_LIB_SPEC ConfigEx : public Config
 {
 public:
+    virtual ~ConfigEx();
     ConfigEx(const std::string &path);
 
-    GroupConfig group() const;
-    void group(const GroupConfig &group);
+    GroupConfig* group() const;
+    void group(GroupConfig *group);
     bool isGroup(const std::string &line) const;
 
 private:
-  GroupConfig m_group;
+    GroupConfig *m_group;
 };
 
 }

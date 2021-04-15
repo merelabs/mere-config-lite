@@ -13,6 +13,7 @@ namespace Parser
 class MERE_CONFIG_LIB_SPEC GroupConfig
 {
 public:
+    GroupConfig();
     GroupConfig(const std::string &pattern);
 
     std::string delimiter() const;
