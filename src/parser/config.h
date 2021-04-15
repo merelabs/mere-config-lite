@@ -2,6 +2,8 @@
 #define MERE_CONFIG_PARSER_CONFIG_H
 
 #include "../global.h"
+#include "commentconfig.h"
+
 #include <string>
 
 namespace Mere
@@ -23,15 +25,17 @@ public:
     bool strict() const;
     void strict(bool strict);
 
-    std::string comment() const;
-    void comment(const std::string &commnet);
+    CommentConfig comment() const;
+    void comment(const CommentConfig  &comment);
     bool isComment(const std::string &line) const;
 
 private:
     std::string m_path;
 
     bool m_strict;
-    std::string m_comment;
+
+    CommentConfig m_comment;
+
 };
 
 }
