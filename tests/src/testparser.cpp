@@ -36,8 +36,6 @@ void TestParser::cleanupTestCase()
 void TestParser::test_config_lines()
 {
     Mere::Config::Parser::Config config(m_file1);
-    config.comment("^#.*");
-
     Mere::Config::Parser::Parser parser1(config);
 
     std::vector<std::string> lines = parser1.parse();
