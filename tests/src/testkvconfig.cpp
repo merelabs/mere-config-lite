@@ -1,6 +1,6 @@
 #include "testkvconfig.h"
 
-#include "mere/config/kvconfig.h"
+#include "../src/kvconfig.h"
 
 #include <fstream>
 
@@ -36,19 +36,26 @@ void TestKVConfig::cleanupTestCase()
 
 void TestKVConfig::test_propery_count()
 {
-    const Mere::Config::KVConfig config1(m_file1);
-    QVERIFY(config1.properties().size() == 1);
+    Mere::Config::KVConfig config1(m_file1);
+    config1.load();
 
-    const Mere::Config::KVConfig config2(m_file2);
-    QVERIFY(config2.properties().size() == 6);
+    QVERIFY(config1.getProperties().size() == 1);
+
+    Mere::Config::KVConfig config2(m_file2);
+    config2.load();
+
+    qDebug() << ">>>>>>" << config2.getProperties().size();
+    QVERIFY(config2.getProperties().size() == 6);
 }
 
 void TestKVConfig::test_propery_value()
 {
-    const Mere::Config::KVConfig config1(m_file1);
+    Mere::Config::KVConfig config1(m_file1);
+    config1.load();
 
-    QVERIFY(config1.property("name").compare("parser") == 0);
+    QVERIFY(config1.getProperty("name")->value().compare("parser") == 0);
 
-    const Mere::Config::KVConfig config2(m_file2);
-    QVERIFY(config2.property("group3.site").compare("any") == 0);
+    Mere::Config::KVConfig config2(m_file2);
+    config2.load();
+    QVERIFY(config2.getProperty("group3.site")->value().compare("any") == 0);
 }

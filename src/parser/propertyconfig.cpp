@@ -5,7 +5,7 @@
 Mere::Config::Parser::PropertyConfig::PropertyConfig(const std::string &path)
     : Config(path),
       m_delimiter("="),
-      m_property("^(\\\w+)=(.*)$")
+      m_property("^([\\\w._]+)=(.*)$")
 {
 
 }

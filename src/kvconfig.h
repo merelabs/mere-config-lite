@@ -22,19 +22,19 @@ public:
 
     virtual std::vector<std::string> getKeys() const override;
     virtual std::string getValue(const std::string &key, int *set = nullptr) const override;
-    virtual Property getProperty(const std::string &key, int *set = nullptr) const override;
-    virtual std::vector<Property> getProperties() const override;
+    virtual Property* getProperty(const std::string &key) const override;
+    virtual std::vector<Property *> getProperties() const override;
 
-    virtual void setProperty(const Property &property) override;
+    virtual void setProperty(Property *property) override;
     virtual void setValue(const std::string &key, const std::string &value) override;
 
-    virtual std::vector<Property> readProperties() const override;
-    virtual Property readProperty(const std::string &key, int *set = nullptr) const override;
+    virtual std::vector<Property *> readProperties() const override;
+    virtual Property* readProperty(const std::string &key) const override;
 
     void load();
 
 private:
-    std::vector<Mere::Config::Property> m_properties;
+    std::vector<Mere::Config::Property *> m_properties;
 };
 
 }

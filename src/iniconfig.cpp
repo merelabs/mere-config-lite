@@ -1,273 +1,288 @@
 #include "iniconfig.h"
 #include "parser/iniparser.h"
 
-Mere::Config::IniConfig::IniConfig(const std::string &path, QObject *parent)
-    : CrossConfig(path, ".ini", parent)
+Mere::Config::IniConfig::IniConfig(const std::string &path)
+    : CrossConfig(path, ".ini"),
+      m_config(path)
+{
+    m_config.group("^\\\[\\\w+(\\\s+\\\w+)*(\\\/\\\w+(\\\s+\\\w+)*)*\\\]$");
+}
+
+std::string Mere::Config::IniConfig::get(const std::string &fqkp, int *set) const
 {
 
+    Property *property = m_document->property(fqkp);
+    if (!property)
+    {
+        if (set) *set = 0;
+        return "";
+    }
+
+    if (set) *set = 1;
+
+    return property->value();
+}
+
+void Mere::Config::IniConfig::set(const std::string &fqkp, const std::string &value)
+{
+    Property *property = m_document->property(fqkp);
+    if (property)
+    {
+        property->value(value);
+        return;
+    }
+
+    auto pos = fqkp.find_last_of(m_config.delimiter());
+    if (pos == std::string::npos)
+    {
+        m_document->root()->property(new Property(fqkp, value));
+        return;
+    }
+
+    Group *group = m_document->group(fqkp.substr(0, pos));
+    if (!group) return;
+
+    group->property(new Property(fqkp.substr(pos + 1), value));
+}
+
+std::string Mere::Config::IniConfig::read(const std::string &fqkp, int *set) const
+{
+    Mere::Config::Parser::DocumentConfig config(this->path());
+    Mere::Config::Parser::IniParser parser(config);
+
+    std::string path, key(fqkp);
+
+    auto pos = fqkp.find_last_of(m_config.delimiter());
+    if (pos != std::string::npos)
+    {
+        path = fqkp.substr(0, pos);
+        key  = fqkp.substr(pos + 1);
+    }
+
+    Property *property = parser.parse(path, key);;
+    if (!property)
+    {
+        if (set) *set = 0;
+        return "";
+    }
+
+    std::string value = property->value();
+    delete property;
+
+    if (set) *set = 1;
+
+    return value;
 }
 
 std::vector<std::string> Mere::Config::IniConfig::getKeys() const
 {
-    std::vector<std::string> keys;
-
-    for(const Property &property : m_group.properties())
-            keys.push_back(property.name());
-
-    return keys;
+    return m_document->root()->keys();
 }
 
 std::vector<std::string> Mere::Config::IniConfig::getAllKeys() const
 {
-    std::vector<std::string> keys;
-
-    std::vector<Property> prooerties = getProperties(m_group);
-
-    for(const Property &property : prooerties)
-            keys.push_back(property.name());
-
-    return keys;
+    return m_document->root()->keys(100);
 }
 
-std::vector<std::string> Mere::Config::IniConfig::getKeys(const std::string &group, int *set) const
+std::vector<std::string> Mere::Config::IniConfig::getKeys(const std::string &name, int *set) const
 {
-    auto it = std::find_if(m_group.groups().cbegin(), m_group.groups().cend(), [&](const Group &grp){
-        return grp.name().compare(group) == 0;
-    });
-
-    if (it == m_group.groups().cend())
+    Group *group = m_document->group(name);
+    if (!group)
     {
-        if (set) *set = 0;
+        if(set) *set = 0;
+        return {};
+    }
+    if(set) *set = 1;
+
+    return group->keys();
+}
+
+std::vector<std::string> Mere::Config::IniConfig::getAllKeys(const std::string &name, int *set) const
+{
+    Group *group = m_document->group(name);
+    if (!group)
+    {
+        if(set) *set = 0;
+        return {};
+    }
+    if(set) *set = 1;
+
+    return group->keys(100);
+}
+
+Mere::Config::Group* Mere::Config::IniConfig::getGroup(const std::string &name) const
+{
+    return m_document->group(name);
+}
+
+std::vector<Mere::Config::Group *> Mere::Config::IniConfig::getGroups() const
+{
+    return m_document->root()->groups();
+}
+
+std::vector<Mere::Config::Group *> Mere::Config::IniConfig::getAllGroups() const
+{
+    return m_document->root()->groups(100);
+}
+
+std::vector<Mere::Config::Group *> Mere::Config::IniConfig::getGroups(const std::string &name, int *set) const
+{
+    Group *group = m_document->group(name);
+    if (!group)
+    {
+        if(set) *set = 0;
         return {};
     }
 
-    if (set) *set = 1;
+    if(set) *set = 1;
 
-    return getKeys(*it);
+    return group->groups();
 }
 
-std::vector<std::string> Mere::Config::IniConfig::getAllKeys(const std::string &group, int *set) const
+std::vector<Mere::Config::Group *> Mere::Config::IniConfig::getAllGroups(const std::string &name, int *set) const
 {
-    auto it = std::find_if(m_group.groups().cbegin(), m_group.groups().cend(), [&](const Group &grp){
-        return grp.name().compare(group) == 0;
-    });
-
-    if (it == m_group.groups().cend())
+    Group *group = m_document->group(name);
+    if (!group)
     {
-        if (set) *set = 0;
+        if(set) *set = 0;
         return {};
     }
 
-    if (set) *set = 1;
+    if(set) *set = 1;
 
-    return getKeys(*it);
-}
-
-std::vector<std::string> Mere::Config::IniConfig::getKeys(const Group &group) const
-{
-    std::vector<std::string> keys;
-    std::vector<Property> prooerties = getProperties(group);
-    for(const Property &property : prooerties)
-            keys.push_back(property.name());
-
-    return keys;
-}
-
-std::vector<Mere::Config::Group> Mere::Config::IniConfig::getGroups() const
-{
-    return m_group.groups();
-}
-
-std::vector<Mere::Config::Group> Mere::Config::IniConfig::getAllGroups() const
-{
-    // implement it...
-}
-
-
-std::vector<Mere::Config::Group> Mere::Config::IniConfig::getGroups(const std::string &group, int *set) const
-{
-    Group grp = getGroup(group, set);
-    if (!set) return {};
-
-    return grp.groups();
-}
-
-std::vector<Mere::Config::Group> Mere::Config::IniConfig::getAllGroups(const std::string &group, int *set) const
-{
-    // implement recurssively
-}
-
-Mere::Config::Group Mere::Config::IniConfig::getGroup(const std::string &group, int *set) const
-{
-    if (group.empty())
-    {
-        if (set) *set = 0;
-        return Group();
-    }
-
-    auto it = std::find_if(m_group.groups().cbegin(), m_group.groups().cend(), [&](const Group &grp){
-        return grp.name().compare(group) == 0;
-    });
-
-    if (it == m_group.groups().cend())
-    {
-        if (set) *set = 0;
-        return Group();
-    }
-
-    if (set) *set = 1;
-
-    return *it;
+    return group->groups(100);
 }
 
 std::string Mere::Config::IniConfig::getValue(const std::string &key, int *set) const
 {
-    auto pos = key.find_first_of("/");
-    if(pos == std::string::npos)
+    return get(key, set);
+}
+
+std::string Mere::Config::IniConfig::getValue(const std::string &name, const std::string &key, int *set) const
+{
+    Group *group = m_document->group(name);
+    if (!group)
     {
         if(set) *set = 0;
-        return "";
+        return {};
     }
 
-    return getValue(key.substr(0, pos), key.substr(pos + 1), set);
+    return getValue(group, key, set);
 }
 
-std::string Mere::Config::IniConfig::getValue(const std::string &group, const std::string &key, int *set) const
+// OK
+std::string Mere::Config::IniConfig::getValue(const Group *group, const std::string &key, int *set) const
 {
-    return getValue(getGroup(group), key, set);
-}
-
-std::string Mere::Config::IniConfig::getValue(const Group &group, const std::string &key, int *set) const
-{
-    auto pos = key.find_first_of("/");
-    if(pos != std::string::npos)
+    Property *property = group->property(key);
+    if (!property)
     {
-        std::string section = key.substr(0, pos);
-
-        auto groups = group.groups();
-        auto it = std::find_if(groups.cbegin(), groups.cend(), [&](const Group &group){
-            return group.name().compare(section) == 0;
-        });
-
-        if (it == groups.cend())
-        {
-            if(set) *set = 0;
-            return "";
-        }
-
-        return getValue(*it, key.substr(pos + 1), set);
+        if(set) *set = 0;
+        return {};
     }
 
-    auto properties = group.properties();
-    auto it = std::find_if(properties.cbegin(), properties.cend(), [&](const Property &property){
-        return property.name().compare(key) == 0;
-    });
+    if(set) *set = 1;
 
-    if (set) *set = (it != properties.cend());
-
-    return set ? it->value() : "";
+    return property->value();
 }
 
-std::vector<Mere::Config::Property> Mere::Config::IniConfig::getProperties() const
+Mere::Config::Property* Mere::Config::IniConfig::getProperty(const std::string &key) const
 {
-
+    return m_document->property(key);
 }
 
-std::vector<Mere::Config::Property> Mere::Config::IniConfig::getProperties(const std::string &group, int *set) const
+Mere::Config::Property* Mere::Config::IniConfig::getProperty(const std::string &name, const std::string &key) const
 {
-   return getProperties(getGroup(group, set));
+    Group *group = m_document->group(name);
+    if (!group) return nullptr;
+
+    return group->property(key);
 }
 
-std::vector<Mere::Config::Property> Mere::Config::IniConfig::getProperties(const Group &group) const
+std::vector<Mere::Config::Property *> Mere::Config::IniConfig::getProperties() const
 {
-    std::vector<Property> properties;
+    return m_document->root()->properties();
+}
 
-    const std::string key(group.base() + "/" + group.name() + "/");
-    for(const Property &property : group.properties())
+std::vector<Mere::Config::Property *> Mere::Config::IniConfig::getAllProperties() const
+{
+    return m_document->root()->properties(100);
+}
+
+std::vector<Mere::Config::Property *> Mere::Config::IniConfig::getProperties(const std::string &name, int *set) const
+{
+    Group *group = m_document->group(name);
+    if (!group)
     {
-        properties.push_back(Property(std::string(key).append(property.name()), property.value()));
+        if(set) *set = 0;
+        return {};
     }
 
-    std::vector<Property> _properties = getProperties(group.groups());
-    properties.insert(properties.end(), _properties.begin(), _properties.end());
+    if(set) *set = 1;
 
-    return properties;
+    return group->properties();
+}
+
+std::vector<Mere::Config::Property *> Mere::Config::IniConfig::getAllProperties(const std::string &name, int *set) const
+{
+    Group *group = m_document->group(name);
+    if (!group)
+    {
+        if(set) *set = 0;
+        return {};
+    }
+
+    if(set) *set = 1;
+
+    return group->properties(100);
+}
+
+void Mere::Config::IniConfig::setValue(const std::string &key, const std::string &value)
+{
+    set(key, value);
+}
+
+void Mere::Config::IniConfig::setProperty(Property *property)
+{
+    m_document->root()->property(property);
+}
+
+Mere::Config::Document* Mere::Config::IniConfig::readDocument() const
+{
+    Mere::Config::Parser::IniParser parser(m_config);
+    return parser.parse();
+}
+
+Mere::Config::Group* Mere::Config::IniConfig::readGroup(const std::string &name) const
+{
+    Mere::Config::Parser::IniParser parser(m_config);
+
+    return parser.parse(name);
+}
+
+std::vector<Mere::Config::Property *> Mere::Config::IniConfig::readProperties() const
+{
+    // IMPORVE WHY READ ALL??
+    Mere::Config::Parser::IniParser parser(m_config);
+
+    Mere::Config::Document *document = parser.parse();
+
+    return document->root()->properties();
+}
+
+
+Mere::Config::Property* Mere::Config::IniConfig::readProperty(const std::string &key) const
+{
+    return readProperty("", key);
+}
+
+Mere::Config::Property* Mere::Config::IniConfig::readProperty(const std::string &name, const std::string &key) const
+{
+    Mere::Config::Parser::IniParser parser(m_config);
+
+    return parser.parse(name, key);
 }
 
 void Mere::Config::IniConfig::load()
 {
     m_document = readDocument();
 }
-
-Mere::Config::Document Mere::Config::IniConfig::readDocument() const
-{
-    Mere::Config::Parser::DocumentConfig config(this->path());
-    Mere::Config::Parser::IniParser parser(config);
-    return parser.parse();
-}
-
-std::vector<Mere::Config::Group> Mere::Config::IniConfig::readGroups() const
-{
-    Mere::Config::Parser::DocumentConfig config(this->path());
-    Mere::Config::Parser::IniParser parser(config);
-
-    Mere::Config::Document document = parser.parse();
-    return document.root().groups();
-}
-
-Mere::Config::Group Mere::Config::IniConfig::readGroup(const std::string &name, int *set) const
-{
-    Mere::Config::Parser::DocumentConfig config(this->path());
-    Mere::Config::Parser::IniParser parser(config);
-    return parser.parse(name);
-}
-
-std::vector<Mere::Config::Property> Mere::Config::IniConfig::readProperties() const
-{
-    Mere::Config::Parser::DocumentConfig config(this->path());
-    Mere::Config::Parser::IniParser parser(config);
-
-    Mere::Config::Document document = parser.parse();
-
-    return getProperties(document.root());
-}
-
-std::vector<Mere::Config::Property> Mere::Config::IniConfig::properties(const std::string &group, int *set) const
-{
-//    IniParser parser(*this);
-//    Group grp = parser.parse(group, set);
-
-//    return getProperties(grp);
-}
-
-std::vector<Mere::Config::Property> Mere::Config::IniConfig::properties(const Group &group, int *set) const
-{
-    return getProperties(group);
-}
-
-std::vector<Mere::Config::Property> Mere::Config::IniConfig::getProperties(std::vector<Group> groups) const
-{
-    std::vector<Property> properties;
-
-    for(const Group &group : groups)
-    {
-        std::vector<Property> _properties = getProperties(group);
-        properties.insert(properties.end(), _properties.begin(), _properties.end());
-    }
-
-    return properties;;
-}
-
-std::vector<Mere::Config::Property> Mere::Config::IniConfig::getProperties(std::vector<Group> groups) const
-{
-    std::vector<Property> properties;
-
-    for(const Group &group : groups)
-    {
-        std::vector<Property> _properties = getProperties(group);
-        properties.insert(properties.end(), _properties.begin(), _properties.end());
-    }
-
-    return properties;;
-}
-

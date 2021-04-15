@@ -65,7 +65,7 @@ bool Mere::Config::Parser::Parser::next(std::ifstream &file, std::string &line) 
         if (isComment(line)) continue;
         break;
     }
-
+    //qDebug() << "LINE:" << line.c_str();
     return static_cast<bool>(file);
 }
 
@@ -75,7 +75,9 @@ bool Mere::Config::Parser::Parser::seek(std::ifstream &file, std::string &line) 
 
     while(next(file, line))
     {
-        if (seek.compare(line) == 0)
+//        if (seek.compare(line) == 0)
+//            break;
+        if (line.find(seek) == 0)
             break;
     }
 

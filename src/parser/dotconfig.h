@@ -1,5 +1,5 @@
-#ifndef DOTCONFIG_H
-#define DOTCONFIG_H
+#ifndef MERE_CONFIG_PARSER_DOTCONFIG_H
+#define MERE_CONFIG_PARSER_DOTCONFIG_H
 
 #include "propertyconfig.h"
 
@@ -19,4 +19,4 @@ public:
 }
 }
 }
-#endif // DOTCONFIG_H
+#endif // MERE_CONFIG_PARSER_DOTCONFIG_H

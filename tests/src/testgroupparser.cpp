@@ -1,7 +1,7 @@
 #include "testgroupparser.h"
 
-#include "mere/config/groupconfig.h"
-#include "mere/config/groupparser.h"
+#include "../src/parser/groupconfig.h"
+#include "../src/parser/groupparser.h"
 
 #include <fstream>
 

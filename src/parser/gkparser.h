@@ -1,5 +1,5 @@
-#ifndef GKPARSER_H
-#define GKPARSER_H
+#ifndef MERE_CONFIG_PARSER_GKPARSER_H
+#define MERE_CONFIG_PARSER_GKPARSER_H
 
 #include "groupparser.h"
 #include "groupconfig.h"
@@ -29,4 +29,4 @@ private:
 }
 }
 
-#endif // GKPARSER_H
+#endif // MERE_CONFIG_PARSER_GKPARSER_H

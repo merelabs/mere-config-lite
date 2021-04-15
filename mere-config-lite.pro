@@ -75,7 +75,7 @@ DEFINES += QT_DEPRECATED_WARNINGS MERE_CONFIG_LITE_LIB
 INCLUDEPATH += /usr/local/include
 
 
-LIBS += -lmere-xdg -lmere-utils
+LIBS += -lmere-utils
 
 include(mere-config-lite-src.pri)
 

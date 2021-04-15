@@ -12,9 +12,9 @@ Mere::Config::Parser::KVParser::KVParser(const PropertyConfig &config)
 
 }
 
-std::vector<Mere::Config::Property> Mere::Config::Parser::KVParser::parse() const
+std::vector<Mere::Config::Property *> Mere::Config::Parser::KVParser::parse() const
 {
-    std::vector<Mere::Config::Property> properties;
+    std::vector<Mere::Config::Property *> properties;
 
     std::string path = m_config.path();
 
@@ -39,25 +39,27 @@ std::vector<Mere::Config::Property> Mere::Config::Parser::KVParser::parse() cons
             continue;
         }
 
-        properties.push_back(Property(key, value(line)));
+        properties.push_back(new Property(key, value(line)));
     }
 
     return properties;
 }
 
-Mere::Config::Property Mere::Config::Parser::KVParser::parse(const std::string &key, int *set) const
+Mere::Config::Property* Mere::Config::Parser::KVParser::parse(const std::string &key) const
 {
     std::string match(key);
+    // append property delimiter
     match.append(m_config.delimiter());
 
-    std::string line = Parser::parse(match, set);
-    if (!set) return Property();
+    int set;
+    std::string line = Parser::parse(match, &set);
+    if (!set) return nullptr;
 
     if (!m_config.isProperty(line))
     {
         if (strict()) throw Exception("malformed configuration");
-        return Property();
+        return nullptr;
     }
 
-    return Property(key, value(line));
+    return new Property(key, value(line));
 }

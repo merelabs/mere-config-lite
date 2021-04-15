@@ -24,12 +24,7 @@ public:
     bool isGroup(const std::string &line) const;
     bool isSubGroup(const std::string &line) const;
 
-//    std::string group(const std::string &line) const{};
-//    std::string subgroup(const std::string &group) const{};
-//    std::string parent(const std::string &group) const{};
-//    std::string base(const std::string &group) const{};
-
-    std::string group(const std::string &line) const;
+    std::string name(const std::string &line) const;
     std::string subgroup(const std::string &group) const;
     std::string parent(const std::string &group) const;
     std::string base(const std::string &group) const;

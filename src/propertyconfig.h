@@ -36,15 +36,15 @@ public:
     // if 'set' flag specified, it will set the value of 'set' as
     // 0 - property with specified key is not present
     // 1 - otherwise
-    virtual Property getProperty(const std::string &key, int *set = nullptr) const = 0;
+    virtual Property* getProperty(const std::string &key) const = 0;
 
     // get all properties
-    virtual std::vector<Property> getProperties() const = 0;
+    virtual std::vector<Property *> getProperties() const = 0;
 
     // set the property
     // if the peoperty with specified key is not present, add one othewise
     // update the value of the property associated with the specified key
-    virtual void setProperty(const Property &property) = 0;
+    virtual void setProperty(Property *property) = 0;
 
     // set the value for a fully qualified key
     // if the specified property key is not present, it will add one othewise
@@ -54,7 +54,7 @@ public:
     // Online APIs
     // read all the properties from the  persistence system
     // if you already read it, use 'get' for the property value
-    virtual std::vector<Property> readProperties() const = 0;
+    virtual std::vector<Property *> readProperties() const = 0;
 
     // read the property associated with the specified key from persistence system
     // if the specified property key is not present, return empty property.
@@ -62,7 +62,7 @@ public:
     // 0 - property with specified key is not present
     // 1 - otherwise
     // if you already read the configuration, use 'get' for the value
-    virtual Property readProperty(const std::string &key, int *set = nullptr) const = 0;
+    virtual Property* readProperty(const std::string &key) const = 0;
 
     // write
     //virtual int writeProperty(const std::string &name, const std::string &value) const = 0;

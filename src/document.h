@@ -1,5 +1,5 @@
-#ifndef DOCUMENT_H
-#define DOCUMENT_H
+#ifndef MERE_CONFIG_DOCUMENT_H
+#define MERE_CONFIG_DOCUMENT_H
 
 #include "global.h"
 #include "rootgroup.h"
@@ -26,23 +26,24 @@ public:
     std::string name() const;
     void name(const std::string &name);
 
-    RootGroup root() const;
-    void root(const RootGroup &root);
+    RootGroup* root() const;
+    void root(RootGroup *root);
 
-//    Group group() const;
-//    Property property() const;
+    Group* group(const std::string &path) const;
+    Property* property(const std::string &path) const;
+
+private:
+    Group* traverse(const std::string &path) const;
+    Group* traverse(const Group *group, const std::string &path) const;
 
 private:
     std::string m_name;
     std::string m_type;
     std::string m_path;
 
-    std::vector<Property> m_properties;
-    std::vector<Group> m_groups;
-
-    RootGroup   m_root;
+    RootGroup *m_root;
 };
 
 }
 }
-#endif // DOCUMENT_H
+#endif // MERE_CONFIG_DOCUMENT_H

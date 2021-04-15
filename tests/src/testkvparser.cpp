@@ -54,7 +54,7 @@ void TestKVParser::test_property_number()
 
     Mere::Config::Parser::KVParser parser(config);
 
-    std::vector<Mere::Config::Property> properties = parser.parse();
+    std::vector<Mere::Config::Property *> properties = parser.parse();
     QVERIFY(properties.size() == 1);
 }
 
@@ -64,6 +64,8 @@ void TestKVParser::test_property_value()
     config.strict(true);
 
     Mere::Config::Parser::KVParser parser(config);
-    Mere::Config::Property property = parser.parse("name");
-    QVERIFY(property.value().compare("parser") == 0);
+    Mere::Config::Property *property = parser.parse("name");
+
+    QVERIFY(property);
+    QVERIFY(property->value().compare("parser") == 0);
 }

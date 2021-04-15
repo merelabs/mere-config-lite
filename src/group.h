@@ -24,36 +24,45 @@ public:
     Group(Group &&that) = default;
     Group& operator=(Group &&that) = default;
 
-    std::string base() const;
-    void base(const std::string &base);
+    std::string path() const;
+    void path(const std::string &base);
 
     std::string name() const;
     void name(const std::string &name);
 
     std::vector<std::string> keys() const;
+    std::vector<std::string> keys(int depth) const;
 
-    Property property(const std::string &name, int *set = nullptr);
-    void property(const Property &property);
+    Property *property(const std::string &name) const;
+    void property(Property *property);
 
-    std::vector<Property> properties() const;
-    void properties(const std::vector<Property> &properties);
+    std::vector<Property *> properties() const;
+    std::vector<Property *> properties(int depth) const;
 
-    std::vector<Group> groups() const;
-    void group(const Group &group);
-    void groups(const std::vector<Group> &groups);
+    void properties(const std::vector<Property *> &properties);
 
-    Group group(const std::string &name) const;
+    std::vector<Group *> groups() const;
+    std::vector<Group *> groups(int depth) const;
 
-    std::vector<Group>& groups();
+    Group* group(const std::string &name) const;
+
+    void group(Group *group);
+    void groups(const std::vector<Group *> &groups);
 
     virtual bool valid() const;
     void dump() const;
 
+    Group* parent() const;
+    void parent(Group *parent);
+
+
 private:
-    std::string           m_name;
-    std::string           m_base;
-    std::vector<Property> m_properties;
-    std::vector<Group>    m_groups;
+    std::string             m_name;
+    std::vector<Property *> m_properties;
+    std::vector<Group *>    m_groups;
+
+    std::string             m_path;
+    Group*                  m_parent;
 };
 
 }

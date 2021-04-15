@@ -18,8 +18,8 @@ class MERE_CONFIG_LIB_SPEC PropertyParser : public Parser
 public:
     explicit PropertyParser(const PropertyConfig &config);
 
-    virtual std::vector<Property> parse() const = 0;
-    virtual Property parse(const std::string &key, int *set = nullptr) const = 0;
+    virtual std::vector<Property *> parse() const = 0;
+    virtual Property* parse(const std::string &key) const = 0;
 
 protected:
     // move to next valid property

@@ -10,173 +10,176 @@ Mere::Config::Parser::GKParser::GKParser(const GroupConfig &config)
 
 }
 
-std::vector<Mere::Config::Group> Mere::Config::Parser::GroupParser::parse() const
+std::vector<Mere::Config::Group> Mere::Config::Parser::GKParser::parse() const
 {
     std::vector<Mere::Config::Group> groups;
 
-    bool ignore = true;
-    Group *groupPtr = nullptr;
+//    bool ignore = true;
+//    Group *groupPtr = nullptr;
 
-    std::vector<std::string> lines = Parser::parse();
-    for(const std::string &line : lines)
-    {
-        if (m_config.isGroup(line))
-        {
-            std::string name = m_config.group(line);
-            // is sub group?
-            if (m_config.isSubGroup(line))
-            {
-                std::string subgroup = m_config.subgroup(name);
-                std::string parent   = m_config.parent(name);
-                std::string base     = m_config.parent(name);
+//    std::vector<std::string> lines = Parser::parse();
+//    for(const std::string &line : lines)
+//    {
+//        if (m_config.isGroup(line))
+//        {
+//            std::string name = m_config.group(line);
+//            // is sub group?
+//            if (m_config.isSubGroup(line))
+//            {
+//                std::string subgroup = m_config.subgroup(name);
+//                std::string parent   = m_config.parent(name);
+//                std::string base     = m_config.parent(name);
 
-                if (groupPtr->name().compare(parent))
-                {
-                    if (strict()) throw Exception("malformed configuration");
-                    ignore = true;
-                    continue;
-                }
+//                if (groupPtr->name().compare(parent))
+//                {
+//                    if (strict()) throw Exception("malformed configuration");
+//                    ignore = true;
+//                    continue;
+//                }
 
-                Group group(subgroup);
-                group.base(base);
+//                Group group(subgroup);
+//                group.path(base);
 
-                groupPtr->group(group);
-                groupPtr = &groupPtr->groups().back();
-            }
-            else
-            {
-                Group group(name);
-                groups.push_back(group);
-                groupPtr = &groups.back();
-            }
+//                groupPtr->group(group);
+//                groupPtr = &groupPtr->groups().back();
+//            }
+//            else
+//            {
+//                Group group(name);
+//                groups.push_back(group);
+//                groupPtr = &groups.back();
+//            }
 
-            ignore = false;
-            continue;
-        }
+//            ignore = false;
+//            continue;
+//        }
 
-        if (ignore)
-        {
-            if (strict()) throw Exception("malformed configuration");
-            continue;
-        }
+//        if (ignore)
+//        {
+//            if (strict()) throw Exception("malformed configuration");
+//            continue;
+//        }
 
-        std::string key = this->key(line);
-        if(key.empty())
-        {
-            if (strict()) throw Exception("malformed configuration");
-            continue;
-        }
+//        std::string key = this->key(line);
+//        if(key.empty())
+//        {
+//            if (strict()) throw Exception("malformed configuration");
+//            continue;
+//        }
 
-        if (groupPtr)
-            groupPtr->property(Property(key, this->value(line)));
-    }
+//        if (groupPtr)
+//            groupPtr->property(Property(key, this->value(line)));
+//    }
 
     return groups;
 }
 
-Mere::Config::Group Mere::Config::Parser::GroupParser::parse(const std::string &name, int *set) const
+Mere::Config::Group Mere::Config::Parser::GKParser::parse(const std::string &name, int *set) const
 {
-    std::ifstream file(config().path());
-    if (!file.good())
-    {
-        if (set) *set = 0;
-        return Group();
-    }
+//    std::ifstream file(config().path());
+//    if (!file.good())
+//    {
+//        if (set) *set = 0;
+//        return Group();
+//    }
 
-    std::string match(name);
-    if(!next(file, match))
-    {
-        if (set) *set = 0;
-        return Group();
-    }
+//    std::string match(name);
+//    if(!next(file, match))
+//    {
+//        if (set) *set = 0;
+//        return Group();
+//    }
 
-    Mere::Config::Group group(m_config.group(match));
+//    Mere::Config::Group group(m_config.group(match));
 
-    Group *groupPtr = &group;
+//    Group *groupPtr = &group;
 
-    std::string line;
-    while (Parser::next(file, line))
-    {
-        if (m_config.isGroup(line))
-        {
-            std::string name = m_config.group(line);
-            if (!m_config.isSubGroup(line))
-                break;
+//    std::string line;
+//    while (Parser::next(file, line))
+//    {
+//        if (m_config.isGroup(line))
+//        {
+//            std::string name = m_config.group(line);
+//            if (!m_config.isSubGroup(line))
+//                break;
 
-            // is sub group?
-            std::string subgroup = m_config.subgroup(name);
-            std::string parent   = m_config.parent(name);
-            std::string base     = m_config.parent(name);
+//            // is sub group?
+//            std::string subgroup = m_config.subgroup(name);
+//            std::string parent   = m_config.parent(name);
+//            std::string base     = m_config.parent(name);
 
-            if (groupPtr->name().compare(parent))
-            {
-                if (strict()) throw Exception("malformed configuration");
-                break;
-            }
+//            if (groupPtr->name().compare(parent))
+//            {
+//                if (strict()) throw Exception("malformed configuration");
+//                break;
+//            }
 
-            Group group(subgroup);
-            group.base(base);
-            groupPtr->group(group);
-            groupPtr = &groupPtr->groups().back();
-            continue;
-        }
+//            Group group(subgroup);
+//            group.path(base);
+//            groupPtr->group(group);
+//            groupPtr = &groupPtr->groups().back();
+//            continue;
+//        }
 
-        std::string key = this->key(line);
-        if(key.empty())
-        {
-            if (strict()) throw Exception("malformed configuration");
-            continue;
-        }
+//        std::string key = this->key(line);
+//        if(key.empty())
+//        {
+//            if (strict()) throw Exception("malformed configuration");
+//            continue;
+//        }
 
-        std::string value = this->value(line);
-        groupPtr->property(Property(key, value));
-    }
+//        std::string value = this->value(line);
+//        groupPtr->property(Property(key, value));
+//    }
 
-    if (set) *set = 1;
+//    if (set) *set = 1;
 
-    return group;
+//    return group;
+    return Group();
 }
 
-Mere::Config::Property Mere::Config::Parser::GroupParser::parse(const std::string &group, const std::string &property, int *set) const
+Mere::Config::Property Mere::Config::Parser::GKParser::parse(const std::string &group, const std::string &property, int *set) const
 {
-    std::ifstream file(config().path());
-    if (!file.good())
-    {
-        if (set) *set = 0;
-        return Property();
-    }
+//    std::ifstream file(config().path());
+//    if (!file.good())
+//    {
+//        if (set) *set = 0;
+//        return Property();
+//    }
 
-    std::string match(group);
-    if(!next(file, match))
-    {
-        if (set) *set = 0;
-        return Property();
-    }
+//    std::string match(group);
+//    if(!next(file, match))
+//    {
+//        if (set) *set = 0;
+//        return Property();
+//    }
 
-    Property _property;
+//    Property _property;
 
-    std::string line;
-    while (Parser::next(file, line))
-    {
-        if (m_config.isGroup(line))
-            break;
+//    std::string line;
+//    while (Parser::next(file, line))
+//    {
+//        if (m_config.isGroup(line))
+//            break;
 
-        std::string key = this->key(line);
-        if(key.empty())
-        {
-            if (strict()) throw Exception("malformed configuration");
-            continue;
-        }
+//        std::string key = this->key(line);
+//        if(key.empty())
+//        {
+//            if (strict()) throw Exception("malformed configuration");
+//            continue;
+//        }
 
-        if (key.compare(key) != 0)
-            continue;
+//        if (key.compare(key) != 0)
+//            continue;
 
-        _property.name(property);
-        _property.value(this->value(line));
-        break;
-    }
+//        _property.name(property);
+//        _property.value(this->value(line));
+//        break;
+//    }
 
-    if (set) *set = _property.valid();
+//    if (set) *set = _property.valid();
 
-    return _property;
+//    return _property;
+
+    return Property();
 }

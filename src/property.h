@@ -1,5 +1,5 @@
-#ifndef PROPERTY_H
-#define PROPERTY_H
+#ifndef MERE_CONFIG_PROPERTY_H
+#define MERE_CONFIG_PROPERTY_H
 
 #include "global.h"
 #include <string>
@@ -8,6 +8,8 @@ namespace Mere
 {
 namespace Config
 {
+
+class Group;
 
 class MERE_CONFIG_LIB_SPEC Property
 {
@@ -23,6 +25,11 @@ public:
     Property(Property &&that) = default;
     Property& operator=(Property &&that) = default;
 
+//    bool operator < (const Property &that) const
+//    {
+//        return (m_name < that.name());
+//    }
+
     std::string name() const;
     void name(const std::string &name);
 
@@ -31,11 +38,21 @@ public:
 
     bool valid() const;
 
+    std::string path() const;
+    void path(const std::string &path);
+
+    Group* group() const;
+    void group(Group *group);
+
+
 private:
     std::string m_name;
     std::string m_value;
+
+    std::string m_path;
+    Group *m_group;
 };
 
 }
 }
-#endif // PROPERTY_H
+#endif // MERE_CONFIG_PROPERTY_H

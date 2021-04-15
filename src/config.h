@@ -10,7 +10,6 @@ namespace Config
 
 class MERE_CONFIG_LIB_SPEC Config
 {
-    Q_OBJECT
 public:
     virtual ~Config();
     explicit Config(const std::string &path);

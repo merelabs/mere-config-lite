@@ -43,7 +43,7 @@ bool Mere::Config::Parser::GroupConfig::isSubGroup(const std::string &line) cons
     return isGroup(line) && line.find(delimiter()) != std::string::npos;
 }
 
-std::string Mere::Config::Parser::GroupConfig::group(const std::string &line) const
+std::string Mere::Config::Parser::GroupConfig::name(const std::string &line) const
 {
     return line.substr(1, line.length() - 2);
 }

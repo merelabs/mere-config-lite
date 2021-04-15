@@ -21,48 +21,60 @@ Mere::Config::KVConfig::KVConfig(const std::string &path, const std::string &typ
 
 std::string Mere::Config::KVConfig::get(const std::string &key, int *set) const
 {
-    std::string value;
-
-    auto it = std::find_if(m_properties.cbegin(), m_properties.cend(), [&](const Property &property){
-        return property.name().compare(key) == 0;
+    auto it = std::find_if(m_properties.cbegin(), m_properties.cend(), [&](const Property *property){
+        return property->name().compare(key) == 0;
     });
 
-    if (it != m_properties.end())
-        value = it->value();
+    if (it == m_properties.end())
+    {
+        if (set) *set  = 0;
+        return "";
+    }
 
-    if (set) *set = it != m_properties.end();
-
-    return value;
+    if (set) *set  = 1;
+    return (*it)->value();
 }
 
 void Mere::Config::KVConfig::set(const std::string &key, const std::string &value)
 {
-    auto it = std::find_if(m_properties.begin(), m_properties.end(), [&](const Property &property){
-        return property.name().compare(key) == 0;
+    auto it = std::find_if(m_properties.begin(), m_properties.end(), [&](const Property *property){
+        return property->name().compare(key) == 0;
     });
 
     if (it != m_properties.end())
-        it->value(value);
-    else if (it == m_properties.end())
-        m_properties.push_back(Property(key, value));
+        (*it)->value(value);
+    else
+        m_properties.push_back(new Property(key, value));
 }
 
 std::string Mere::Config::KVConfig::read(const std::string &key, int *set) const
 {
+    std::string value;
+
     Mere::Config::Parser::PropertyConfig config(this->path());
     Mere::Config::Parser::KVParser parser(config);
 
-    Property property = parser.parse(key, set);
+    Property *property = parser.parse(key);
+    if (property)
+    {
+        if (set) *set = 1;
+        value = property->value();
+        delete property;
+    }
+    else
+    {
+        if (set) *set = 0;
+    }
 
-    return property.value();
+    return property->value();
 }
 
 std::vector<std::string> Mere::Config::KVConfig::getKeys() const
 {
     std::vector<std::string> keys;
 
-    for(const auto &property : m_properties)
-        keys.push_back(property.name());
+    for(const auto *property : m_properties)
+        keys.push_back(property->name());
 
     return keys;
 }
@@ -72,19 +84,26 @@ std::string Mere::Config::KVConfig::getValue(const std::string &key, int *set) c
     return get(key, set);
 }
 
-Mere::Config::Property Mere::Config::KVConfig::getProperty(const std::string &key, int *set) const
+Mere::Config::Property* Mere::Config::KVConfig::getProperty(const std::string &key) const
 {
-    return Property(key, getValue(key, set));
+    auto it = std::find_if(m_properties.begin(), m_properties.end(), [&](const Property *property){
+        return property->name().compare(key) == 0;
+    });
+
+    if (it == m_properties.end())
+        return nullptr;
+
+    return *it;
 }
 
-std::vector<Mere::Config::Property> Mere::Config::KVConfig::getProperties() const
+std::vector<Mere::Config::Property *> Mere::Config::KVConfig::getProperties() const
 {
     return m_properties;
 }
 
-void Mere::Config::KVConfig::setProperty(const Property &property)
+void Mere::Config::KVConfig::setProperty(Property *property)
 {
-    set(property.name(), property.value());
+    set(property->name(), property->value());
 }
 
 void Mere::Config::KVConfig::setValue(const std::string &key, const std::string &value)
@@ -92,19 +111,19 @@ void Mere::Config::KVConfig::setValue(const std::string &key, const std::string 
     set(key, value);
 }
 
-std::vector<Mere::Config::Property> Mere::Config::KVConfig::readProperties() const
+std::vector<Mere::Config::Property *> Mere::Config::KVConfig::readProperties() const
 {
     Mere::Config::Parser::PropertyConfig config(this->path());
     Mere::Config::Parser::KVParser parser(config);
     return parser.parse();
 }
 
-Mere::Config::Property Mere::Config::KVConfig::readProperty(const std::string &key, int *set) const
+Mere::Config::Property* Mere::Config::KVConfig::readProperty(const std::string &key) const
 {
     Mere::Config::Parser::PropertyConfig config(this->path());
     Mere::Config::Parser::KVParser parser(config);
 
-    return parser.parse(key, set);
+    return parser.parse(key);
 }
 
 void Mere::Config::KVConfig::load()

@@ -1,71 +1,39 @@
-#ifndef DOTCONFIG_H
-#define DOTCONFIG_H
+#ifndef MERE_CONFIG_DOTCONFIG_H
+#define MERE_CONFIG_DOTCONFIG_H
 
 #include "groupconfig.h"
+#include "parser/dotconfig.h"
 
 namespace Mere
 {
 namespace Config
 {
 
-class MERE_CONFIG_LIB_SPEC DotConfig : public GroupConfig
+class MERE_CONFIG_LIB_SPEC DotConfig : public PropertyConfig
 {
-    Q_OBJECT
 public:
-    explicit DotConfig(const std::string &path, QObject *parent = nullptr);
+    explicit DotConfig(const std::string &path);
 
-//    //
-//    // in-memory query
-//    // call load before any of the query
-//    //
+    // config
+    std::string get(const std::string &fqkp, int *set = nullptr) const override;
+    void set(const std::string &fqkp, const std::string &value) override;
+    std::string read(const std::string &fqkp, int *set = nullptr) const override;
 
-//    // flat list of all keys
-//    // keys inside a secion are listed as
-//    // key = section/key
-    std::vector<std::string> keys() const override;
+//    // property config
+    std::vector<std::string> getKeys() const override;
+    std::string getValue(const std::string &key, int *set = nullptr) const override;
+    Property* getProperty(const std::string &key) const override;
+    std::vector<Property *> getProperties() const override;
+    void setProperty(Property *property) override;
+    void setValue(const std::string &key, const std::string &value) override;
+    std::vector<Property *> readProperties() const override;
+    Property* readProperty(const std::string &key) const override;
 
-//    // list of all keys of a section
-    std::vector<std::string> keys(const std::string &group, int *set = nullptr) const override;
-
-    // list of all keys of a section
-    //std::vector<std::string> keys(const Group &group, int *set = nullptr) const;
-
-//    // list of all sections
-//    std::vector<std::string> sections() const;
-
-//    // list of all sections of a section
-//    std::vector<std::string> sections(const std::string &section, int *set = nullptr) const;
-
-//    // get value of a key/flatten-key
-    std::string value(const std::string &key, int *set = nullptr) const override;
-
-//    // get value of a key of a section
-    std::string value(const std::string &group, const std::string &key, int *set = nullptr) const;
-//    std::string value(const Group &group, const std::string &key, int *set = nullptr) const;
-
-//    // alias of value
-    Property get(const std::string &key) const;
-    std::string get(const std::string &key, int *set = nullptr) const override;
-    std::string get(const std::string &group, const std::string &key, int *set = nullptr) const;
-
-    std::map<std::string, std::string> mget() const;
-    std::map<std::string, std::string> mget(const std::string &group, int *set = nullptr) const;
-//    std::map<std::string, std::string> mget(const Group &group) const;
-
-    //
-    // sync query - query directly to the config file
-    //
-    //std::vector<Group> groups() const override;
-    //Group group(const std::string &name, int *set = nullptr) const override;
-
-    std::vector<Property> properties() const override;
-    std::vector<Property> properties(const std::string &group, int *set = nullptr) const override;
-    //std::vector<Property> properties(const Group &group, int *set = nullptr) const override;
-    virtual Property property(const std::string &group, const std::string &key, int *set = nullptr) const;
-    //virtual Property property(const std::string &name, int *set = nullptr) const = 0;
-
-    virtual bool isGroup(const std::string &line) const override;
-    virtual std::string name(const std::string &line) const;
+//    // group config
+    std::vector<std::string> getKeys(const std::string &name, int *set = nullptr) const;
+    std::vector<std::string> getAllKeys(const std::string &name, int *set = nullptr) const;
+    std::vector<Property *> getProperties(const std::string &name, int *set = nullptr) const;
+    std::vector<Property *> getAllProperties(const std::string &name, int *set = nullptr) const;
 
 private:
     void load();
@@ -73,9 +41,11 @@ private:
 signals:
 
 private:
-    std::vector<Mere::Config::Property> m_properties;
+    std::vector<Mere::Config::Property *> m_properties;
+
+    Mere::Config::Parser::DotConfig m_config;
 };
 
 }
 }
-#endif // DOTCONFIG_H
+#endif // MERE_CONFIG_DOTCONFIG_H

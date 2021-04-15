@@ -1,7 +1,7 @@
 #include "testdotparser.h"
 
-#include "mere/config/dotconfig.h"
-#include "mere/config/dotparser.h"
+#include "../src/parser/dotconfig.h"
+#include "../src/parser/dotparser.h"
 
 #include <fstream>
 
@@ -37,20 +37,20 @@ void TestDotParser::cleanupTestCase()
 
 void TestDotParser::test_strict_on()
 {
-//    const Mere::Config::DotConfig config(m_file1);
-//    Mere::Config::DotParser parser(config);
-//    parser.strict(true);
+    Mere::Config::Parser::DotConfig config(m_file1);
+    config.strict(true);
 
-//    QVERIFY_EXCEPTION_THROWN(parser.parse(), std::exception);
+    Mere::Config::Parser::DotParser parser(config);
+
+    QVERIFY_EXCEPTION_THROWN(parser.parse(), std::exception);
 }
 
 void TestDotParser::test_strict_off()
 {
-//    const Mere::Config::DotConfig config(m_file1);
+    Mere::Config::Parser::DotConfig config(m_file1);
+    config.strict(false);
+    Mere::Config::Parser::DotParser parser(config);
 
-//    Mere::Config::DotParser parser(config);
-//    parser.strict(false);
-
-//    std::vector<Mere::Config::Property> properties = parser.parse();
-//    QVERIFY(properties.size() == 0);
+    std::vector<Mere::Config::Property *> properties = parser.parse();
+    QVERIFY(properties.size() == 0);
 }
