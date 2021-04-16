@@ -24,14 +24,8 @@ std::vector<Mere::Config::Property *> Mere::Config::Parser::KVParser::parse() co
     std::vector<std::string> lines;
 
     std::string line;
-    while (next(file, line))
+    while (PropertyParser::next(file, line))
     {
-        if (!m_spec.isProperty(line))
-        {
-            if (strict()) throw Exception("malformed configuration");
-            continue;
-        }
-
         std::string key   = this->key(line);
         if(key.empty())
         {
