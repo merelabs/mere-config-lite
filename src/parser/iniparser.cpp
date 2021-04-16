@@ -2,8 +2,6 @@
 #include "../property.h"
 #include "../exception.h"
 
-#include "mere/utils/stringutils.h"
-
 #include <fstream>
 
 Mere::Config::Parser::IniParser::IniParser(const Spec::Document &spec)

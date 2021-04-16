@@ -9,6 +9,7 @@ CONFIG += object_parallel_to_source
 TEMPLATE = app
 
 SOURCES += \
+    src/testgkparser.cpp \
     src/testdotparser.cpp \
     src/testiniconfig.cpp \
     src/main.cpp \
@@ -19,6 +20,7 @@ SOURCES += \
     src/testparser.cpp
 
 HEADERS += \
+    src/testgkparser.h \
     src/testdotparser.h \
     src/testiniconfig.h \
     src/testkvconfig.h \
