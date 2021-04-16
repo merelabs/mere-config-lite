@@ -2,7 +2,7 @@
 #define DOCUMENTPARSER_H
 
 
-#include "documentconfig.h"
+#include "../spec/document.h"
 #include "groupparser.h"
 #include "../document.h"
 
@@ -16,7 +16,7 @@ namespace Parser
 class DocumentParser : public Parser
 {
 public:
-    DocumentParser(const DocumentConfig &config);
+    DocumentParser(const Spec::Document &spec);
 
     virtual Document* parse() const = 0;
     virtual Group* parse(const std::string &group) const = 0;

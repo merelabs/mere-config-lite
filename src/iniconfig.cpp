@@ -46,8 +46,7 @@ void Mere::Config::IniConfig::set(const std::string &fqkp, const std::string &va
 
 std::string Mere::Config::IniConfig::read(const std::string &fqkp, int *set) const
 {
-    Mere::Config::Parser::DocumentConfig config(this->path());
-    Mere::Config::Parser::IniParser parser(config);
+    Mere::Config::Parser::IniParser parser(m_config);
 
     std::string path, key(fqkp);
 

@@ -1,7 +1,7 @@
 #ifndef MERE_CONFIG_PARSER_DOTPARSER_H
 #define MERE_CONFIG_PARSER_DOTPARSER_H
 
-#include "dotconfig.h"
+#include "../spec/base.h"
 #include "kvparser.h"
 #include "../property.h"
 
@@ -16,10 +16,10 @@ namespace Parser
 class MERE_CONFIG_LIB_SPEC DotParser : public KVParser
 {
 public:
-    explicit DotParser(const DotConfig &config);
+    explicit DotParser(const Spec::Base &spec);
 
 private:
-    const DotConfig &m_config;};
+    const Spec::Base &m_spec;};
 
 }
 }

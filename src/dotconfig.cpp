@@ -1,5 +1,4 @@
 #include "dotconfig.h"
-#include "parser/dotconfig.h"
 #include "parser/dotparser.h"
 
 #include <QDebug>

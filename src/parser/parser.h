@@ -2,7 +2,7 @@
 #define MERE_CONFIG_PARSER_PARSER_H
 
 #include "../global.h"
-#include "config.h"
+#include "../spec/base.h"
 #include <istream>
 
 namespace Mere
@@ -16,8 +16,8 @@ namespace Parser
 class MERE_CONFIG_LIB_SPEC Parser
 {
 public:
-    explicit Parser(const Config &config);
-    const Config &config() const;
+    explicit Parser(const Spec::Base &spec);
+    const Spec::Base &config() const;
 
     std::vector<std::string> parse() const;
     std::string parse(const std::string &match, int *set = nullptr) const;
@@ -38,7 +38,7 @@ protected:
     std::string value(const std::string &line) const;
 
 private:
-    const Config &m_config;
+    const Spec::Base &m_spec;
 };
 }
 }

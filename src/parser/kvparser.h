@@ -2,7 +2,7 @@
 #define MERE_CONFIG_PARSER_KVPARSER_H
 
 #include "propertyparser.h"
-#include "config.h"
+#include "../spec/base.h"
 #include "../property.h"
 
 #include <string>
@@ -17,13 +17,13 @@ namespace Parser
 class MERE_CONFIG_LIB_SPEC KVParser : public PropertyParser
 {
 public:
-    explicit KVParser(const Config &config);
+    explicit KVParser(const Spec::Base &spec);
 
     virtual std::vector<Property *> parse() const override;
     virtual Property* parse(const std::string &key) const override;
 
 private:
-    const Config &m_config;
+    const Spec::Base &m_spec;
 };
 
 }

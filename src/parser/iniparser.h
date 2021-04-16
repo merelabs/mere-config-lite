@@ -1,7 +1,7 @@
 #ifndef MERE_CONFIG_PARSER_INIPARSER_H
 #define MERE_CONFIG_PARSER_INIPARSER_H
 
-#include "documentconfig.h"
+#include "documentspec.h"
 #include "documentparser.h"
 
 namespace Mere
@@ -14,7 +14,7 @@ namespace Parser
 class MERE_CONFIG_LIB_SPEC IniParser : public DocumentParser
 {
 public:
-    explicit IniParser(const DocumentConfig &config);
+    explicit IniParser(const Spec::Document &spec);
 
     Document* parse() const override;
     Group *parse(const std::string &name) const override;
@@ -29,7 +29,7 @@ protected:
 signals:
 
 private:
-    const ConfigEx &m_config;
+    const Spec::BaseEx &m_spec;
 };
 
 }

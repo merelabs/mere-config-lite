@@ -2,7 +2,7 @@
 #define MERE_CONFIG_DOTCONFIG_H
 
 #include "groupconfig.h"
-#include "parser/dotconfig.h"
+#include "spec/dotted.h"
 
 namespace Mere
 {
@@ -43,7 +43,7 @@ signals:
 private:
     std::vector<Mere::Config::Property *> m_properties;
 
-    Mere::Config::Parser::DotConfig m_config;
+    Mere::Config::Spec::Dotted m_config;
 };
 
 }

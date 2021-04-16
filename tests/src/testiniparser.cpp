@@ -1,6 +1,6 @@
 #include "testiniparser.h"
 
-#include "../src/parser/documentconfig.h"
+#include "../src/spec/document.h"
 #include "../src/parser/iniparser.h"
 
 #include <fstream>
@@ -70,7 +70,7 @@ void TestIniParser::cleanupTestCase()
 
 void TestIniParser::test_strict_on()
 {
-    Mere::Config::Parser::DocumentConfig config(m_file1);
+    Mere::Config::Spec::Document config(m_file1);
     config.strict(true);
 
     Mere::Config::Parser::IniParser parser(config);
@@ -79,7 +79,7 @@ void TestIniParser::test_strict_on()
 
 void TestIniParser::test_strict_off()
 {
-    Mere::Config::Parser::DocumentConfig config(m_file1);
+    Mere::Config::Spec::Document config(m_file1);
     config.strict(false);
 
     Mere::Config::Parser::IniParser parser(config);
@@ -88,7 +88,7 @@ void TestIniParser::test_strict_off()
 
 void TestIniParser::test_section_number_strict()
 {
-    Mere::Config::Parser::DocumentConfig config2(m_file2);
+    Mere::Config::Spec::Document config2(m_file2);
     config2.strict(true);
 
     Mere::Config::Parser::IniParser parser2(config2);
@@ -96,7 +96,7 @@ void TestIniParser::test_section_number_strict()
     Mere::Config::Document *document2 = parser2.parse();
     QVERIFY(document2->root()->groups().size() == 3);
 
-    Mere::Config::Parser::DocumentConfig config3(m_file3);
+    Mere::Config::Spec::Document config3(m_file3);
     config3.strict(true);
 
     Mere::Config::Parser::IniParser parser3(config3);
@@ -107,7 +107,7 @@ void TestIniParser::test_section_number_strict()
 
 void TestIniParser::test_group_property_number()
 {
-    Mere::Config::Parser::DocumentConfig config2(m_file2);
+    Mere::Config::Spec::Document config2(m_file2);
     config2.strict(true);
 
     Mere::Config::Parser::IniParser parser2(config2);
@@ -117,7 +117,7 @@ void TestIniParser::test_group_property_number()
     QVERIFY(parser2.parse("group3")->properties().size() == 3);
 
 
-    Mere::Config::Parser::DocumentConfig config3(m_file3);
+    Mere::Config::Spec::Document config3(m_file3);
     config3.strict(true);
 
     Mere::Config::Parser::IniParser parser3(config3);
@@ -130,7 +130,7 @@ void TestIniParser::test_group_property_number()
 
 void TestIniParser::test_group_subgroup_number()
 {
-    Mere::Config::Parser::DocumentConfig config3(m_file3);
+    Mere::Config::Spec::Document config3(m_file3);
     config3.strict(true);
 
     Mere::Config::Parser::IniParser parser3(config3);
@@ -142,7 +142,7 @@ void TestIniParser::test_group_subgroup_number()
 
 void TestIniParser::test_group_property_value()
 {
-    Mere::Config::Parser::DocumentConfig config2(m_file2);
+    Mere::Config::Spec::Document config2(m_file2);
     config2.strict(true);
 
     Mere::Config::Parser::IniParser parser2(config2);

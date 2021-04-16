@@ -4,29 +4,29 @@
 #include <fstream>
 #include <iostream>
 
-Mere::Config::Parser::Parser::Parser(const Config &config)
-    : m_config(config)
+Mere::Config::Parser::Parser::Parser(const Spec::Base &spec)
+    : m_spec(spec)
 {
 }
 
-const Mere::Config::Parser::Config& Mere::Config::Parser::Parser::config() const
+const Mere::Config::Spec::Base& Mere::Config::Parser::Parser::config() const
 {
-    return m_config;
+    return m_spec;
 }
 
 bool Mere::Config::Parser::Parser::strict() const
 {
-    return m_config.strict();
+    return m_spec.strict();
 }
 
 bool Mere::Config::Parser::Parser::isComment(const std::string &line) const
 {
-    return m_config.isComment(line);
+    return m_spec.isComment(line);
 }
 
 std::vector<std::string> Mere::Config::Parser::Parser::parse() const
 {
-    std::string path = m_config.path();
+    std::string path = m_spec.path();
 
     std::ifstream file(path);
     if (!file.good()) return {};

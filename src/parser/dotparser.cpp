@@ -4,9 +4,9 @@
 
 #include <fstream>
 
-Mere::Config::Parser::DotParser::DotParser(const DotConfig &config)
-    : KVParser(config),
-      m_config(config)
+Mere::Config::Parser::DotParser::DotParser(const Spec::Base &spec)
+    : KVParser(spec),
+      m_spec(spec)
 {
 
 }

@@ -5,9 +5,9 @@
 
 #include <fstream>
 
-Mere::Config::Parser::KVParser::KVParser(const Config &config)
-    : PropertyParser(config),
-      m_config(config)
+Mere::Config::Parser::KVParser::KVParser(const Spec::Base &spec)
+    : PropertyParser(spec),
+      m_spec(spec)
 {
 
 }
@@ -16,7 +16,7 @@ std::vector<Mere::Config::Property *> Mere::Config::Parser::KVParser::parse() co
 {
     std::vector<Mere::Config::Property *> properties;
 
-    std::string path = m_config.path();
+    std::string path = m_spec.path();
 
     std::ifstream file(path);
     if (!file.good()) return {};
@@ -26,7 +26,7 @@ std::vector<Mere::Config::Property *> Mere::Config::Parser::KVParser::parse() co
     std::string line;
     while (next(file, line))
     {
-        if (!m_config.isProperty(line))
+        if (!m_spec.isProperty(line))
         {
             if (strict()) throw Exception("malformed configuration");
             continue;
@@ -49,13 +49,13 @@ Mere::Config::Property* Mere::Config::Parser::KVParser::parse(const std::string 
 {
     std::string match(key);
     // append property delimiter
-    match.append(m_config.property()->delimiter());
+    match.append(m_spec.property()->delimiter());
 
     int set;
     std::string line = Parser::parse(match, &set);
     if (!set) return nullptr;
 
-    if (!m_config.isProperty(line))
+    if (!m_spec.isProperty(line))
     {
         if (strict()) throw Exception("malformed configuration");
         return nullptr;

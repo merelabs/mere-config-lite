@@ -6,9 +6,9 @@
 
 #include <fstream>
 
-Mere::Config::Parser::IniParser::IniParser(const DocumentConfig &config)
-    : DocumentParser(config),
-      m_config(config)
+Mere::Config::Parser::IniParser::IniParser(const Spec::Document &spec)
+    : DocumentParser(spec),
+      m_spec(spec)
 {
 }
 
@@ -19,17 +19,17 @@ std::string Mere::Config::Parser::IniParser::group(const std::string &line) cons
 
 std::string Mere::Config::Parser::IniParser::subgroup(const std::string &group) const
 {
-    auto pos = group.find_last_of(m_config.group()->delimiter());
+    auto pos = group.find_last_of(m_spec.group()->delimiter());
     return group.substr(pos + 1);
 }
 
 std::string Mere::Config::Parser::IniParser::parent(const std::string &group) const
 {
-    auto pos2 = group.find_last_of(m_config.group()->delimiter());
+    auto pos2 = group.find_last_of(m_spec.group()->delimiter());
     if (pos2 == std::string::npos)
         return "";
 
-    auto pos1 = group.find_last_of(m_config.group()->delimiter(), pos2 - 1);
+    auto pos1 = group.find_last_of(m_spec.group()->delimiter(), pos2 - 1);
     if (pos1 == std::string::npos)
         pos1 = -1;
 
@@ -38,21 +38,21 @@ std::string Mere::Config::Parser::IniParser::parent(const std::string &group) co
 
 std::string Mere::Config::Parser::IniParser::base(const std::string &group) const
 {
-    auto pos = group.find_last_of(m_config.group()->delimiter());
+    auto pos = group.find_last_of(m_spec.group()->delimiter());
     if (pos == std::string::npos)
         return "";
 
     return group.substr(0, pos);
 }
 
-Mere::Config::Document* Mere::Config::Parser::IniParser::parse() const
+Mere::Config::Document* Mere::Config::Parser::IniParser::   parse() const
 {
-    std::string path = m_config.path();
+    std::string path = m_spec.path();
 
     std::ifstream file(path);
     if (!file.good()) return nullptr;
 
-    Document *document = new Document(m_config.path());
+    Document *document = new Document(m_spec.path());
 
     // root group
     RootGroup *root = new RootGroup();
@@ -66,12 +66,12 @@ Mere::Config::Document* Mere::Config::Parser::IniParser::parse() const
     std::string line;
     while (Parser::next(file, line))
     {
-        if (m_config.isGroup(line))
+        if (m_spec.isGroup(line))
         {
             std::string name = this->group(line);
 
             // is sub group?
-            if (m_config.group()->isSubGroup(line))
+            if (m_spec.group()->isSubGroup(line))
             {
                 std::string subgroup = this->subgroup(name);
                 std::string parent   = this->parent(name);
@@ -107,7 +107,7 @@ Mere::Config::Document* Mere::Config::Parser::IniParser::parse() const
             continue;
         }
 
-        if (!m_config.isProperty(line))
+        if (!m_spec.isProperty(line))
         {
             if (strict()) throw Exception("malformed configuration");
             continue;
@@ -149,10 +149,10 @@ Mere::Config::Group* Mere::Config::Parser::IniParser::parse(const std::string &n
     std::string line;
     while (Parser::next(file, line))
     {
-        if (m_config.isGroup(line))
+        if (m_spec.isGroup(line))
         {
             std::string name = this->group(line);
-            if (!m_config.group()->isSubGroup(line))
+            if (!m_spec.group()->isSubGroup(line))
                 break;
 
             // is sub group?
@@ -180,7 +180,7 @@ Mere::Config::Group* Mere::Config::Parser::IniParser::parse(const std::string &n
             continue;
         }
 
-        if (!m_config.isProperty(line))
+        if (!m_spec.isProperty(line))
         {
             if (strict()) throw Exception("malformed configuration");
             continue;
@@ -217,10 +217,10 @@ Mere::Config::Property* Mere::Config::Parser::IniParser::parse(const std::string
     std::string line;
     while (Parser::next(file, line))
     {
-        if (m_config.isGroup(line))
+        if (m_spec.isGroup(line))
             break;
 
-        if (!m_config.isProperty(line))
+        if (!m_spec.isProperty(line))
         {
             if (strict()) throw Exception("malformed configuration");
             continue;

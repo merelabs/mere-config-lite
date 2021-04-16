@@ -1,20 +1,20 @@
 SOURCES += \
-    $$PWD/src/parser/commentconfig.cpp \
-    $$PWD/src/parser/config.cpp \
-    $$PWD/src/parser/configex.cpp \
-    $$PWD/src/parser/documentconfig.cpp \
+    $$PWD/src/parser/crossparser.cpp \
+    $$PWD/src/spec/base.cpp \
+    $$PWD/src/spec/baseex.cpp \
+    $$PWD/src/spec/comment.cpp \
+    $$PWD/src/spec/document.cpp \
+    $$PWD/src/spec/dotted.cpp \
+    $$PWD/src/spec/group.cpp \
+    $$PWD/src/parser/ckparser.cpp \
+    $$PWD/src/parser/gkparser.cpp \
     $$PWD/src/parser/documentparser.cpp \
-    $$PWD/src/parser/dotconfig.cpp \
     $$PWD/src/parser/dotparser.cpp \
-    $$PWD/src/parser/groupconfig.cpp \
     $$PWD/src/parser/groupparser.cpp \
     $$PWD/src/parser/iniparser.cpp \
-    $$PWD/src/parser/keyconfig.cpp \
     $$PWD/src/parser/kvparser.cpp \
     $$PWD/src/parser/parser.cpp \
-    $$PWD/src/parser/propertyconfig.cpp \
     $$PWD/src/parser/propertyparser.cpp \
-    $$PWD/src/parser/valueconfig.cpp \
     $$PWD/src/builder.cpp \
     $$PWD/src/config.cpp \
     $$PWD/src/crossconfig.cpp \
@@ -31,25 +31,32 @@ SOURCES += \
     $$PWD/src/property.cpp \
     $$PWD/src/propertyconfig.cpp \
     $$PWD/src/rootgroup.cpp \
+    $$PWD/src/spec/key.cpp \
+    $$PWD/src/spec/property.cpp \
+    $$PWD/src/spec/value.cpp \
     $$PWD/src/value.cpp
 
 HEADERS += \
-    $$PWD/src/parser/commentconfig.h \
-    $$PWD/src/parser/config.h \
-    $$PWD/src/parser/configex.h \
+    $$PWD/src/parser/crossparser.h \
+    $$PWD/src/spec/baseex.h \
+    $$PWD/src/spec/base.h \
+    $$PWD/src/spec/document.h \
+    $$PWD/src/spec/dotted.h \
+    $$PWD/src/spec/key.h \
+    $$PWD/src/spec/comment.h \
+    $$PWD/src/spec/group.h \
+    $$PWD/src/spec/property.h \
+    $$PWD/src/spec/value.h \
+    $$PWD/src/parser/ckparser.h \
+    $$PWD/src/parser/gkparser.h \
     $$PWD/src/parser/documentconfig.h \
     $$PWD/src/parser/documentparser.h \
-    $$PWD/src/parser/dotconfig.h \
     $$PWD/src/parser/dotparser.h \
-    $$PWD/src/parser/groupconfig.h \
     $$PWD/src/parser/groupparser.h \
     $$PWD/src/parser/iniparser.h \
-    $$PWD/src/parser/keyconfig.h \
     $$PWD/src/parser/kvparser.h \
     $$PWD/src/parser/parser.h \
-    $$PWD/src/parser/propertyconfig.h \
     $$PWD/src/parser/propertyparser.h \
-    $$PWD/src/parser/valueconfig.h \
     $$PWD/src/builder.h \
     $$PWD/src/config.h \
     $$PWD/src/crossconfig.h \

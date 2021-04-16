@@ -3,9 +3,9 @@
 
 #include <fstream>
 
-Mere::Config::Parser::GroupParser::GroupParser(const ConfigEx &config)
-    : Parser(config),
-      m_config(config)
+Mere::Config::Parser::GroupParser::GroupParser(const Spec::BaseEx &spec)
+    : Parser(spec),
+      m_spec(spec)
 {
 
 }
@@ -14,7 +14,7 @@ bool Mere::Config::Parser::GroupParser::next(std::ifstream &file, std::string &l
 {
     while(Parser::next(file, line))
     {
-        if (m_config.isGroup(line));
+        if (m_spec.isGroup(line));
             break;
     }
 

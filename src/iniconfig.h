@@ -5,7 +5,7 @@
 #include "document.h"
 #include "rootgroup.h"
 #include "group.h"
-#include "parser/documentconfig.h"
+#include "spec/document.h"
 
 namespace Mere
 {
@@ -60,7 +60,7 @@ public:
 private:
     Document *m_document;
 
-    Mere::Config::Parser::DocumentConfig m_config;
+    Mere::Config::Spec::Document m_config;
 };
 
 }

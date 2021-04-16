@@ -1,6 +1,5 @@
 #include "testgroupparser.h"
 
-#include "../src/parser/groupconfig.h"
 #include "../src/parser/groupparser.h"
 
 #include <fstream>

@@ -1,6 +1,6 @@
 #include "testdotparser.h"
 
-#include "../src/parser/dotconfig.h"
+#include "../src/spec/dotted.h"
 #include "../src/parser/dotparser.h"
 
 #include <fstream>
@@ -37,7 +37,7 @@ void TestDotParser::cleanupTestCase()
 
 void TestDotParser::test_strict_on()
 {
-    Mere::Config::Parser::DotConfig config(m_file1);
+    Mere::Config::Spec::Dotted config(m_file1);
     config.strict(true);
 
     Mere::Config::Parser::DotParser parser(config);
@@ -47,7 +47,7 @@ void TestDotParser::test_strict_on()
 
 void TestDotParser::test_strict_off()
 {
-    Mere::Config::Parser::DotConfig config(m_file1);
+    Mere::Config::Spec::Dotted config(m_file1);
     config.strict(false);
     Mere::Config::Parser::DotParser parser(config);
 
