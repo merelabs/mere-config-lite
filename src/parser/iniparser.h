@@ -20,14 +20,6 @@ public:
     Group *parse(const std::string &name) const override;
     Property* parse(const std::string &name, const std::string &key) const override;
 
-protected:
-    std::string group(const std::string &line) const;
-    std::string subgroup(const std::string &group) const;
-    std::string parent(const std::string &group) const;
-    std::string base(const std::string &group) const;
-
-signals:
-
 private:
     const Spec::BaseEx &m_spec;
 };

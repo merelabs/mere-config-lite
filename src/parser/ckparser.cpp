@@ -1,4 +1,5 @@
 #include "ckparser.h"
+#include "gkparser.h"
 #include "kvparser.h"
 #include "gkparser.h"
 #include "../exception.h"
@@ -91,6 +92,18 @@ Mere::Config::Group* Mere::Config::Parser::CKParser::parse() const
     root->groups(groups);
 
     return root;
+}
+
+Mere::Config::Group* Mere::Config::Parser::CKParser::parse(const std::string &name) const
+{
+    GKParser parse(m_spec);
+    return parse.parse(name);
+}
+
+Mere::Config::Property* Mere::Config::Parser::CKParser::parse(const std::string &name, const std::string &key) const
+{
+    GKParser parse(m_spec);
+    return parse.parse(name, key);
 }
 
 std::vector<Mere::Config::Property *> Mere::Config::Parser::CKParser::parseProperties() const
@@ -199,37 +212,4 @@ std::vector<Mere::Config::Group *> Mere::Config::Parser::CKParser::parseGroups()
             groupPtr->property(new Property(key, this->value(line)));
     }
 
-}
-
-std::string Mere::Config::Parser::CKParser::group(const std::string &line) const
-{
-    return line.substr(1, line.length() - 2);
-}
-
-std::string Mere::Config::Parser::CKParser::subgroup(const std::string &group) const
-{
-    auto pos = group.find_last_of(m_spec.group()->delimiter());
-    return group.substr(pos + 1);
-}
-
-std::string Mere::Config::Parser::CKParser::parent(const std::string &group) const
-{
-    auto pos2 = group.find_last_of(m_spec.group()->delimiter());
-    if (pos2 == std::string::npos)
-        return "";
-
-    auto pos1 = group.find_last_of(m_spec.group()->delimiter(), pos2 - 1);
-    if (pos1 == std::string::npos)
-        pos1 = -1;
-
-    return group.substr(pos1 + 1, pos2 - pos1 -1 );
-}
-
-std::string Mere::Config::Parser::CKParser::base(const std::string &group) const
-{
-    auto pos = group.find_last_of(m_spec.group()->delimiter());
-    if (pos == std::string::npos)
-        return "";
-
-    return group.substr(0, pos);
 }

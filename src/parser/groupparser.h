@@ -25,6 +25,11 @@ protected:
     // move to next valid group
     bool next(std::ifstream &file, std::string &line) const;
 
+    std::string group(const std::string &line) const;
+    std::string subgroup(const std::string &group) const;
+    std::string parent(const std::string &group) const;
+    std::string base(const std::string &group) const;
+
 private:
     const Spec::BaseEx &m_spec;
 };
