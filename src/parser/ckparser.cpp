@@ -1,6 +1,235 @@
 #include "ckparser.h"
+#include "kvparser.h"
+#include "gkparser.h"
+#include "../exception.h"
 
-Mere::Config::Parser::CKParser::CKParser()
+#include <fstream>
+
+Mere::Config::Parser::CKParser::CKParser(const Spec::BaseEx &spec)
+    : CrossParser(spec),
+      m_spec(spec)
 {
+}
 
+Mere::Config::Group *Mere::Config::Parser::CKParser::parse() const
+{
+    std::string path = m_spec.path();
+
+    std::ifstream file(path);
+    if (!file.good()) return nullptr;
+
+    // root group
+    Group *root = new Group();
+
+    std::vector<Mere::Config::Group *> groups;
+
+    Group *groupPtr = root;
+
+    std::vector<std::string> lines = Parser::parse();
+
+    std::string line;
+    while (Parser::next(file, line))
+    {
+        if (m_spec.isGroup(line))
+        {
+            std::string name = this->group(line);
+
+            // is sub group?
+            if (m_spec.group()->isSubGroup(line))
+            {
+                std::string subgroup = this->subgroup(name);
+                std::string parent   = this->parent(name);
+                std::string base     = this->parent(name);
+
+                while (groupPtr->name().compare(parent))
+                {
+                    if (!groupPtr->parent())
+                    {
+                        if (strict()) throw Exception("malformed configuration");
+                        continue;
+                    }
+                    groupPtr = groupPtr->parent();
+                }
+
+
+                Group *group = new Group(subgroup);
+                group->path(base);
+                group->parent(groupPtr);
+
+                groupPtr->group(group);
+
+                groupPtr = group;
+            }
+            else
+            {
+                Group *group = new Group(name);
+                groups.push_back(group);
+
+                groupPtr = group;
+            }
+
+            continue;
+        }
+
+        if (!m_spec.isProperty(line))
+        {
+            if (strict()) throw Exception("malformed configuration");
+            continue;
+        }
+
+        std::string key = this->key(line);
+        if(key.empty())
+        {
+            if (strict()) throw Exception("malformed configuration");
+            continue;
+        }
+
+        if (groupPtr)
+            groupPtr->property(new Property(key, this->value(line)));
+    }
+
+    root->groups(groups);
+
+    return root;
+}
+
+std::vector<Mere::Config::Property *> Mere::Config::Parser::CKParser::parseProperties() const
+{
+    std::string path = m_spec.path();
+
+    std::ifstream file(path);
+    if (!file.good()) return {};
+
+    std::vector<Mere::Config::Property *> properties;
+
+    std::string line;
+    while (Parser::next(file, line))
+    {
+        if (!m_spec.isProperty(line))
+            break;
+
+        std::string key = this->key(line);
+        if(key.empty())
+        {
+            if (strict()) throw Exception("malformed configuration");
+            continue;
+        }
+
+        properties.push_back(new Property(key, this->value(line)));
+    }
+
+    return properties;
+}
+
+std::vector<Mere::Config::Group *> Mere::Config::Parser::CKParser::parseGroups() const
+{
+    std::string path = m_spec.path();
+
+    std::ifstream file(path);
+    if (!file.good()) return {};
+
+    std::vector<Mere::Config::Group *> groups;
+
+    Group *groupPtr = nullptr;
+
+    std::string line;
+    while (Parser::next(file, line))
+    {
+        if (m_spec.isGroup(line))
+        {
+            std::string name = this->group(line);
+
+            // is sub group?
+            if (m_spec.group()->isSubGroup(line))
+            {
+                std::string subgroup = this->subgroup(name);
+                std::string parent   = this->parent(name);
+                std::string base     = this->parent(name);
+
+                while (groupPtr->name().compare(parent))
+                {
+                    if (!groupPtr->parent())
+                    {
+                        if (strict()) throw Exception("malformed configuration");
+                        continue;
+                    }
+                    groupPtr = groupPtr->parent();
+                }
+
+
+                Group *group = new Group(subgroup);
+                group->path(base);
+                group->parent(groupPtr);
+
+                groupPtr->group(group);
+
+                groupPtr = group;
+            }
+            else
+            {
+                Group *group = new Group(name);
+                groups.push_back(group);
+
+                groupPtr = group;
+            }
+
+            continue;
+        }
+
+        if (!groupPtr)
+        {
+            if (strict()) throw Exception("malformed configuration");
+            continue;
+        }
+
+        if (!m_spec.isProperty(line))
+        {
+            if (strict()) throw Exception("malformed configuration");
+            continue;
+        }
+
+        std::string key = this->key(line);
+        if(key.empty())
+        {
+            if (strict()) throw Exception("malformed configuration");
+            continue;
+        }
+
+        if (groupPtr)
+            groupPtr->property(new Property(key, this->value(line)));
+    }
+
+}
+
+std::string Mere::Config::Parser::CKParser::group(const std::string &line) const
+{
+    return line.substr(1, line.length() - 2);
+}
+
+std::string Mere::Config::Parser::CKParser::subgroup(const std::string &group) const
+{
+    auto pos = group.find_last_of(m_spec.group()->delimiter());
+    return group.substr(pos + 1);
+}
+
+std::string Mere::Config::Parser::CKParser::parent(const std::string &group) const
+{
+    auto pos2 = group.find_last_of(m_spec.group()->delimiter());
+    if (pos2 == std::string::npos)
+        return "";
+
+    auto pos1 = group.find_last_of(m_spec.group()->delimiter(), pos2 - 1);
+    if (pos1 == std::string::npos)
+        pos1 = -1;
+
+    return group.substr(pos1 + 1, pos2 - pos1 -1 );
+}
+
+std::string Mere::Config::Parser::CKParser::base(const std::string &group) const
+{
+    auto pos = group.find_last_of(m_spec.group()->delimiter());
+    if (pos == std::string::npos)
+        return "";
+
+    return group.substr(0, pos);
 }

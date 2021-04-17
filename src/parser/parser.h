@@ -31,7 +31,7 @@ protected:
     virtual bool next(std::ifstream &file, std::string &line) const;
 
     // move to line that starts with privided string
-    bool seek(std::ifstream &file, std::string &line) const;
+    virtual bool seek(std::ifstream &file, std::string &line) const;
 
     // it shoild not know about key/value
     std::string key(const std::string &line) const;

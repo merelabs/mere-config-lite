@@ -80,7 +80,7 @@ void TestIniParser::test_strict_on()
 void TestIniParser::test_strict_off()
 {
     Mere::Config::Spec::Document config(m_file1);
-    config.strict(false);
+    //config.strict(false);
 
     Mere::Config::Parser::IniParser parser(config);
     parser.parse();

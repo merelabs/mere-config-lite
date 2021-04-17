@@ -48,7 +48,6 @@ void TestDotParser::test_strict_on()
 void TestDotParser::test_strict_off()
 {
     Mere::Config::Spec::Dotted config(m_file1);
-    config.strict(false);
     Mere::Config::Parser::DotParser parser(config);
 
     std::vector<Mere::Config::Property *> properties = parser.parse();

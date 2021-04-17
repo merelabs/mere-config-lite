@@ -1,4 +1,5 @@
 #include "iniparser.h"
+#include "ckparser.h"
 #include "../property.h"
 #include "../exception.h"
 
@@ -45,85 +46,11 @@ std::string Mere::Config::Parser::IniParser::base(const std::string &group) cons
 
 Mere::Config::Document* Mere::Config::Parser::IniParser::   parse() const
 {
-    std::string path = m_spec.path();
-
-    std::ifstream file(path);
-    if (!file.good()) return nullptr;
+    CKParser parse(m_spec);
+    Group *group  = parse.parse();
 
     Document *document = new Document(m_spec.path());
-
-    // root group
-    RootGroup *root = new RootGroup();
-
-    std::vector<Mere::Config::Group *> groups;
-
-    Group *groupPtr = root;
-
-    std::vector<std::string> lines = Parser::parse();
-
-    std::string line;
-    while (Parser::next(file, line))
-    {
-        if (m_spec.isGroup(line))
-        {
-            std::string name = this->group(line);
-
-            // is sub group?
-            if (m_spec.group()->isSubGroup(line))
-            {
-                std::string subgroup = this->subgroup(name);
-                std::string parent   = this->parent(name);
-                std::string base     = this->parent(name);
-
-                while (groupPtr->name().compare(parent))
-                {
-                    if (!groupPtr->parent())
-                    {
-                        if (strict()) throw Exception("malformed configuration");
-                        continue;
-                    }
-                    groupPtr = groupPtr->parent();
-                }
-
-
-                Group *group = new Group(subgroup);
-                group->path(base);
-                group->parent(groupPtr);
-
-                groupPtr->group(group);
-
-                groupPtr = group;
-            }
-            else
-            {
-                Group *group = new Group(name);
-                groups.push_back(group);
-
-                groupPtr = group;
-            }
-
-            continue;
-        }
-
-        if (!m_spec.isProperty(line))
-        {
-            if (strict()) throw Exception("malformed configuration");
-            continue;
-        }
-
-        std::string key = this->key(line);
-        if(key.empty())
-        {
-            if (strict()) throw Exception("malformed configuration");
-            continue;
-        }
-
-        if (groupPtr)
-            groupPtr->property(new Property(key, this->value(line)));
-    }
-
-    root->groups(groups);
-    document->root(root);
+    document->root((RootGroup*)group);
 
     return document;
 }

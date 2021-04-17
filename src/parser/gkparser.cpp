@@ -56,7 +56,6 @@ std::vector<Mere::Config::Group *> Mere::Config::Parser::GKParser::parse() const
 
     std::vector<std::string> lines = Parser::parse();
 
-    bool ignore = true;
     std::string line;
     while (Parser::next(file, line))
     {
@@ -76,12 +75,12 @@ std::vector<Mere::Config::Group *> Mere::Config::Parser::GKParser::parse() const
                     if (!groupPtr->parent())
                     {
                         if (strict()) throw Exception("malformed configuration");
-                        ignore = true;
+
+                        groupPtr = nullptr;
                         continue;
                     }
                     groupPtr = groupPtr->parent();
                 }
-
 
                 Group *group = new Group(subgroup);
                 group->path(base);
@@ -99,11 +98,10 @@ std::vector<Mere::Config::Group *> Mere::Config::Parser::GKParser::parse() const
                 groupPtr = group;
             }
 
-            ignore = false;
             continue;
         }
 
-        if (ignore)
+        if (!groupPtr)
         {
             if (strict()) throw Exception("malformed configuration");
             continue;

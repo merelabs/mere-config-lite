@@ -33,6 +33,7 @@ Mere::Config::Group* Mere::Config::Document::group(const std::string &path) cons
 
 Mere::Config::Property* Mere::Config::Document::property(const std::string &path) const
 {
+
     Group *group;
 
     std::string key;
