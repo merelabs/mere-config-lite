@@ -52,6 +52,8 @@ Mere::Config::Spec::Comment *Mere::Config::Spec::Base::comment() const
 
 void Mere::Config::Spec::Base::comment(Comment *comment)
 {
+    if (m_comment)
+        delete m_comment;
     m_comment = comment;
 }
 
@@ -67,6 +69,9 @@ Mere::Config::Spec::Property* Mere::Config::Spec::Base::property() const
 
 void Mere::Config::Spec::Base::property(Property *property)
 {
+    if (m_property)
+        delete m_property;
+
     m_property = property;
 }
 

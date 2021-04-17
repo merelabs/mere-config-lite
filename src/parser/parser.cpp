@@ -2,7 +2,6 @@
 #include "mere/utils/stringutils.h"
 
 #include <fstream>
-#include <iostream>
 
 Mere::Config::Parser::Parser::Parser(const Spec::Base &spec)
     : m_spec(spec)
@@ -84,7 +83,7 @@ bool Mere::Config::Parser::Parser::seek(std::ifstream &file, std::string &line) 
 
 std::string Mere::Config::Parser::Parser::key(const std::string &line) const
 {
-    auto pos = line.find("=");
+    auto pos = line.find(m_spec.property()->delimiter());
     if (pos == 0 || pos == std::string::npos) return "";
 
     return line.substr(0, pos);
@@ -92,7 +91,7 @@ std::string Mere::Config::Parser::Parser::key(const std::string &line) const
 
 std::string Mere::Config::Parser::Parser::value(const std::string &line) const
 {
-    auto pos = line.find("=");
+    auto pos = line.find(m_spec.property()->delimiter());
     if (pos == 0 || pos == std::string::npos) return "";
 
     return line.substr(pos + 1);

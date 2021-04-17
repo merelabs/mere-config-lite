@@ -22,6 +22,9 @@ Mere::Config::Spec::Group* Mere::Config::Spec::BaseEx::group() const
 
 void Mere::Config::Spec::BaseEx::group(Group *group)
 {
+    if(m_group)
+        delete m_group;
+
     m_group = group;
 }
 
