@@ -4,6 +4,7 @@ SOURCES += \
     $$PWD/src/spec/baseex.cpp \
     $$PWD/src/spec/comment.cpp \
     $$PWD/src/spec/document.cpp \
+    $$PWD/src/spec/domain.cpp \
     $$PWD/src/spec/dotted.cpp \
     $$PWD/src/spec/group.cpp \
     $$PWD/src/parser/ckparser.cpp \
@@ -41,6 +42,7 @@ HEADERS += \
     $$PWD/src/spec/baseex.h \
     $$PWD/src/spec/base.h \
     $$PWD/src/spec/document.h \
+    $$PWD/src/spec/domain.h \
     $$PWD/src/spec/dotted.h \
     $$PWD/src/spec/key.h \
     $$PWD/src/spec/comment.h \

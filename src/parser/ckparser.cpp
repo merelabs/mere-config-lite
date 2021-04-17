@@ -11,7 +11,7 @@ Mere::Config::Parser::CKParser::CKParser(const Spec::BaseEx &spec)
 {
 }
 
-Mere::Config::Group *Mere::Config::Parser::CKParser::parse() const
+Mere::Config::Group* Mere::Config::Parser::CKParser::parse() const
 {
     std::string path = m_spec.path();
 
