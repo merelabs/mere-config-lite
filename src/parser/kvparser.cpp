@@ -14,20 +14,14 @@ Mere::Config::Parser::KVParser::KVParser(const Spec::Base &spec)
 
 std::vector<Mere::Config::Property *> Mere::Config::Parser::KVParser::parse() const
 {
-    std::vector<Mere::Config::Property *> properties;
-
-    std::string path = m_spec.path();
-
-    std::ifstream file(path);
+    std::ifstream file(m_spec.path());
     if (!file.good()) return {};
 
-    std::vector<std::string> lines;
+    std::vector<Mere::Config::Property *> properties;
 
     std::string line;
     while (PropertyParser::next(file, line))
-    {
         properties.push_back(new Property(key(line), value(line)));
-    }
 
     return properties;
 }
