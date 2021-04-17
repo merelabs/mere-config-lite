@@ -33,3 +33,11 @@ Mere::Config::Property* Mere::Config::Parser::IniParser::parse(const std::string
     CKParser parse(m_spec);
     return parse.parse(name, key);
 }
+
+std::vector<Mere::Config::Property *> Mere::Config::Parser::IniParser::parseProperties() const
+{
+    CKParser parse(m_spec);
+
+    return parse.parseProperties();
+
+}

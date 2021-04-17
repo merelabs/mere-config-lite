@@ -257,6 +257,13 @@ Mere::Config::Group* Mere::Config::IniConfig::readGroup(const std::string &name)
     return parser.parse(name);
 }
 
+std::vector<Mere::Config::Property *> Mere::Config::IniConfig::readProperties() const
+{
+    Mere::Config::Parser::IniParser parser(m_config);
+
+    return parser.parseProperties();
+}
+
 Mere::Config::Property* Mere::Config::IniConfig::readProperty(const std::string &key) const
 {
     return readProperty("", key);

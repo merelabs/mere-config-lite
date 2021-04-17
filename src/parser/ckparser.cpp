@@ -29,14 +29,14 @@ Mere::Config::Group* Mere::Config::Parser::CKParser::parse() const
     {
         if (m_spec.isGroup(line))
         {
-            std::string name = this->group(line);
+            std::string name = m_spec.group()->name(line);
 
             // is sub group?
             if (m_spec.group()->isSubGroup(line))
             {
-                std::string subgroup = this->subgroup(name);
-                std::string parent   = this->parent(name);
-                std::string base     = this->parent(name);
+                std::string subgroup = m_spec.group()->subgroup(name);
+                std::string parent   = m_spec.group()->parent(name);
+                std::string base     = m_spec.group()->parent(name);
 
                 while (groupPtr->name().compare(parent))
                 {
@@ -128,14 +128,14 @@ std::vector<Mere::Config::Group *> Mere::Config::Parser::CKParser::parseGroups()
     {
         if (m_spec.isGroup(line))
         {
-            std::string name = this->group(line);
+            std::string name = m_spec.group()->name(line);
 
             // is sub group?
             if (m_spec.group()->isSubGroup(line))
             {
-                std::string subgroup = this->subgroup(name);
-                std::string parent   = this->parent(name);
-                std::string base     = this->parent(name);
+                std::string subgroup = m_spec.group()->subgroup(name);
+                std::string parent   = m_spec.group()->parent(name);
+                std::string base     = m_spec.group()->parent(name);
 
                 while (groupPtr->name().compare(parent))
                 {
