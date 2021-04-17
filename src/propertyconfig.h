@@ -32,10 +32,7 @@ public:
     virtual std::string getValue(const std::string &key, int *set = nullptr) const = 0;
 
     // get the property associated with the specified key
-    // if the specified property key is not present, return empty property.
-    // if 'set' flag specified, it will set the value of 'set' as
-    // 0 - property with specified key is not present
-    // 1 - otherwise
+    // if the specified property key is not present, return null.
     virtual Property* getProperty(const std::string &key) const = 0;
 
     // get all properties
@@ -57,10 +54,7 @@ public:
     virtual std::vector<Property *> readProperties() const = 0;
 
     // read the property associated with the specified key from persistence system
-    // if the specified property key is not present, return empty property.
-    // if 'set' flag specified, it will set the value of 'set' as
-    // 0 - property with specified key is not present
-    // 1 - otherwise
+    // if the specified property key is not present, return null.
     // if you already read the configuration, use 'get' for the value
     virtual Property* readProperty(const std::string &key) const = 0;
 

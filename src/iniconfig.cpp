@@ -257,16 +257,6 @@ Mere::Config::Group* Mere::Config::IniConfig::readGroup(const std::string &name)
     return parser.parse(name);
 }
 
-std::vector<Mere::Config::Property *> Mere::Config::IniConfig::readProperties() const
-{
-    // IMPORVE WHY READ ALL??
-    Mere::Config::Parser::IniParser parser(m_config);
-
-    Mere::Config::Document *document = parser.parse();
-
-    return document->root()->properties();
-}
-
 Mere::Config::Property* Mere::Config::IniConfig::readProperty(const std::string &key) const
 {
     return readProperty("", key);
