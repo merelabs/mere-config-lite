@@ -51,7 +51,6 @@ HEADERS += \
     $$PWD/src/spec/value.h \
     $$PWD/src/parser/ckparser.h \
     $$PWD/src/parser/gkparser.h \
-    $$PWD/src/parser/documentconfig.h \
     $$PWD/src/parser/documentparser.h \
     $$PWD/src/parser/dotparser.h \
     $$PWD/src/parser/groupparser.h \

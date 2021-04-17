@@ -1,6 +1,5 @@
 cmake_minimum_required(VERSION 3.10)
 
-
 # set the project name
 project(mere-config-lite
         VERSION 0.0.1.1
@@ -24,7 +23,7 @@ set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
 set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 
-set(CMAKE_AUTOMOC ON)
+#set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 #set(CMAKE_AUTOUIC ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
@@ -48,8 +47,8 @@ target_include_directories(${PROJECT_NAME} PUBLIC /usr/local/include)
 install(TARGETS ${PROJECT_NAME}
         LIBRARY DESTINATION lib)
 
-install(FILES ${HEADERS} DESTINATION include/mere/config)
-
+#install(FILES ${HEADERS} DESTINATION include/mere/config)
+install(DIRECTORY "./src/" DESTINATION "include/mere/config" FILES_MATCHING PATTERN "*.h")
 #
 # Linking
 #

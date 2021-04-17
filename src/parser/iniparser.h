@@ -21,6 +21,7 @@ public:
     Property* parse(const std::string &name, const std::string &key) const override;
 
     std::vector<Property *> parseProperties() const;
+
 private:
     const Spec::BaseEx &m_spec;
 };
