@@ -23,14 +23,14 @@ std::vector<Mere::Config::Group *> Mere::Config::Parser::GKParser::parse() const
     {
         if (m_spec.isGroup(line))
         {
-            std::string name = this->group(line);
+            std::string name = m_spec.group()->name(line);
 
             // is sub group?
             if (m_spec.group()->isSubGroup(line))
             {
-                std::string subgroup = this->subgroup(name);
-                std::string parent   = this->parent(name);
-                std::string base     = this->parent(name);
+                std::string subgroup = m_spec.group()->subgroup(name);
+                std::string parent   = m_spec.group()->parent(name);
+                std::string base     = m_spec.group()->parent(name);
 
                 while (groupPtr && groupPtr->name().compare(parent))
                 {
@@ -93,7 +93,7 @@ Mere::Config::Group* Mere::Config::Parser::GKParser::parse(const std::string &na
     std::string match("[" + name + "]");
     if(!seek(file, match)) return nullptr;
 
-    Group *group = new Group(this->group(match));
+    Group *group = new Group(m_spec.group()->name(match));
     group->parent(nullptr);
 
     Group *groupPtr = group;
@@ -103,14 +103,14 @@ Mere::Config::Group* Mere::Config::Parser::GKParser::parse(const std::string &na
     {
         if (m_spec.isGroup(line))
         {
-            std::string name = this->group(line);
+            std::string name = m_spec.group()->name(line);
             if (!m_spec.group()->isSubGroup(line))
                 break;
 
             // is sub group?
-            std::string subgroup = this->subgroup(name);
-            std::string parent   = this->parent(name);
-            std::string base     = this->parent(name);
+            std::string subgroup = m_spec.group()->subgroup(name);
+            std::string parent   = m_spec.group()->parent(name);
+            std::string base     = m_spec.group()->parent(name);
 
             while (groupPtr->name().compare(parent))
             {
