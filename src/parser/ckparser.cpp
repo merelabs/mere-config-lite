@@ -14,9 +14,7 @@ Mere::Config::Parser::CKParser::CKParser(const Spec::BaseEx &spec)
 
 Mere::Config::Group* Mere::Config::Parser::CKParser::parse() const
 {
-    std::string path = m_spec.path();
-
-    std::ifstream file(path);
+    std::ifstream file(config().path());
     if (!file.good()) return nullptr;
 
     // root group
@@ -25,8 +23,6 @@ Mere::Config::Group* Mere::Config::Parser::CKParser::parse() const
     std::vector<Mere::Config::Group *> groups;
 
     Group *groupPtr = root;
-
-    std::vector<std::string> lines = Parser::parse();
 
     std::string line;
     while (Parser::next(file, line))
@@ -78,15 +74,8 @@ Mere::Config::Group* Mere::Config::Parser::CKParser::parse() const
             continue;
         }
 
-        std::string key = this->key(line);
-        if(key.empty())
-        {
-            if (strict()) throw Exception("malformed configuration");
-            continue;
-        }
-
         if (groupPtr)
-            groupPtr->property(new Property(key, this->value(line)));
+            groupPtr->property(new Property(this->key(line), this->value(line)));
     }
 
     root->groups(groups);
@@ -108,9 +97,7 @@ Mere::Config::Property* Mere::Config::Parser::CKParser::parse(const std::string 
 
 std::vector<Mere::Config::Property *> Mere::Config::Parser::CKParser::parseProperties() const
 {
-    std::string path = m_spec.path();
-
-    std::ifstream file(path);
+    std::ifstream file(config().path());
     if (!file.good()) return {};
 
     std::vector<Mere::Config::Property *> properties;
@@ -121,14 +108,7 @@ std::vector<Mere::Config::Property *> Mere::Config::Parser::CKParser::parsePrope
         if (!m_spec.isProperty(line))
             break;
 
-        std::string key = this->key(line);
-        if(key.empty())
-        {
-            if (strict()) throw Exception("malformed configuration");
-            continue;
-        }
-
-        properties.push_back(new Property(key, this->value(line)));
+        properties.push_back(new Property(this->key(line), this->value(line)));
     }
 
     return properties;
@@ -136,9 +116,7 @@ std::vector<Mere::Config::Property *> Mere::Config::Parser::CKParser::parsePrope
 
 std::vector<Mere::Config::Group *> Mere::Config::Parser::CKParser::parseGroups() const
 {
-    std::string path = m_spec.path();
-
-    std::ifstream file(path);
+    std::ifstream file(config().path());
     if (!file.good()) return {};
 
     std::vector<Mere::Config::Group *> groups;
@@ -201,15 +179,7 @@ std::vector<Mere::Config::Group *> Mere::Config::Parser::CKParser::parseGroups()
             continue;
         }
 
-        std::string key = this->key(line);
-        if(key.empty())
-        {
-            if (strict()) throw Exception("malformed configuration");
-            continue;
-        }
-
         if (groupPtr)
-            groupPtr->property(new Property(key, this->value(line)));
+            groupPtr->property(new Property(this->key(line), this->value(line)));
     }
-
 }

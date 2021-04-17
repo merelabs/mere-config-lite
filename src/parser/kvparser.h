@@ -21,9 +21,6 @@ public:
 
     virtual std::vector<Property *> parse() const override;
     virtual Property* parse(const std::string &key) const override;
-
-private:
-    const Spec::Base &m_spec;
 };
 
 }

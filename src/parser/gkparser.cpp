@@ -7,14 +7,11 @@ Mere::Config::Parser::GKParser::GKParser(const Spec::BaseEx &spec)
     : GroupParser(spec),
       m_spec(spec)
 {
-
 }
 
 std::vector<Mere::Config::Group *> Mere::Config::Parser::GKParser::parse() const
 {
-    std::string path = m_spec.path();
-
-    std::ifstream file(path);
+    std::ifstream file(config().path());
     if (!file.good()) return {};
 
     std::vector<Mere::Config::Group *> groups;
@@ -78,21 +75,14 @@ std::vector<Mere::Config::Group *> Mere::Config::Parser::GKParser::parse() const
             continue;
         }
 
-        std::string key = this->key(line);
-        if(key.empty())
-        {
-            if (strict()) throw Exception("malformed configuration");
-            continue;
-        }
-
         if (groupPtr)
-            groupPtr->property(new Property(key, this->value(line)));
+            groupPtr->property(new Property(this->key(line), this->value(line)));
     }
 
     return groups;
 }
 
-Mere::Config::Group* Mere::Config::Parser::GKParser::parse(const std::string &name, int *set) const
+Mere::Config::Group* Mere::Config::Parser::GKParser::parse(const std::string &name) const
 {
     if (name.empty()) return nullptr;
 
@@ -148,21 +138,13 @@ Mere::Config::Group* Mere::Config::Parser::GKParser::parse(const std::string &na
             continue;
         }
 
-        std::string key = this->key(line);
-        if(key.empty())
-        {
-            if (strict()) throw Exception("malformed configuration");
-            continue;
-        }
-
-        std::string value = this->value(line);
-        groupPtr->property(new Property(key, value));
+        groupPtr->property(new Property(this->key(line), this->value(line)));
     }
 
     return group;
 }
 
-Mere::Config::Property* Mere::Config::Parser::GKParser::parse(const std::string &name, const std::string &key, int *set) const
+Mere::Config::Property* Mere::Config::Parser::GKParser::parse(const std::string &name, const std::string &key) const
 {
     std::ifstream file(config().path());
     if (!file.good()) return nullptr;
@@ -189,12 +171,6 @@ Mere::Config::Property* Mere::Config::Parser::GKParser::parse(const std::string 
         }
 
         std::string _key = this->key(line);
-        if(_key.empty())
-        {
-            if (strict()) throw Exception("malformed configuration");
-            continue;
-        }
-
         if (_key.compare(key) != 0)
             continue;
 

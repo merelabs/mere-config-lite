@@ -4,8 +4,7 @@
 #include <fstream>
 
 Mere::Config::Parser::PropertyParser::PropertyParser(const Spec::Base &spec)
-    : Parser(spec),
-      m_spec(spec)
+    : Parser(spec)
 {
 
 }
@@ -14,7 +13,7 @@ bool Mere::Config::Parser::PropertyParser::next(std::ifstream &file, std::string
 {
     while(Parser::next(file, line))
     {
-        if (!m_spec.isProperty(line))
+        if (!config().isProperty(line))
         {
             if (strict()) throw Exception("malformed configuration");
             continue;

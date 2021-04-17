@@ -1,20 +1,16 @@
 #include "kvparser.h"
 #include "../exception.h"
 
-#include "mere/utils/stringutils.h"
-
 #include <fstream>
 
 Mere::Config::Parser::KVParser::KVParser(const Spec::Base &spec)
-    : PropertyParser(spec),
-      m_spec(spec)
+    : PropertyParser(spec)
 {
-
 }
 
 std::vector<Mere::Config::Property *> Mere::Config::Parser::KVParser::parse() const
 {
-    std::ifstream file(m_spec.path());
+    std::ifstream file(config().path());
     if (!file.good()) return {};
 
     std::vector<Mere::Config::Property *> properties;
@@ -29,14 +25,13 @@ std::vector<Mere::Config::Property *> Mere::Config::Parser::KVParser::parse() co
 Mere::Config::Property* Mere::Config::Parser::KVParser::parse(const std::string &key) const
 {
     std::string match(key);
-    // append property delimiter
-    match.append(m_spec.property()->delimiter());
+    match.append(config().property()->delimiter());
 
     int set;
     std::string line = Parser::parse(match, &set);
     if (!set) return nullptr;
 
-    if (!m_spec.isProperty(line))
+    if (!config().isProperty(line))
     {
         if (strict()) throw Exception("malformed configuration");
         return nullptr;

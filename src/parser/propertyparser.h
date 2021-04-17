@@ -24,10 +24,6 @@ public:
 protected:
     // move to next valid property
     bool next(std::ifstream &file, std::string &line) const;
-
-private:
-    const Spec::Base &m_spec;
-
 };
 
 }

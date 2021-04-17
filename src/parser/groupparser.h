@@ -18,8 +18,8 @@ public:
     explicit GroupParser(const Spec::BaseEx &spec);
 
     virtual std::vector<Group *> parse() const = 0;
-    virtual Group* parse(const std::string &name, int *set = nullptr) const = 0;
-    virtual Property* parse(const std::string &group, const std::string &property, int *set = nullptr) const = 0;
+    virtual Group* parse(const std::string &name) const = 0;
+    virtual Property* parse(const std::string &group, const std::string &property) const = 0;
 
 protected:
     // move to next valid group

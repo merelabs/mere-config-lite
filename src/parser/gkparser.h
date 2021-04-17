@@ -18,8 +18,8 @@ public:
     explicit GKParser(const Spec::BaseEx &spec);
 
     std::vector<Group *> parse() const override;
-    Group* parse(const std::string &name, int *set = nullptr) const override;
-    Property* parse(const std::string &name, const std::string &key, int *set = nullptr) const override;
+    Group* parse(const std::string &name) const override;
+    Property* parse(const std::string &name, const std::string &key) const override;
 
 private:
     const Spec::BaseEx &m_spec;

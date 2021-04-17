@@ -3,7 +3,6 @@
 
 #include "../spec/base.h"
 #include "kvparser.h"
-#include "../property.h"
 
 namespace Mere
 {
@@ -19,10 +18,10 @@ public:
     explicit DotParser(const Spec::Base &spec);
 
 private:
-    const Spec::Base &m_spec;};
+    const Spec::Base &m_spec;
+};
 
 }
 }
-
 }
 #endif // MERE_CONFIG_PARSER_DOTPARSER_H
