@@ -8,7 +8,7 @@ Mere::Config::Parser::KVParser::KVParser(const Spec::Base &spec)
 {
 }
 
-std::vector<Mere::Config::Property *> Mere::Config::Parser::KVParser::parse() const
+std::vector<Mere::Config::Property *> Mere::Config::Parser::KVParser::parseProperties() const
 {
     std::ifstream file(config().path());
     if (!file.good()) return {};
@@ -22,13 +22,13 @@ std::vector<Mere::Config::Property *> Mere::Config::Parser::KVParser::parse() co
     return properties;
 }
 
-Mere::Config::Property* Mere::Config::Parser::KVParser::parse(const std::string &key) const
+Mere::Config::Property* Mere::Config::Parser::KVParser::parseProperty(const std::string &key) const
 {
     std::string match(key);
     match.append(config().property()->delimiter());
 
     int set;
-    std::string line = Parser::parse(match, &set);
+    std::string line = LineParser::parseLine(match, &set);
     if (!set) return nullptr;
 
     if (!config().isProperty(line))

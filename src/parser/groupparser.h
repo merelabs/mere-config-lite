@@ -1,8 +1,8 @@
 #ifndef MERE_CONFIG_PARSER_GROUPPARSER_H
 #define MERE_CONFIG_PARSER_GROUPPARSER_H
 
+#include "lineparser.h"
 #include "../spec/baseex.h"
-#include "parser.h"
 #include "../group.h"
 
 namespace Mere
@@ -12,14 +12,14 @@ namespace Config
 namespace Parser
 {
 
-class MERE_CONFIG_LIB_SPEC GroupParser : public Parser
+class MERE_CONFIG_LIB_SPEC GroupParser : public LineParser
 {
 public:
     explicit GroupParser(const Spec::BaseEx &spec);
 
-    virtual std::vector<Group *> parse() const = 0;
-    virtual Group* parse(const std::string &name) const = 0;
-    virtual Property* parse(const std::string &group, const std::string &property) const = 0;
+    virtual std::vector<Group *> parseGroups() const = 0;
+    virtual Group* parseGroup(const std::string &name) const = 0;
+    virtual Property* parseProperty(const std::string &group, const std::string &property) const = 0;
 
 protected:
     // move to next valid group

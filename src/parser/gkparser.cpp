@@ -9,7 +9,7 @@ Mere::Config::Parser::GKParser::GKParser(const Spec::BaseEx &spec)
 {
 }
 
-std::vector<Mere::Config::Group *> Mere::Config::Parser::GKParser::parse() const
+std::vector<Mere::Config::Group *> Mere::Config::Parser::GKParser::parseGroups() const
 {
     std::ifstream file(config().path());
     if (!file.good()) return {};
@@ -24,25 +24,17 @@ std::vector<Mere::Config::Group *> Mere::Config::Parser::GKParser::parse() const
         if (m_spec.isGroup(line))
         {
             std::string name = m_spec.group()->name(line);
-
-            // is sub group?
             if (m_spec.group()->isSubGroup(line))
             {
-                std::string subgroup = m_spec.group()->subgroup(name);
-                std::string parent   = m_spec.group()->parent(name);
-                std::string base     = m_spec.group()->parent(name);
-
-                while (groupPtr && groupPtr->name().compare(parent))
+                groupPtr = this->parent(groupPtr, m_spec.group()->parent(name));
+                if (!groupPtr)
                 {
-                    if (!groupPtr->parent())
-                    {
-                        if (strict()) throw Exception("malformed configuration");
-
-                        groupPtr = nullptr;
-                        continue;
-                    }
-                    groupPtr = groupPtr->parent();
+                    if (strict()) throw Exception("malformed configuration");
+                    continue;
                 }
+
+                std::string subgroup = m_spec.group()->subgroup(name);
+                std::string base     = m_spec.group()->parent(name);
 
                 Group *group = new Group(subgroup);
                 group->path(base);
@@ -55,6 +47,7 @@ std::vector<Mere::Config::Group *> Mere::Config::Parser::GKParser::parse() const
             else
             {
                 Group *group = new Group(name);
+                group->parent(nullptr);
                 groups.push_back(group);
 
                 groupPtr = group;
@@ -75,14 +68,13 @@ std::vector<Mere::Config::Group *> Mere::Config::Parser::GKParser::parse() const
             continue;
         }
 
-        if (groupPtr)
-            groupPtr->property(new Property(this->key(line), this->value(line)));
+        groupPtr->property(new Property(this->key(line), this->value(line)));
     }
 
     return groups;
 }
 
-Mere::Config::Group* Mere::Config::Parser::GKParser::parse(const std::string &name) const
+Mere::Config::Group* Mere::Config::Parser::GKParser::parseGroup(const std::string &name) const
 {
     if (name.empty()) return nullptr;
 
@@ -107,20 +99,16 @@ Mere::Config::Group* Mere::Config::Parser::GKParser::parse(const std::string &na
             if (!m_spec.group()->isSubGroup(line))
                 break;
 
+            groupPtr = this->parent(groupPtr, m_spec.group()->parent(name));
+            if (!groupPtr)
+            {
+                if (strict()) throw Exception("malformed configuration");
+                break;
+            }
+
             // is sub group?
             std::string subgroup = m_spec.group()->subgroup(name);
-            std::string parent   = m_spec.group()->parent(name);
             std::string base     = m_spec.group()->parent(name);
-
-            while (groupPtr->name().compare(parent))
-            {
-                if (!groupPtr->parent())
-                {
-                    if (strict()) throw Exception("malformed configuration");
-                    break;
-                }
-                groupPtr = groupPtr->parent();
-            }
 
             Group *group = new Group(subgroup);
             group->path(base);
@@ -144,7 +132,7 @@ Mere::Config::Group* Mere::Config::Parser::GKParser::parse(const std::string &na
     return group;
 }
 
-Mere::Config::Property* Mere::Config::Parser::GKParser::parse(const std::string &name, const std::string &key) const
+Mere::Config::Property* Mere::Config::Parser::GKParser::parseProperty(const std::string &name, const std::string &key) const
 {
     std::ifstream file(config().path());
     if (!file.good()) return nullptr;
@@ -179,4 +167,12 @@ Mere::Config::Property* Mere::Config::Parser::GKParser::parse(const std::string 
     }
 
     return property;
+}
+
+Mere::Config::Group* Mere::Config::Parser::GKParser::parent(Group *node, const std::string &parent) const
+{
+    while (node && node->name().compare(parent))
+        node = node->parent();
+
+    return node;
 }

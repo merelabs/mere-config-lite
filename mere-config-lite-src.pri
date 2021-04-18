@@ -1,5 +1,6 @@
 SOURCES += \
     $$PWD/src/parser/crossparser.cpp \
+    $$PWD/src/parser/lineparser.cpp \
     $$PWD/src/spec/base.cpp \
     $$PWD/src/spec/baseex.cpp \
     $$PWD/src/spec/comment.cpp \
@@ -39,6 +40,7 @@ SOURCES += \
 
 HEADERS += \
     $$PWD/src/parser/crossparser.h \
+    $$PWD/src/parser/lineparser.h \
     $$PWD/src/spec/baseex.h \
     $$PWD/src/spec/base.h \
     $$PWD/src/spec/document.h \

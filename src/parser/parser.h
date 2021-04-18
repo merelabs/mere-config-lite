@@ -19,8 +19,8 @@ public:
     explicit Parser(const Spec::Base &spec);
     const Spec::Base &config() const;
 
-    std::vector<std::string> parse() const;
-    std::string parse(const std::string &match, int *set = nullptr) const;
+//    std::vector<std::string> parse() const;
+//    std::string parse(const std::string &match, int *set = nullptr) const;
 
 protected:
     bool strict() const;
@@ -32,10 +32,6 @@ protected:
 
     // move to line that starts with privided string
     virtual bool seek(std::ifstream &file, std::string &line) const;
-
-    // it shoild not know about key/value
-    std::string key(const std::string &line) const;
-    std::string value(const std::string &line) const;
 
 private:
     const Spec::Base &m_spec;

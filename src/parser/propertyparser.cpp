@@ -4,7 +4,7 @@
 #include <fstream>
 
 Mere::Config::Parser::PropertyParser::PropertyParser(const Spec::Base &spec)
-    : Parser(spec)
+    : LineParser(spec)
 {
 
 }
@@ -24,3 +24,19 @@ bool Mere::Config::Parser::PropertyParser::next(std::ifstream &file, std::string
 
     return static_cast<bool>(file);
 }
+
+//std::string Mere::Config::Parser::PropertyParser::key(const std::string &line) const
+//{
+//    auto pos = line.find(config().property()->delimiter());
+//    if (pos == 0 || pos == std::string::npos) return "";
+
+//    return line.substr(0, pos);
+//}
+
+//std::string Mere::Config::Parser::PropertyParser::value(const std::string &line) const
+//{
+//    auto pos = line.find(config().property()->delimiter());
+//    if (pos == 0 || pos == std::string::npos) return "";
+
+//    return line.substr(pos + 1);
+//}

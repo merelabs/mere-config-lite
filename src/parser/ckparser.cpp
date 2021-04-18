@@ -12,7 +12,7 @@ Mere::Config::Parser::CKParser::CKParser(const Spec::BaseEx &spec)
 {
 }
 
-Mere::Config::Group* Mere::Config::Parser::CKParser::parse() const
+Mere::Config::Group* Mere::Config::Parser::CKParser::parseGroup() const
 {
     std::ifstream file(config().path());
     if (!file.good()) return nullptr;
@@ -34,20 +34,15 @@ Mere::Config::Group* Mere::Config::Parser::CKParser::parse() const
             // is sub group?
             if (m_spec.group()->isSubGroup(line))
             {
-                std::string subgroup = m_spec.group()->subgroup(name);
-                std::string parent   = m_spec.group()->parent(name);
-                std::string base     = m_spec.group()->parent(name);
-
-                while (groupPtr->name().compare(parent))
+                groupPtr = this->parent(groupPtr, m_spec.group()->parent(name));
+                if (!groupPtr)
                 {
-                    if (!groupPtr->parent())
-                    {
-                        if (strict()) throw Exception("malformed configuration");
-                        continue;
-                    }
-                    groupPtr = groupPtr->parent();
+                    if (strict()) throw Exception("malformed configuration");
+                    continue;
                 }
 
+                std::string subgroup = m_spec.group()->subgroup(name);
+                std::string base     = m_spec.group()->parent(name);
 
                 Group *group = new Group(subgroup);
                 group->path(base);
@@ -74,8 +69,7 @@ Mere::Config::Group* Mere::Config::Parser::CKParser::parse() const
             continue;
         }
 
-        if (groupPtr)
-            groupPtr->property(new Property(this->key(line), this->value(line)));
+        groupPtr->property(new Property(this->key(line), this->value(line)));
     }
 
     root->groups(groups);
@@ -83,16 +77,22 @@ Mere::Config::Group* Mere::Config::Parser::CKParser::parse() const
     return root;
 }
 
-Mere::Config::Group* Mere::Config::Parser::CKParser::parse(const std::string &name) const
+Mere::Config::Group* Mere::Config::Parser::CKParser::parseGroup(const std::string &name) const
 {
     GKParser parse(m_spec);
-    return parse.parse(name);
+    return parse.parseGroup(name);
 }
 
-Mere::Config::Property* Mere::Config::Parser::CKParser::parse(const std::string &name, const std::string &key) const
+Mere::Config::Property* Mere::Config::Parser::CKParser::parseProperty(const std::string &key) const
+{
+    //FIXME
+    return nullptr;
+}
+
+Mere::Config::Property* Mere::Config::Parser::CKParser::parseProperty(const std::string &name, const std::string &key) const
 {
     GKParser parse(m_spec);
-    return parse.parse(name, key);
+    return parse.parseProperty(name, key);
 }
 
 std::vector<Mere::Config::Property *> Mere::Config::Parser::CKParser::parseProperties() const
@@ -133,20 +133,15 @@ std::vector<Mere::Config::Group *> Mere::Config::Parser::CKParser::parseGroups()
             // is sub group?
             if (m_spec.group()->isSubGroup(line))
             {
-                std::string subgroup = m_spec.group()->subgroup(name);
-                std::string parent   = m_spec.group()->parent(name);
-                std::string base     = m_spec.group()->parent(name);
-
-                while (groupPtr->name().compare(parent))
+                groupPtr = this->parent(groupPtr, m_spec.group()->parent(name));
+                if (!groupPtr)
                 {
-                    if (!groupPtr->parent())
-                    {
-                        if (strict()) throw Exception("malformed configuration");
-                        continue;
-                    }
-                    groupPtr = groupPtr->parent();
+                    if (strict()) throw Exception("malformed configuration");
+                    continue;
                 }
 
+                std::string subgroup = m_spec.group()->subgroup(name);
+                std::string base     = m_spec.group()->parent(name);
 
                 Group *group = new Group(subgroup);
                 group->path(base);
@@ -179,7 +174,14 @@ std::vector<Mere::Config::Group *> Mere::Config::Parser::CKParser::parseGroups()
             continue;
         }
 
-        if (groupPtr)
-            groupPtr->property(new Property(this->key(line), this->value(line)));
+        groupPtr->property(new Property(this->key(line), this->value(line)));
     }
+}
+
+Mere::Config::Group* Mere::Config::Parser::CKParser::parent(Group *node, const std::string &parent) const
+{
+    while (node && node->name().compare(parent))
+        node = node->parent();
+
+    return node;
 }

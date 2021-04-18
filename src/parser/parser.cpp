@@ -23,36 +23,36 @@ bool Mere::Config::Parser::Parser::isComment(const std::string &line) const
     return m_spec.isComment(line);
 }
 
-std::vector<std::string> Mere::Config::Parser::Parser::parse() const
-{
-    std::string path = m_spec.path();
+//std::vector<std::string> Mere::Config::Parser::Parser::parse() const
+//{
+//    std::string path = m_spec.path();
 
-    std::ifstream file(path);
-    if (!file.good()) return {};
+//    std::ifstream file(path);
+//    if (!file.good()) return {};
 
-    std::vector<std::string> lines;
+//    std::vector<std::string> lines;
 
-    std::string line;
-    while (next(file, line))
-        lines.push_back(line);
+//    std::string line;
+//    while (next(file, line))
+//        lines.push_back(line);
 
-    return lines;
-}
+//    return lines;
+//}
 
-std::string Mere::Config::Parser::Parser::parse(const std::string &match, int *set) const
-{
-    std::string path = this->config().path();
+//std::string Mere::Config::Parser::Parser::parse(const std::string &match, int *set) const
+//{
+//    std::string path = this->config().path();
 
-    std::ifstream file(path);
-    if (!file.good()) return {};
+//    std::ifstream file(path);
+//    if (!file.good()) return {};
 
-    std::string seek(match);
-    bool result = this->seek(file, seek);
+//    std::string seek(match);
+//    bool result = this->seek(file, seek);
 
-    if (set) *set = result;
+//    if (set) *set = result;
 
-    return seek;
-}
+//    return seek;
+//}
 
 bool Mere::Config::Parser::Parser::next(std::ifstream &file, std::string &line) const
 {
@@ -79,20 +79,4 @@ bool Mere::Config::Parser::Parser::seek(std::ifstream &file, std::string &line) 
     }
 
     return static_cast<bool>(file);
-}
-
-std::string Mere::Config::Parser::Parser::key(const std::string &line) const
-{
-    auto pos = line.find(m_spec.property()->delimiter());
-    if (pos == 0 || pos == std::string::npos) return "";
-
-    return line.substr(0, pos);
-}
-
-std::string Mere::Config::Parser::Parser::value(const std::string &line) const
-{
-    auto pos = line.find(m_spec.property()->delimiter());
-    if (pos == 0 || pos == std::string::npos) return "";
-
-    return line.substr(pos + 1);
 }

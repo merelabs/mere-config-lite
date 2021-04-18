@@ -4,7 +4,7 @@
 #include <fstream>
 
 Mere::Config::Parser::GroupParser::GroupParser(const Spec::BaseEx &spec)
-    : Parser(spec),
+    : LineParser(spec),
       m_spec(spec)
 {
 
