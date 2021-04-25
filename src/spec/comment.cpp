@@ -1,5 +1,10 @@
 #include "comment.h"
 
+Mere::Config::Spec::Comment::~Comment()
+{
+
+}
+
 Mere::Config::Spec::Comment::Comment()
     : Comment("^#.*")
 {

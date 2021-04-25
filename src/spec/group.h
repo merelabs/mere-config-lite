@@ -14,8 +14,14 @@ namespace Spec
 class MERE_CONFIG_LIB_SPEC Group : public Domain
 {
 public:
+    virtual ~Group();
     Group();
     Group(const std::string &pattern);
+
+    Group(const Group &that) = default;
+    Group& operator=(const Group &that) = default;
+    Group(Group &&that) = default;
+    Group& operator=(Group &&that) = default;
 
     std::string delimiter() const;
     void delimiter(const std::string &delimiter);

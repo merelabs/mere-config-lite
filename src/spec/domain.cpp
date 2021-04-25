@@ -8,7 +8,7 @@ Mere::Config::Spec::Domain::~Domain()
 }
 
 Mere::Config::Spec::Domain::Domain()
-    : Domain("^.*$")
+    : Domain("^.+$")
 {
 
 }

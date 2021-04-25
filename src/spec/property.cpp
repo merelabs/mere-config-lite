@@ -1,5 +1,10 @@
 #include "property.h"
 
+Mere::Config::Spec::Property::~Property()
+{
+
+}
+
 Mere::Config::Spec::Property::Property()
     : Property("^([\\\w._]+)=(.*)$")
 {
@@ -8,7 +13,9 @@ Mere::Config::Spec::Property::Property()
 
 Mere::Config::Spec::Property::Property(const std::string &pattern)
     : Domain(pattern),
-      m_delimiter("=")
+      m_delimiter("="),
+      m_key(nullptr),
+      m_value(nullptr)
 {
 
 }

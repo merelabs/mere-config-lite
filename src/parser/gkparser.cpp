@@ -9,7 +9,7 @@ Mere::Config::Parser::GKParser::GKParser(const Spec::BaseEx &spec)
 {
 }
 
-std::vector<Mere::Config::Group *> Mere::Config::Parser::GKParser::parseGroups() const
+std::vector<Mere::Config::Group *> Mere::Config::Parser::GKParser::parse() const
 {
     std::ifstream file(config().path());
     if (!file.good()) return {};
@@ -29,7 +29,8 @@ std::vector<Mere::Config::Group *> Mere::Config::Parser::GKParser::parseGroups()
                 groupPtr = this->parent(groupPtr, m_spec.group()->parent(name));
                 if (!groupPtr)
                 {
-                    if (strict()) throw Exception("malformed configuration");
+                    if (strict() == Spec::Base::Strict::Hard) throw Exception("malformed configuration");
+                    else if (strict() != Spec::Base::Strict::Soft) break;
                     continue;
                 }
 
@@ -58,13 +59,15 @@ std::vector<Mere::Config::Group *> Mere::Config::Parser::GKParser::parseGroups()
 
         if (!groupPtr)
         {
-            if (strict()) throw Exception("malformed configuration");
+            if (strict() == Spec::Base::Strict::Hard) throw Exception("malformed configuration");
+            else if (strict() != Spec::Base::Strict::Soft) break;
             continue;
         }
 
         if (!m_spec.isProperty(line))
         {
-            if (strict()) throw Exception("malformed configuration");
+            if (strict() == Spec::Base::Strict::Hard) throw Exception("malformed configuration");
+            else if (strict() != Spec::Base::Strict::Soft) break;
             continue;
         }
 
@@ -74,7 +77,7 @@ std::vector<Mere::Config::Group *> Mere::Config::Parser::GKParser::parseGroups()
     return groups;
 }
 
-Mere::Config::Group* Mere::Config::Parser::GKParser::parseGroup(const std::string &name) const
+Mere::Config::Group* Mere::Config::Parser::GKParser::parse(const std::string &name) const
 {
     if (name.empty()) return nullptr;
 
@@ -102,7 +105,7 @@ Mere::Config::Group* Mere::Config::Parser::GKParser::parseGroup(const std::strin
             groupPtr = this->parent(groupPtr, m_spec.group()->parent(name));
             if (!groupPtr)
             {
-                if (strict()) throw Exception("malformed configuration");
+                if (strict() != Spec::Base::Strict::None) throw Exception("malformed configuration");
                 break;
             }
 
@@ -122,7 +125,9 @@ Mere::Config::Group* Mere::Config::Parser::GKParser::parseGroup(const std::strin
 
         if (!m_spec.isProperty(line))
         {
-            if (strict()) throw Exception("malformed configuration");
+            if (strict() == Spec::Base::Strict::Hard) throw Exception("malformed configuration");
+            else if (strict() != Spec::Base::Strict::Soft) break;
+
             continue;
         }
 
@@ -132,7 +137,7 @@ Mere::Config::Group* Mere::Config::Parser::GKParser::parseGroup(const std::strin
     return group;
 }
 
-Mere::Config::Property* Mere::Config::Parser::GKParser::parseProperty(const std::string &name, const std::string &key) const
+Mere::Config::Property* Mere::Config::Parser::GKParser::parse(const std::string &name, const std::string &key) const
 {
     std::ifstream file(config().path());
     if (!file.good()) return nullptr;
@@ -154,7 +159,9 @@ Mere::Config::Property* Mere::Config::Parser::GKParser::parseProperty(const std:
 
         if (!m_spec.isProperty(line))
         {
-            if (strict()) throw Exception("malformed configuration");
+            if (strict() == Spec::Base::Strict::Hard) throw Exception("malformed configuration");
+            else if (strict() != Spec::Base::Strict::Soft) break;
+
             continue;
         }
 

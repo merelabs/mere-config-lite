@@ -13,6 +13,8 @@ public:
 private slots:
     void initTestCase();
     void cleanupTestCase();
+    void test_next();
+    void test_prev();
     void test_config_lines();
 
 private:

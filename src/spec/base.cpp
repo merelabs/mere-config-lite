@@ -19,7 +19,7 @@ Mere::Config::Spec::Base::~Base()
 
 Mere::Config::Spec::Base::Base(const std::string &path)
     : m_path(path),
-      m_strict(false),
+      m_strict(Strict::None),
       m_comment(new Comment),
       m_property(new Property)
 {
@@ -35,12 +35,12 @@ void Mere::Config::Spec::Base::path(const std::string &path)
     m_path = path;
 }
 
-bool Mere::Config::Spec::Base::strict() const
+Mere::Config::Spec::Base::Strict Mere::Config::Spec::Base::strict() const
 {
     return m_strict;
 }
 
-void Mere::Config::Spec::Base::strict(bool strict)
+void Mere::Config::Spec::Base::strict(Strict strict)
 {
     m_strict = strict;
 }

@@ -25,11 +25,6 @@ public:
     Property(Property &&that) = default;
     Property& operator=(Property &&that) = default;
 
-//    bool operator < (const Property &that) const
-//    {
-//        return (m_name < that.name());
-//    }
-
     std::string name() const;
     void name(const std::string &name);
 

@@ -71,7 +71,7 @@ void TestIniParser::cleanupTestCase()
 void TestIniParser::test_strict_on()
 {
     Mere::Config::Spec::Document config(m_file1);
-    config.strict(true);
+    config.strict(Mere::Config::Spec::Base::Strict::Hard);
 
     Mere::Config::Parser::IniParser parser(config);
     QVERIFY_EXCEPTION_THROWN(parser.parse(), std::exception);
@@ -89,7 +89,7 @@ void TestIniParser::test_strict_off()
 void TestIniParser::test_section_number_strict()
 {
     Mere::Config::Spec::Document config2(m_file2);
-    config2.strict(true);
+    config2.strict(Mere::Config::Spec::Base::Strict::Hard);
 
     Mere::Config::Parser::IniParser parser2(config2);
 
@@ -97,7 +97,7 @@ void TestIniParser::test_section_number_strict()
     QVERIFY(document2->root()->groups().size() == 3);
 
     Mere::Config::Spec::Document config3(m_file3);
-    config3.strict(true);
+    config3.strict(Mere::Config::Spec::Base::Strict::Hard);
 
     Mere::Config::Parser::IniParser parser3(config3);
 
@@ -108,7 +108,7 @@ void TestIniParser::test_section_number_strict()
 void TestIniParser::test_group_property_number()
 {
     Mere::Config::Spec::Document config2(m_file2);
-    config2.strict(true);
+    config2.strict(Mere::Config::Spec::Base::Strict::Hard);
 
     Mere::Config::Parser::IniParser parser2(config2);
 
@@ -118,7 +118,7 @@ void TestIniParser::test_group_property_number()
 
 
     Mere::Config::Spec::Document config3(m_file3);
-    config3.strict(true);
+    config3.strict(Mere::Config::Spec::Base::Strict::Hard);
 
     Mere::Config::Parser::IniParser parser3(config3);
 
@@ -131,7 +131,7 @@ void TestIniParser::test_group_property_number()
 void TestIniParser::test_group_subgroup_number()
 {
     Mere::Config::Spec::Document config3(m_file3);
-    config3.strict(true);
+    config3.strict(Mere::Config::Spec::Base::Strict::Hard);
 
     Mere::Config::Parser::IniParser parser3(config3);
 
@@ -143,7 +143,7 @@ void TestIniParser::test_group_subgroup_number()
 void TestIniParser::test_group_property_value()
 {
     Mere::Config::Spec::Document config2(m_file2);
-    config2.strict(true);
+    config2.strict(Mere::Config::Spec::Base::Strict::Hard);
 
     Mere::Config::Parser::IniParser parser2(config2);
 

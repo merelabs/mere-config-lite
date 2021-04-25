@@ -19,8 +19,8 @@ class MERE_CONFIG_LIB_SPEC KVParser : public PropertyParser
 public:
     explicit KVParser(const Spec::Base &spec);
 
-    virtual std::vector<Property *> parseProperties() const override;
-    virtual Property* parseProperty(const std::string &key) const override;
+    virtual std::vector<Property *> parse() const override;
+    virtual Property* parse(const std::string &key) const override;
 };
 
 }

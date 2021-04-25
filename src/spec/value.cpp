@@ -1,5 +1,10 @@
 #include "value.h"
 
+Mere::Config::Spec::Value::~Value()
+{
+
+}
+
 Mere::Config::Spec::Value::Value()
     : Value(".*")
 {

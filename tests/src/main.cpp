@@ -11,36 +11,36 @@ int main(int argc, char** argv)
 {
     int status = 0;
     {
-      TestParser test;
-      status |= QTest::qExec(&test, argc, argv);
+        TestParser test;
+        status |= QTest::qExec(&test, argc, argv);
     }
     {
-      TestKVParser test;
-      status |= QTest::qExec(&test, argc, argv);
-    }
-   {
-      TestKVConfig test;
-      status |= QTest::qExec(&test, argc, argv);
-   }
-   {
-      TestGroupParser test;
-      status |= QTest::qExec(&test, argc, argv);
-   }
-    {
-      TestIniParser test;
-      status |= QTest::qExec(&test, argc, argv);
+        TestKVParser test;
+        status |= QTest::qExec(&test, argc, argv);
     }
     {
-     TestIniConfig test;
-     status |= QTest::qExec(&test, argc, argv);
+        TestKVConfig test;
+        status |= QTest::qExec(&test, argc, argv);
     }
     {
-      TestDotParser test;
-      status |= QTest::qExec(&test, argc, argv);
+        TestGroupParser test;
+        status |= QTest::qExec(&test, argc, argv);
     }
     {
-      TestGKParser test;
-      status |= QTest::qExec(&test, argc, argv);
+        TestIniParser test;
+        status |= QTest::qExec(&test, argc, argv);
+    }
+    {
+        TestIniConfig test;
+        status |= QTest::qExec(&test, argc, argv);
+    }
+    {
+        TestDotParser test;
+        status |= QTest::qExec(&test, argc, argv);
+    }
+    {
+        TestGKParser test;
+        status |= QTest::qExec(&test, argc, argv);
     }
     return status;
 }

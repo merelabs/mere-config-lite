@@ -15,7 +15,7 @@ bool Mere::Config::Parser::PropertyParser::next(std::ifstream &file, std::string
     {
         if (!config().isProperty(line))
         {
-            if (strict()) throw Exception("malformed configuration");
+            if (strict() != Spec::Base::Strict::None) throw Exception("malformed configuration");
             continue;
         }
 
@@ -24,19 +24,3 @@ bool Mere::Config::Parser::PropertyParser::next(std::ifstream &file, std::string
 
     return static_cast<bool>(file);
 }
-
-//std::string Mere::Config::Parser::PropertyParser::key(const std::string &line) const
-//{
-//    auto pos = line.find(config().property()->delimiter());
-//    if (pos == 0 || pos == std::string::npos) return "";
-
-//    return line.substr(0, pos);
-//}
-
-//std::string Mere::Config::Parser::PropertyParser::value(const std::string &line) const
-//{
-//    auto pos = line.find(config().property()->delimiter());
-//    if (pos == 0 || pos == std::string::npos) return "";
-
-//    return line.substr(pos + 1);
-//}

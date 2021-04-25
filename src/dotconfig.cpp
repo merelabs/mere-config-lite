@@ -39,7 +39,7 @@ std::string Mere::Config::DotConfig::read(const std::string &fqkp, int *set) con
 {
     Mere::Config::Parser::DotParser parser(m_config);
 
-    Property *property = parser.parseProperty(fqkp);;
+    Property *property = parser.parse(fqkp);;
     if (!property)
     {
         if (set) *set = 0;
@@ -104,13 +104,13 @@ std::vector<Mere::Config::Property *> Mere::Config::DotConfig::readProperties() 
 {
     Mere::Config::Parser::DotParser parser(m_config);
 
-    return parser.parseProperties();;
+    return parser.parse();;
 }
 
 Mere::Config::Property* Mere::Config::DotConfig::readProperty(const std::string &key) const
 {
     Mere::Config::Parser::DotParser parser(m_config);
-    return parser.parseProperty(key);;
+    return parser.parse(key);;
 }
 
 std::vector<std::string> Mere::Config::DotConfig::getKeys(const std::string &name, int *set) const

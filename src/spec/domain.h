@@ -18,6 +18,11 @@ public:
     Domain();
     Domain(const std::string &pattern);
 
+    Domain(const Domain &that) = default;
+    Domain& operator=(const Domain &that) = default;
+    Domain(Domain &&that) = default;
+    Domain& operator=(Domain &&that) = default;
+
     std::string pattern() const;
     void pattern(const std::string &pattern);
 

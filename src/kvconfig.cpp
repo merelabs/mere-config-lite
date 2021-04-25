@@ -54,7 +54,7 @@ std::string Mere::Config::KVConfig::read(const std::string &key, int *set) const
     Mere::Config::Spec::Base config(this->path());
     Mere::Config::Parser::KVParser parser(config);
 
-    Property *property = parser.parseProperty(key);
+    Property *property = parser.parse(key);
     if (property)
     {
         if (set) *set = 1;
@@ -115,7 +115,7 @@ std::vector<Mere::Config::Property *> Mere::Config::KVConfig::readProperties() c
 {
     Mere::Config::Spec::Base config(this->path());
     Mere::Config::Parser::KVParser parser(config);
-    return parser.parseProperties();
+    return parser.parse();
 }
 
 Mere::Config::Property* Mere::Config::KVConfig::readProperty(const std::string &key) const
@@ -123,7 +123,7 @@ Mere::Config::Property* Mere::Config::KVConfig::readProperty(const std::string &
     Mere::Config::Spec::Base config(this->path());
     Mere::Config::Parser::KVParser parser(config);
 
-    return parser.parseProperty(key);
+    return parser.parse(key);
 }
 
 void Mere::Config::KVConfig::load()

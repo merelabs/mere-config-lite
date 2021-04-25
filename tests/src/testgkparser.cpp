@@ -35,7 +35,7 @@ void TestGKParser::cleanupTestCase()
 void TestGKParser::test_strict_on()
 {
     Mere::Config::Spec::BaseEx config(m_file1);
-    config.strict(true);
+    config.strict(Mere::Config::Spec::Base::Strict::Hard);
 
     Mere::Config::Parser::GKParser parser(config);
     QVERIFY_EXCEPTION_THROWN(parser.parse(), std::exception);
