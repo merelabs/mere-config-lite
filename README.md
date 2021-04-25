@@ -95,6 +95,6 @@ applications actually confiuration properties values - in that case get and read
 - std::string read(const std::string &key)
   to read value of the poperty from the presistance system;
 
-to indicate property of a group use flatten fully qualified key name - ie. window/height saying height
-of the window.
+to indicate property of a group use flatten fully qualified key name - ie. window/height saying 
+height of the window.
 ```
