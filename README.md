@@ -53,8 +53,8 @@
 ```
 KVParser
 
-Configurations that only contain key-value paiars are parsed with KVParser; Base api of this parser
-returns list of all the valid properties;
+Configurations that only contain key-value paiars are parsed with KVParser; Base api of this 
+parser returns list of all the valid properties;
 
 Signature:
 virtual std::vector<Property *> parse() const= 0;
@@ -79,8 +79,8 @@ group.
 ```
 CKParser - cross key parser
 
-Configurations that may contain properties as well as groupped properties are parsed with CKParser; 
-Base  api of this parser returns a root group;
+Configurations that may contain properties as well as groupped properties are parsed with 
+CKParser; Base  api of this parser returns a root group;
 
 Signature:
 virtual Group * parse() const= 0;
