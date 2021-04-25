@@ -1,6 +1,5 @@
 #include "kvconfig.h"
-#include "parser.h"
-#include "pathresolver.h"
+#include "parser/kvparser.h"
 
 #include <fstream>
 #include <iostream>
@@ -10,75 +9,124 @@ Mere::Config::KVConfig::~KVConfig()
 
 }
 
-Mere::Config::KVConfig::KVConfig(const std::string &path, QObject *parent)
-    : KVConfig(path, ".conf", parent)
+Mere::Config::KVConfig::KVConfig(const std::string &path)
+    : KVConfig(path, ".conf")
 {
 }
 
-Mere::Config::KVConfig::KVConfig(const std::string &path, const std::string &type, QObject *parent)
-    : QObject(parent),
-      m_path(path),
-      m_type(type)
+Mere::Config::KVConfig::KVConfig(const std::string &path, const std::string &type)
+    : PropertyConfig(path, type)
 {
-    PathResolver resolver;
-    std::string fqpath = resolver.resolve(m_path, m_type);
-}
-
-void Mere::Config::KVConfig::load()
-{
-    m_properties = this->properties();
 }
 
 std::string Mere::Config::KVConfig::get(const std::string &key, int *set) const
 {
-    auto result = m_properties.find(key);
-    if (result != m_properties.end())
+    auto it = std::find_if(m_properties.cbegin(), m_properties.cend(), [&](const Property *property){
+        return property->name().compare(key) == 0;
+    });
+
+    if (it == m_properties.end())
     {
-        if (set) *set = 1;
-        return result->second;
+        if (set) *set  = 0;
+        return "";
     }
 
-    if (set) *set = 0;
-
-    return "";
+    if (set) *set  = 1;
+    return (*it)->value();
 }
 
 void Mere::Config::KVConfig::set(const std::string &key, const std::string &value)
 {
-    m_properties.insert({key, value});
+    auto it = std::find_if(m_properties.begin(), m_properties.end(), [&](const Property *property){
+        return property->name().compare(key) == 0;
+    });
+
+    if (it != m_properties.end())
+        (*it)->value(value);
+    else
+        m_properties.push_back(new Property(key, value));
 }
 
-std::string Mere::Config::KVConfig::property(const std::string &property, int *set) const
+std::string Mere::Config::KVConfig::read(const std::string &key, int *set) const
 {
-    Parser parser(m_path);
-    return parser.parse(property, set);
+    std::string value;
+
+    Mere::Config::Spec::Base config(this->path());
+    Mere::Config::Parser::KVParser parser(config);
+
+    Property *property = parser.parse(key);
+    if (property)
+    {
+        if (set) *set = 1;
+        value = property->value();
+        delete property;
+    }
+    else
+    {
+        if (set) *set = 0;
+    }
+
+    return value;
 }
 
-std::map<std::string, std::string> Mere::Config::KVConfig::properties() const
+std::vector<std::string> Mere::Config::KVConfig::getKeys() const
 {
-    Parser parser(m_path);
+    std::vector<std::string> keys;
+
+    for(const auto *property : m_properties)
+        keys.push_back(property->name());
+
+    return keys;
+}
+
+std::string Mere::Config::KVConfig::getValue(const std::string &key, int *set) const
+{
+    return get(key, set);
+}
+
+Mere::Config::Property* Mere::Config::KVConfig::getProperty(const std::string &key) const
+{
+    auto it = std::find_if(m_properties.begin(), m_properties.end(), [&](const Property *property){
+        return property->name().compare(key) == 0;
+    });
+
+    if (it == m_properties.end())
+        return nullptr;
+
+    return *it;
+}
+
+std::vector<Mere::Config::Property *> Mere::Config::KVConfig::getProperties() const
+{
+    return m_properties;
+}
+
+void Mere::Config::KVConfig::setProperty(Property *property)
+{
+    set(property->name(), property->value());
+}
+
+void Mere::Config::KVConfig::setValue(const std::string &key, const std::string &value)
+{
+    set(key, value);
+}
+
+std::vector<Mere::Config::Property *> Mere::Config::KVConfig::readProperties() const
+{
+    Mere::Config::Spec::Base config(this->path());
+    Mere::Config::Parser::KVParser parser(config);
     return parser.parse();
 }
 
-bool Mere::Config::KVConfig::comment(const std::string &line) const
+Mere::Config::Property* Mere::Config::KVConfig::readProperty(const std::string &key) const
 {
-    auto pos = line.find("#");
+    Mere::Config::Spec::Base config(this->path());
+    Mere::Config::Parser::KVParser parser(config);
 
-    return pos == 0;
+    return parser.parse(key);
 }
 
-std::string Mere::Config::KVConfig::key(const std::string &line) const
+void Mere::Config::KVConfig::load()
 {
-    auto pos = line.find("=");
-    if (pos == 0 || pos == std::string::npos) return "";
-
-    return line.substr(0, pos);
-}
-
-std::string Mere::Config::KVConfig::value(const std::string &line) const
-{
-    auto pos = line.find("=");
-    if (pos == 0 || pos == std::string::npos) return "";
-
-    return line.substr(pos + 1);
+    m_properties = this->readProperties();
 }

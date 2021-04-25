@@ -1,3 +1,5 @@
+build/
+tests/tests
 # C++ objects and libs
 *.slo
 *.lo
