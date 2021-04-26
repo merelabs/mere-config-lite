@@ -1,5 +1,5 @@
-#ifndef EXCEPTION_H
-#define EXCEPTION_H
+#ifndef MERE_CONFIG_EXCEPTION_H
+#define MERE_CONFIG_EXCEPTION_H
 
 #include "global.h"
 #include <string>
@@ -22,4 +22,4 @@ private:
 }
 }
 
-#endif // EXCEPTION_H
+#endif // MERE_CONFIG_EXCEPTION_H

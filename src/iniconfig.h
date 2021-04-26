@@ -1,5 +1,5 @@
-#ifndef INICONFIG_H
-#define INICONFIG_H
+#ifndef MERE_CONFIG_INICONFIG_H
+#define MERE_CONFIG_INICONFIG_H
 
 #include "crossconfig.h"
 #include "document.h"
@@ -66,4 +66,4 @@ private:
 }
 }
 
-#endif // INICONFIG_H
+#endif // MERE_CONFIG_INICONFIG_H

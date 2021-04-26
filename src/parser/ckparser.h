@@ -1,5 +1,5 @@
-#ifndef CKPARSER_H
-#define CKPARSER_H
+#ifndef MERE_CONFIG_PARSER_CKPARSER_H
+#define MERE_CONFIG_PARSER_CKPARSER_H
 
 #include "crossparser.h"
 
@@ -35,4 +35,4 @@ private:
 }
 }
 }
-#endif // CKPARSER_H
+#endif // MERE_CONFIG_PARSER_CKPARSER_H

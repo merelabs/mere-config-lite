@@ -1,5 +1,5 @@
-#ifndef MERE_CONFIG_PARSER_GROUPCONFIG_H
-#define MERE_CONFIG_PARSER_GROUPCONFIG_H
+#ifndef MERE_CONFIG_SPEC_GROUP_H
+#define MERE_CONFIG_SPEC_GROUP_H
 
 #include "../global.h"
 #include "domain.h"
@@ -44,4 +44,4 @@ private:
 }
 }
 
-#endif // MERE_CONFIG_PARSER_GROUPCONFIG_H
+#endif // MERE_CONFIG_SPEC_GROUP_H

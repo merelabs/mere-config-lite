@@ -1,5 +1,5 @@
-#ifndef MERE_CONFIG_PARSER_VALUECONFIG_H
-#define MERE_CONFIG_PARSER_VALUECONFIG_H
+#ifndef MERE_CONFIG_PARSER_VALUE_H
+#define MERE_CONFIG_PARSER_VALUE_H
 
 #include "../global.h"
 #include "domain.h"
@@ -29,4 +29,4 @@ public:
 }
 }
 }
-#endif // MERE_CONFIG_PARSER_VALUECONFIG_H
+#endif // MERE_CONFIG_PARSER_VALUE_H
