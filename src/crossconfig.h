@@ -1,5 +1,5 @@
 #ifndef MERE_CONFIG_CROSSCONFIG_H
-#define MERE_CONFIG_PARSER_VALUE_H
+#define MERE_CONFIG_CROSSCONFIG_H
 
 #include "groupconfig.h"
 
@@ -19,4 +19,4 @@ public:
 }
 }
 
-#endif // MERE_CONFIG_PARSER_VALUE_H
+#endif // MERE_CONFIG_CROSSCONFIG_H
