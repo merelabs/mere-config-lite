@@ -17,8 +17,8 @@ class MERE_CONFIG_LIB_SPEC DotParser : public KVParser
 public:
     explicit DotParser(const Spec::Base &spec);
 
-private:
-    const Spec::Base &m_spec;
+//private:
+//    const Spec::Base &m_spec;
 };
 
 }

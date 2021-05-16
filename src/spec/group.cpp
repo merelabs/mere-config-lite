@@ -8,7 +8,7 @@ Mere::Config::Spec::Group::~Group()
 }
 
 Mere::Config::Spec::Group::Group()
-    : Group("^\\\[(\\\w+(\\/\\\w+)*)\\\]$")
+    : Group("^\\[(\\w+(\\/\\w+)*)\\]$")
 {
 }
 
