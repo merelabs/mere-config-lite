@@ -1,5 +1,5 @@
-#ifndef DOTTED_H
-#define DOTTED_H
+#ifndef MERE_CONFIG_SPEC_DOTTED_H
+#define MERE_CONFIG_SPEC_DOTTED_H
 
 #include "base.h"
 
@@ -20,4 +20,4 @@ public:
 }
 }
 }
-#endif // DOTTED_H
+#endif // MERE_CONFIG_SPEC_DOTTED_H

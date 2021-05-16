@@ -1,5 +1,5 @@
-#ifndef CROSSCONFIG_H
-#define CROSSCONFIG_H
+#ifndef MERE_CONFIG_CROSSCONFIG_H
+#define MERE_CONFIG_CROSSCONFIG_H
 
 #include "groupconfig.h"
 
@@ -19,4 +19,4 @@ public:
 }
 }
 
-#endif // CROSSCONFIG_H
+#endif // MERE_CONFIG_CROSSCONFIG_H

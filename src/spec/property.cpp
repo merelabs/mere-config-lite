@@ -6,7 +6,7 @@ Mere::Config::Spec::Property::~Property()
 }
 
 Mere::Config::Spec::Property::Property()
-    : Property("^([\\\w._]+)=(.*)$")
+    : Property("^([\\w._]+)=(.*)$")
 {
 
 }

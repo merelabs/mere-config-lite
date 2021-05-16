@@ -1,8 +1,5 @@
 #include "homespec.h"
 
-#include <iostream>
-#include <vector>
-
 //static
 std::string Mere::Config::HomeSpec::local()
 {

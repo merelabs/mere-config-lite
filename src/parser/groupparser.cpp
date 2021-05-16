@@ -14,7 +14,7 @@ bool Mere::Config::Parser::GroupParser::next(std::ifstream &file, std::string &l
 {
     while(Parser::next(file, line))
     {
-        if (m_spec.isGroup(line));
+        if (m_spec.isGroup(line))
             break;
     }
 

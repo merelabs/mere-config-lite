@@ -1,5 +1,5 @@
-#ifndef KEY_H
-#define KEY_H
+#ifndef MERE_CONFIG_KEY_H
+#define MERE_CONFIG_KEY_H
 
 #include <QObject>
 
@@ -21,4 +21,4 @@ signals:
 }
 }
 
-#endif // KEY_H
+#endif // MERE_CONFIG_KEY_H

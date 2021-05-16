@@ -1,7 +1,6 @@
 #include "dotconfig.h"
 #include "parser/dotparser.h"
 
-#include <QDebug>
 Mere::Config::DotConfig::DotConfig(const std::string &path)
     : PropertyConfig(path, ".ini"),
       m_config(path)

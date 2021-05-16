@@ -1,5 +1,5 @@
-#ifndef CKPARSER_H
-#define CKPARSER_H
+#ifndef MERE_CONFIG_PARSER_CKPARSER_H
+#define MERE_CONFIG_PARSER_CKPARSER_H
 
 #include "crossparser.h"
 
@@ -20,7 +20,7 @@ public:
 
     virtual Group* parse(const std::string &name) const override;
 
-    virtual Property* parse(const std::string &name, const std::string &key) const ;
+    virtual Property* parse(const std::string &name, const std::string &key) const override;
 
     virtual std::vector<Mere::Config::Property *> properties() const override;
     virtual std::vector<Mere::Config::Group *> groups() const override;
@@ -35,4 +35,4 @@ private:
 }
 }
 }
-#endif // CKPARSER_H
+#endif // MERE_CONFIG_PARSER_CKPARSER_H

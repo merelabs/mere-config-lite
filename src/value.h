@@ -1,5 +1,5 @@
-#ifndef VALUE_H
-#define VALUE_H
+#ifndef MERE_CONFIG_VALUE_H
+#define MERE_CONFIG_VALUE_H
 
 #include <QObject>
 
@@ -24,4 +24,4 @@ signals:
 }
 }
 
-#endif // VALUE_H
+#endif // MERE_CONFIG_VALUE_H
