@@ -69,7 +69,10 @@ bool Mere::Config::Parser::Parser::seek(std::ifstream &file, std::string &line) 
 
 bool Mere::Config::Parser::Parser::seek(std::ifstream &file, std::streampos &position) const
 {
-    file.seekg(position);
+    if(!file.seekg(position))
+        return false;
+
+    return true;
 }
 
 bool Mere::Config::Parser::Parser::getline(std::ifstream &file, std::string &line, Direction direction) const

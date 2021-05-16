@@ -1,5 +1,5 @@
-#ifndef DOCUMENT_H
-#define DOCUMENT_H
+#ifndef MERE_CONFIG_SPEC_DOCUMENT_H
+#define MERE_CONFIG_SPEC_DOCUMENT_H
 
 #include "baseex.h"
 
@@ -21,4 +21,4 @@ public:
 }
 }
 }
-#endif // DOCUMENT_H
+#endif // MERE_CONFIG_SPEC_DOCUMENT_H

@@ -1,5 +1,5 @@
-#ifndef DOCUMENTPARSER_H
-#define DOCUMENTPARSER_H
+#ifndef MERE_CONFIG_PARSER_DOCUMENTPARSER_H
+#define MERE_CONFIG_PARSER_DOCUMENTPARSER_H
 
 
 #include "../spec/document.h"
@@ -27,4 +27,4 @@ public:
 }
 }
 
-#endif // DOCUMENTPARSER_H
+#endif // MERE_CONFIG_PARSER_DOCUMENTPARSER_H

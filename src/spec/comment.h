@@ -1,5 +1,5 @@
-#ifndef COMMENTCONFIG_H
-#define COMMENTCONFIG_H
+#ifndef MERE_CONFIG_SPEC_COMMENTCONFIG_H
+#define MERE_CONFIG_SPEC_COMMENTCONFIG_H
 
 #include "../global.h"
 #include "domain.h"
@@ -29,4 +29,4 @@ public:
 }
 }
 }
-#endif // COMMENTCONFIG_H
+#endif // MERE_CONFIG_SPEC_COMMENTCONFIG_H

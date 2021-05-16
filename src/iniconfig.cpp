@@ -5,7 +5,7 @@ Mere::Config::IniConfig::IniConfig(const std::string &path)
     : CrossConfig(path, ".ini"),
       m_config(path)
 {
-    m_config.group()->pattern("^\\\[\\\w+(\\\s+\\\w+)*(\\\/\\\w+(\\\s+\\\w+)*)*\\\]$");
+    m_config.group()->pattern("^\\[\\w+(\\s+\\w+)*(\\/\\w+(\\s+\\w+)*)*\\]$");
 }
 
 std::string Mere::Config::IniConfig::get(const std::string &fqkp, int *set) const

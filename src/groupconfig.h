@@ -2,6 +2,7 @@
 #define MERE_CONFIG_GROUPCONFIG_H
 
 #include "propertyconfig.h"
+#include "config.h"
 #include "group.h"
 
 namespace Mere
@@ -10,6 +11,7 @@ namespace Config
 {
 
 class MERE_CONFIG_LIB_SPEC GroupConfig : public PropertyConfig
+//class MERE_CONFIG_LIB_SPEC GroupConfig : public Config
 {
 public:
     virtual ~GroupConfig();
@@ -31,6 +33,7 @@ public:
     // if 'set' flag specified, it will set the value of 'set' as
     // 0 - group with specified name is not present
     // 1 - otherwise
+    using PropertyConfig::getKeys;
     virtual std::vector<std::string> getKeys(const std::string &name, int *set = nullptr) const = 0;
 
     // get all the keys of a group and its subgroups ( recursively )
@@ -72,12 +75,14 @@ public:
     // if 'set' flag specified, it will set the value of 'set' as
     // 0 - group name or property with specified key is not present
     // 1 - otherwise
+    using PropertyConfig::getValue;
     virtual std::string getValue(const std::string &name, const std::string &key, int *set = nullptr) const = 0;
 
     virtual std::string getValue(const Group *group, const std::string &key, int *set = nullptr) const = 0;
 
     // get property associated with specified key of a group with specified name
     // if the specified group name or property key is not present, return null.
+    using PropertyConfig::getProperty;
     virtual Property* getProperty(const std::string &name, const std::string &key) const = 0;
 
     //get all the parent level properties
@@ -93,6 +98,7 @@ public:
     // if 'set' flag specified, it will set the value of 'set' as
     // 0 - group name or property with specified key is not present
     // 1 - otherwise
+    using PropertyConfig::getProperties;
     virtual std::vector<Property *> getProperties(const std::string &name, int *set = nullptr) const = 0;
 
     // get the all the properties of a group with specified name recursively from persistence system
@@ -141,6 +147,7 @@ public:
     // 0 - group name or property with specified key is not present
     // 1 - otherwise
     // if you already read the configuration, use 'get' for the value
+    using PropertyConfig::readProperty;
     virtual Property* readProperty(const std::string &name, const std::string &key) const = 0;
 };
 

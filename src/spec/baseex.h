@@ -1,5 +1,5 @@
-#ifndef MERE_CONFIG_PARSER_EXCONFIG_H
-#define MERE_CONFIG_PARSER_EXCONFIG_H
+#ifndef MERE_CONFIG_SPEC_BASEEXCONFIG_H
+#define MERE_CONFIG_SPEC_BASEEXCONFIG_H
 
 #include "base.h"
 #include "group.h"
@@ -53,4 +53,4 @@ private:
 }
 }
 }
-#endif // MERE_CONFIG_PARSER_EXCONFIG_H
+#endif // MERE_CONFIG_SPEC_BASEEXCONFIG_H

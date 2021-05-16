@@ -1,5 +1,5 @@
-#ifndef ROOT_H
-#define ROOT_H
+#ifndef MERE_CONFIG_ROOT_H
+#define MERE_CONFIG_ROOT_H
 
 #include "group.h"
 
@@ -20,4 +20,4 @@ public:
 
 }
 }
-#endif // ROOT_H
+#endif // MERE_CONFIG_ROOT_H

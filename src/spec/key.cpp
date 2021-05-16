@@ -6,7 +6,7 @@ Mere::Config::Spec::Key::~Key()
 }
 
 Mere::Config::Spec::Key::Key()
-    : Key("^\\\w+")
+    : Key("^\\w+")
 {
 
 }

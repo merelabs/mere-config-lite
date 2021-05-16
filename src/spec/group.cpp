@@ -8,7 +8,7 @@ Mere::Config::Spec::Group::~Group()
 }
 
 Mere::Config::Spec::Group::Group()
-    : Group("^\\\[(\\\w+(\\/\\\w+)*)\\\]$")
+    : Group("^\\[(\\w+(\\/\\w+)*)\\]$")
 {
 }
 
@@ -35,6 +35,8 @@ bool Mere::Config::Spec::Group::isGroup(const std::string &line) const
 
 bool Mere::Config::Spec::Group::isSubGroup(const std::string &line) const
 {
+    if (m_delimiter.empty()) return false;
+
     return isGroup(line) && line.find(delimiter()) != std::string::npos;
 }
 
