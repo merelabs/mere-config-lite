@@ -6,7 +6,7 @@ CONFIG += shared
 CONFIG += object_parallel_to_source
 
 TARGET = mere-config-lite
-VERSION= 0.0.1
+VERSION= 0.0.1b
 TEMPLATE = lib
 
 DEFINES += LIB_CODE=\\\"config-lite\\\"
@@ -30,10 +30,16 @@ unix {
     INSTALL_PREFIX = /usr/local/include/mere/config/
     for(header, HEADERS) {
         sdir = $${dirname(header)}
-        sdir = $$replace(sdir, "$$PWD/src", "./")
+        equals(sdir, "$$PWD/src") {
+            sdir = ""
+        } else {
+            sdir = $$replace(sdir, "$$PWD/src/", "")
+        }
+#        message($$sdir)
         path = $${INSTALL_PREFIX}$${sdir}
         eval(headers_$${path}.files += $$header)
         eval(headers_$${path}.path = $$path)
+
         eval(INSTALLS *= headers_$${path})
     }
 }
