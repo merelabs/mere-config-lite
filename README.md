@@ -98,3 +98,29 @@ applications actually confiuration properties values - in that case get and read
 to indicate property of a group use flatten fully qualified key name - ie. window/height saying height
 of the window.
 ```
+
+## requires
+`mere-config-lite` requires following componnets
+- C++11 
+- QtCore
+- mere-utils
+
+## required
+`mere-config-lite` is required by following app, utility and libaries,
+- [mere-xdg](https://github.com/merelabs/mere-xdg)
+- [mere-finder-app](https://github.com/merelabs/mere-finder-app)
+ 
+## build ##
+```
+$ git clone https://github.com/merelabs/mere-config-lite.git
+$ qmake
+$ make
+$ make install
+```
+
+### support
+If you find a bug, or have a feature suggestion, please [log an issue](https://github.com/merelabs/mere-config-lite/issues). If you'd like to
+contribute, please read [How to Contribute](CONTRIBUTING.md).
+
+## license ##
+All the code in this repository is licensed under a [BSD-2-Clause License](LICENSE).
