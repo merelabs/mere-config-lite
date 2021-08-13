@@ -8,16 +8,16 @@ Mere::Config::DotConfig::DotConfig(const std::string &path)
 
 }
 
-std::string Mere::Config::DotConfig::get(const std::string &fqkp, int *set) const
+std::string Mere::Config::DotConfig::get(const std::string &fqkp, bool *set) const
 {
     Property *property = getProperty(fqkp);
     if (!property)
     {
-        if (set) *set = 0;
+        if (set) *set = false;
         return "";
     }
 
-    if (set) *set = 1;
+    if (set) *set = true;
 
     return property->value();
 }
@@ -34,21 +34,21 @@ void Mere::Config::DotConfig::set(const std::string &fqkp, const std::string &va
     property->value(value);
 }
 
-std::string Mere::Config::DotConfig::read(const std::string &fqkp, int *set) const
+std::string Mere::Config::DotConfig::read(const std::string &fqkp, bool *set) const
 {
     Mere::Config::Parser::DotParser parser(m_config);
 
     Property *property = parser.parse(fqkp);;
     if (!property)
     {
-        if (set) *set = 0;
+        if (set) *set = false;
         return "";
     }
 
     std::string value = property->value();
     delete property;
 
-    if (set) *set = 1;
+    if (set) *set = true;
 
     return value;
 }
@@ -63,7 +63,7 @@ std::vector<std::string> Mere::Config::DotConfig::getKeys() const
     return keys;
 }
 
-std::string Mere::Config::DotConfig::getValue(const std::string &key, int *set) const
+std::string Mere::Config::DotConfig::getValue(const std::string &key, bool *set) const
 {
     return get(key, set);
 }

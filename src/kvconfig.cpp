@@ -19,7 +19,7 @@ Mere::Config::KVConfig::KVConfig(const std::string &path, const std::string &typ
 {
 }
 
-std::string Mere::Config::KVConfig::get(const std::string &key, int *set) const
+std::string Mere::Config::KVConfig::get(const std::string &key, bool *set) const
 {
     auto it = std::find_if(m_properties.cbegin(), m_properties.cend(), [&](const Property *property){
         return property->name().compare(key) == 0;
@@ -27,11 +27,11 @@ std::string Mere::Config::KVConfig::get(const std::string &key, int *set) const
 
     if (it == m_properties.end())
     {
-        if (set) *set  = 0;
+        if (set) *set  = false;
         return "";
     }
 
-    if (set) *set  = 1;
+    if (set) *set  = true;
     return (*it)->value();
 }
 
@@ -47,7 +47,7 @@ void Mere::Config::KVConfig::set(const std::string &key, const std::string &valu
         m_properties.push_back(new Property(key, value));
 }
 
-std::string Mere::Config::KVConfig::read(const std::string &key, int *set) const
+std::string Mere::Config::KVConfig::read(const std::string &key, bool *set) const
 {
     std::string value;
 
@@ -57,13 +57,13 @@ std::string Mere::Config::KVConfig::read(const std::string &key, int *set) const
     Property *property = parser.parse(key);
     if (property)
     {
-        if (set) *set = 1;
+        if (set) *set = true;
         value = property->value();
         delete property;
     }
     else
     {
-        if (set) *set = 0;
+        if (set) *set = false;
     }
 
     return value;
@@ -79,7 +79,7 @@ std::vector<std::string> Mere::Config::KVConfig::getKeys() const
     return keys;
 }
 
-std::string Mere::Config::KVConfig::getValue(const std::string &key, int *set) const
+std::string Mere::Config::KVConfig::getValue(const std::string &key, bool *set) const
 {
     return get(key, set);
 }

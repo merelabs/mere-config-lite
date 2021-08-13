@@ -8,16 +8,16 @@ Mere::Config::IniConfig::IniConfig(const std::string &path)
     m_config.group()->pattern("^\\[\\w+(\\s+\\w+)*(\\/\\w+(\\s+\\w+)*)*\\]$");
 }
 
-std::string Mere::Config::IniConfig::get(const std::string &fqkp, int *set) const
+std::string Mere::Config::IniConfig::get(const std::string &fqkp, bool *set) const
 {
     Property *property = m_document->property(fqkp);
     if (!property)
     {
-        if (set) *set = 0;
+        if (set) *set = false;
         return "";
     }
 
-    if (set) *set = 1;
+    if (set) *set = true;
 
     return property->value();
 }
@@ -44,7 +44,7 @@ void Mere::Config::IniConfig::set(const std::string &fqkp, const std::string &va
     group->property(new Property(fqkp.substr(pos + 1), value));
 }
 
-std::string Mere::Config::IniConfig::read(const std::string &fqkp, int *set) const
+std::string Mere::Config::IniConfig::read(const std::string &fqkp, bool *set) const
 {
     Mere::Config::Parser::IniParser parser(m_config);
 
@@ -60,14 +60,14 @@ std::string Mere::Config::IniConfig::read(const std::string &fqkp, int *set) con
     Property *property = parser.parse(path, key);;
     if (!property)
     {
-        if (set) *set = 0;
+        if (set) *set = false;
         return "";
     }
 
     std::string value = property->value();
     delete property;
 
-    if (set) *set = 1;
+    if (set) *set = true;
 
     return value;
 }
@@ -151,7 +151,7 @@ std::vector<Mere::Config::Group *> Mere::Config::IniConfig::getAllGroups(const s
     return group->groups(100);
 }
 
-std::string Mere::Config::IniConfig::getValue(const std::string &key, int *set) const
+std::string Mere::Config::IniConfig::getValue(const std::string &key, bool *set) const
 {
     return get(key, set);
 }
