@@ -119,12 +119,12 @@ void TestIniConfig::test_read()
 {
     Mere::Config::IniConfig config(m_file3);
 
-    int set = 0;
+    bool set = false;
     QVERIFY(config.read("type", &set).compare("lib") == 0);
-    QVERIFY(set == 1);
+    QVERIFY(set == true);
 
     QVERIFY(config.read("mising-property", &set).empty());
-    QVERIFY(set == 0);
+    QVERIFY(set == false);
 
     QVERIFY(std::stoi(config.read("api/get/count")) == 14);
 }
@@ -145,12 +145,12 @@ void TestIniConfig::test_getValue()
     Mere::Config::IniConfig config(m_file3);
     config.load();
 
-    int set;
+    bool set;
     QVERIFY(config.getValue("type", &set).compare("lib") == 0);
-    QVERIFY(set == 1);
+    QVERIFY(set == true);
 
     QVERIFY(config.getValue("missing", &set).empty());
-    QVERIFY(set == 0);
+    QVERIFY(set == false);
 }
 
 void TestIniConfig::test_getProperty()

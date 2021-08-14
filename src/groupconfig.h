@@ -31,19 +31,19 @@ public:
     // get the all the keys of a group with specified name
     // if the specified group name is not present, return empty property.
     // if 'set' flag specified, it will set the value of 'set' as
-    // 0 - group with specified name is not present
-    // 1 - otherwise
+    // false - group with specified name is not present
+    // true - otherwise
     using PropertyConfig::getKeys;
-    virtual std::vector<std::string> getKeys(const std::string &name, int *set = nullptr) const = 0;
+    virtual std::vector<std::string> getKeys(const std::string &name, bool *set = nullptr) const = 0;
 
     // get all the keys of a group and its subgroups ( recursively )
     // It will traverse all the groups and subgroups recursively and get the properties.
     // keys inside a group are listed as key = group/key
     // if the specified group name is not present, return empty property.
     // if 'set' flag specified, it will set the value of 'set' as
-    // 0 - group with specified name is not present
-    // 1 - otherwise
-    virtual std::vector<std::string> getAllKeys(const std::string &group, int *set = nullptr) const = 0;
+    // false - group with specified name is not present
+    // true - otherwise
+    virtual std::vector<std::string> getAllKeys(const std::string &group, bool *set = nullptr) const = 0;
 
     virtual Group* getGroup(const std::string &name) const = 0;
 
@@ -56,16 +56,16 @@ public:
     // get of all the subgroups a group with specified name
     // if the specified group name is not present, return empty property.
     // if 'set' flag specified, it will set the value of 'set' as
-    // 0 - group with specified name is not present
-    // 1 - otherwise
-    virtual std::vector<Group *> getGroups(const std::string &name, int *set = nullptr) const = 0;
+    // false - group with specified name is not present
+    // true - otherwise
+    virtual std::vector<Group *> getGroups(const std::string &name, bool *set = nullptr) const = 0;
 
     // get of all groups and subgroups of a group ( recursively )
     // if the specified group name is not present, return empty property.
     // if 'set' flag specified, it will set the value of 'set' as
-    // 0 - group with specified name is not present
-    // 1 - otherwise
-    virtual std::vector<Group *> getAllGroups(const std::string &name, int *set = nullptr) const = 0;
+    // false - group with specified name is not present
+    // true - otherwise
+    virtual std::vector<Group *> getAllGroups(const std::string &name, bool *set = nullptr) const = 0;
 
     // get value of a key/flatten-key
     //std::string getValue(const std::string &key, int *set = nullptr) const;
@@ -73,12 +73,12 @@ public:
     // get value of a key of a group with specified name
     // if the specified group name or property key is not present, return empty string.
     // if 'set' flag specified, it will set the value of 'set' as
-    // 0 - group name or property with specified key is not present
-    // 1 - otherwise
+    // false - group name or property with specified key is not present
+    // true - otherwise
     using PropertyConfig::getValue;
-    virtual std::string getValue(const std::string &name, const std::string &key, int *set = nullptr) const = 0;
+    virtual std::string getValue(const std::string &name, const std::string &key, bool *set = nullptr) const = 0;
 
-    virtual std::string getValue(const Group *group, const std::string &key, int *set = nullptr) const = 0;
+    virtual std::string getValue(const Group *group, const std::string &key, bool *set = nullptr) const = 0;
 
     // get property associated with specified key of a group with specified name
     // if the specified group name or property key is not present, return null.
@@ -96,18 +96,18 @@ public:
     // get all the properties of groups specified with name
     // if the specified group name or property key is not present, return empty list.
     // if 'set' flag specified, it will set the value of 'set' as
-    // 0 - group name or property with specified key is not present
-    // 1 - otherwise
+    // false - group name or property with specified key is not present
+    // true - otherwise
     using PropertyConfig::getProperties;
-    virtual std::vector<Property *> getProperties(const std::string &name, int *set = nullptr) const = 0;
+    virtual std::vector<Property *> getProperties(const std::string &name, bool *set = nullptr) const = 0;
 
     // get the all the properties of a group with specified name recursively from persistence system
     // It will traverse all the subgroup recursively and get the properties.
     // if the specified group name is not present, return empty property.
     // if 'set' flag specified, it will set the value of 'set' as
-    // 0 - group with specified name is not present
-    // 1 - otherwise
-    virtual std::vector<Property *> getAllProperties(const std::string &name, int *set = nullptr) const = 0;
+    // false - group with specified name is not present
+    // true - otherwise
+    virtual std::vector<Property *> getAllProperties(const std::string &name, bool *set = nullptr) const = 0;
 
     // Online APIs
     // read all the parent level groups from persistence system
@@ -127,8 +127,8 @@ public:
     // read the all the properties of a group with specified name from persistence system
     // if the specified group name is not present, return empty property.
     // if 'set' flag specified, it will set the value of 'set' as
-    // 0 - group with specified name is not present
-    // 1 - otherwise
+    // false - group with specified name is not present
+    // true - otherwise
     // if you already read the configuration, use 'get' for the value
     //virtual std::vector<Property *> readProperties(const std::string &name, int *set = nullptr) const = 0;
 
@@ -136,16 +136,16 @@ public:
     // It will traverse all the subgroup recursively and read the properties.
     // if the specified group name is not present, return empty property.
     // if 'set' flag specified, it will set the value of 'set' as
-    // 0 - group with specified name is not present
-    // 1 - otherwise
+    // false - group with specified name is not present
+    // true - otherwise
     // if you already read the configuration, use 'get' for the value
     //virtual std::vector<Property *> readAllProperties(const std::string &name, int *set = nullptr) const = 0;
 
     // read the property associated with the specified key and group name from persistence system
     // if the specified group name or property key is not present, return empty property.
     // if 'set' flag specified, it will set the value of 'set' as
-    // 0 - group name or property with specified key is not present
-    // 1 - otherwise
+    // false - group name or property with specified key is not present
+    // true - otherwise
     // if you already read the configuration, use 'get' for the value
     using PropertyConfig::readProperty;
     virtual Property* readProperty(const std::string &name, const std::string &key) const = 0;

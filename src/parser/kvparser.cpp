@@ -23,7 +23,7 @@ std::vector<Mere::Config::Property *> Mere::Config::Parser::KVParser::parse() co
     }
     catch (Exception &e)
     {
-        if (strict() == Spec::Base::Strict::Hard)
+        if (strict() == Spec::Strict::Hard)
             throw Exception("malformed configuration");
     }
 
@@ -41,7 +41,7 @@ Mere::Config::Property* Mere::Config::Parser::KVParser::parse(const std::string 
 
     if (!config().isProperty(line))
     {
-        if (strict() == Spec::Base::Strict::Hard) throw Exception("malformed configuration");
+        if (strict() == Spec::Strict::Hard) throw Exception("malformed configuration");
         return nullptr;
     }
 

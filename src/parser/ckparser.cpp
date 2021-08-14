@@ -39,7 +39,7 @@ Mere::Config::Property* Mere::Config::Parser::CKParser::parse(const std::string 
 std::vector<Mere::Config::Property *> Mere::Config::Parser::CKParser::properties() const
 {
     Mere::Config::Spec::BaseEx config(m_spec);
-    config.strict(Spec::Base::Strict::Soft);
+    config.strict(Spec::Strict::Soft);
 
     KVParser kvparser(config);
     return kvparser.parse();
@@ -48,7 +48,7 @@ std::vector<Mere::Config::Property *> Mere::Config::Parser::CKParser::properties
 std::vector<Mere::Config::Group *> Mere::Config::Parser::CKParser::groups() const
 {
     Mere::Config::Spec::BaseEx config(m_spec);
-    config.strict(Spec::Base::Strict::Soft);
+    config.strict(Spec::Strict::Soft);
 
     GKParser gkparser(config);
     return gkparser.parse();
