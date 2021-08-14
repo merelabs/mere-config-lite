@@ -33,7 +33,7 @@ void TestKVParser::cleanupTestCase()
 void TestKVParser::test_strict_on()
 {
     Mere::Config::Spec::Base config(m_file2);
-    config.strict(Mere::Config::Spec::Base::Strict::Hard);
+    config.strict(Mere::Config::Spec::Strict::Hard);
 
     Mere::Config::Parser::KVParser parser(config);
     QVERIFY_EXCEPTION_THROWN(parser.parse(), std::exception);
@@ -50,7 +50,7 @@ void TestKVParser::test_strict_off()
 void TestKVParser::test_property_number()
 {
     Mere::Config::Spec::Base config(m_file1);
-    config.strict(Mere::Config::Spec::Base::Strict::Hard);
+    config.strict(Mere::Config::Spec::Strict::Hard);
 
     Mere::Config::Parser::KVParser parser(config);
 
@@ -61,7 +61,7 @@ void TestKVParser::test_property_number()
 void TestKVParser::test_property_value()
 {
     Mere::Config::Spec::Base config(m_file1);
-    config.strict(Mere::Config::Spec::Base::Strict::Hard);
+    config.strict(Mere::Config::Spec::Strict::Hard);
 
     Mere::Config::Parser::KVParser parser(config);
     Mere::Config::Property *property = parser.parse("name");

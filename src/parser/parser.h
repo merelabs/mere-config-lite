@@ -20,7 +20,7 @@ public:
     const Spec::Base &config() const;
 
 protected:
-    Spec::Base::Strict strict() const;
+    Spec::Strict strict() const;
     bool isComment(const std::string &line) const;
 
     // move to next valid line

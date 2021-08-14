@@ -13,8 +13,8 @@ class MERE_CONFIG_LIB_SPEC KVConfig : public PropertyConfig
 {
 public:
     virtual ~KVConfig();
-    explicit KVConfig(const std::string &path);
-    explicit KVConfig(const std::string &path, const std::string &type);
+    explicit KVConfig(const std::string &path, const Spec::Strict &strict = Spec::Strict::Soft);
+    explicit KVConfig(const std::string &path, const std::string &type, const Spec::Strict &strict = Spec::Strict::Soft);
 
     virtual std::string get(const std::string &key, bool *set = nullptr) const override;
     virtual void set(const std::string &key, const std::string &value) override;

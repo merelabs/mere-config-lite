@@ -9,13 +9,13 @@ Mere::Config::KVConfig::~KVConfig()
 
 }
 
-Mere::Config::KVConfig::KVConfig(const std::string &path)
-    : KVConfig(path, ".conf")
+Mere::Config::KVConfig::KVConfig(const std::string &path, const Spec::Strict &strict)
+    : KVConfig(path, ".conf", strict)
 {
 }
 
-Mere::Config::KVConfig::KVConfig(const std::string &path, const std::string &type)
-    : PropertyConfig(path, type)
+Mere::Config::KVConfig::KVConfig(const std::string &path, const std::string &type, const Spec::Strict &strict)
+    : PropertyConfig(path, type, strict)
 {
 }
 
@@ -113,15 +113,19 @@ void Mere::Config::KVConfig::setValue(const std::string &key, const std::string 
 
 std::vector<Mere::Config::Property *> Mere::Config::KVConfig::readProperties() const
 {
-    Mere::Config::Spec::Base config(this->path());
-    Mere::Config::Parser::KVParser parser(config);
+    Mere::Config::Spec::Base spec(this->path());
+    spec.strict(strict());
+
+    Mere::Config::Parser::KVParser parser(spec);
     return parser.parse();
 }
 
 Mere::Config::Property* Mere::Config::KVConfig::readProperty(const std::string &key) const
 {
-    Mere::Config::Spec::Base config(this->path());
-    Mere::Config::Parser::KVParser parser(config);
+    Mere::Config::Spec::Base spec(this->path());
+    spec.strict(strict());
+
+    Mere::Config::Parser::KVParser parser(spec);
 
     return parser.parse(key);
 }

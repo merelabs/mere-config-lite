@@ -14,6 +14,13 @@ namespace Config
 namespace Spec
 {
 
+enum class Strict
+{
+    None,
+    Soft,
+    Hard
+};
+
 class MERE_CONFIG_LIB_SPEC Base
 {
 public:
@@ -51,13 +58,6 @@ public:
 
     std::string path() const;
     void path(const std::string &path);
-
-    enum class Strict
-    {
-        None,
-        Soft,
-        Hard
-    };
 
     Strict strict() const;
     void strict(Strict strict);

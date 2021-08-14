@@ -13,8 +13,8 @@ class MERE_CONFIG_LIB_SPEC PropertyConfig : public Config
 {
 public:
     virtual ~PropertyConfig();
-    explicit PropertyConfig(const std::string &path);
-    explicit PropertyConfig(const std::string &path, const std::string &type);
+    explicit PropertyConfig(const std::string &path, const Spec::Strict &strict = Spec::Strict::Soft);
+    explicit PropertyConfig(const std::string &path, const std::string &type, const Spec::Strict &strict = Spec::Strict::Soft);
 
     //
     // in-memory query
