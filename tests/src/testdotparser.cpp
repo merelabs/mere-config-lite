@@ -38,7 +38,7 @@ void TestDotParser::cleanupTestCase()
 void TestDotParser::test_strict_on()
 {
     Mere::Config::Spec::Dotted config(m_file1);
-    config.strict(Mere::Config::Spec::Base::Strict::Hard);
+    config.strict(Mere::Config::Spec::Strict::Hard);
 
     Mere::Config::Parser::DotParser parser(config);
 

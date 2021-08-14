@@ -15,7 +15,7 @@ bool Mere::Config::Parser::PropertyParser::next(std::ifstream &file, std::string
     {
         if (!config().isProperty(line))
         {
-            if (strict() != Spec::Base::Strict::None) throw Exception("malformed configuration");
+            if (strict() != Spec::Strict::None) throw Exception("malformed configuration");
             continue;
         }
 

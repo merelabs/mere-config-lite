@@ -35,7 +35,7 @@ void Mere::Config::Spec::Base::path(const std::string &path)
     m_path = path;
 }
 
-Mere::Config::Spec::Base::Strict Mere::Config::Spec::Base::strict() const
+Mere::Config::Spec::Strict Mere::Config::Spec::Base::strict() const
 {
     return m_strict;
 }

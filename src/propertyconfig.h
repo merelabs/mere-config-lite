@@ -13,8 +13,8 @@ class MERE_CONFIG_LIB_SPEC PropertyConfig : public Config
 {
 public:
     virtual ~PropertyConfig();
-    explicit PropertyConfig(const std::string &path);
-    explicit PropertyConfig(const std::string &path, const std::string &type);
+    explicit PropertyConfig(const std::string &path, const Spec::Strict &strict = Spec::Strict::Soft);
+    explicit PropertyConfig(const std::string &path, const std::string &type, const Spec::Strict &strict = Spec::Strict::Soft);
 
     //
     // in-memory query
@@ -27,9 +27,9 @@ public:
     // get the value of fully qualified key's value
     // if the specified property key is not present, return empty string.
     // if 'set' flag specified, it will set the value of 'set' as
-    // 0 - property with specified key is not present
-    // 1 - otherwise
-    virtual std::string getValue(const std::string &key, int *set = nullptr) const = 0;
+    // false - property with specified key is not present
+    // true - otherwise
+    virtual std::string getValue(const std::string &key, bool *set = nullptr) const = 0;
 
     // get the property associated with the specified key
     // if the specified property key is not present, return null.

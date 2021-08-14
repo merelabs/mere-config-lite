@@ -18,13 +18,13 @@ public:
     explicit IniConfig(const std::string &path);
 
     // config
-    std::string get(const std::string &fqkp, int *set = nullptr) const override;
+    std::string get(const std::string &fqkp, bool *set = nullptr) const override;
     void set(const std::string &fqkp, const std::string &value) override;
-    std::string read(const std::string &fqkp, int *set = nullptr) const override;
+    std::string read(const std::string &fqkp, bool *set = nullptr) const override;
 
     // property config
     std::vector<std::string> getKeys() const override;
-    std::string getValue(const std::string &key, int *set = nullptr) const override;
+    std::string getValue(const std::string &key, bool *set = nullptr) const override;
     Property* getProperty(const std::string &key) const override;
     std::vector<Property *> getProperties() const override;
     void setProperty(Property *property) override;
@@ -34,21 +34,21 @@ public:
 
     // group config
     std::vector<std::string> getAllKeys() const override;
-    std::vector<std::string> getKeys(const std::string &name, int *set = nullptr) const override;
-    std::vector<std::string> getAllKeys(const std::string &group, int *set = nullptr) const override;
+    std::vector<std::string> getKeys(const std::string &name, bool *set = nullptr) const override;
+    std::vector<std::string> getAllKeys(const std::string &group, bool *set = nullptr) const override;
     Group* getGroup(const std::string &name) const override;
     std::vector<Group *> getGroups() const override;
     std::vector<Group *> getAllGroups() const override;
-    std::vector<Group *> getGroups(const std::string &name, int *set = nullptr) const override;
-    std::vector<Group *> getAllGroups(const std::string &name, int *set = nullptr) const override;
+    std::vector<Group *> getGroups(const std::string &name, bool *set = nullptr) const override;
+    std::vector<Group *> getAllGroups(const std::string &name, bool *set = nullptr) const override;
 
-    std::string getValue(const std::string &name, const std::string &key, int *set = nullptr) const override;
-    std::string getValue(const Group *group, const std::string &key, int *set = nullptr) const override;
+    std::string getValue(const std::string &name, const std::string &key, bool *set = nullptr) const override;
+    std::string getValue(const Group *group, const std::string &key, bool *set = nullptr) const override;
     Property* getProperty(const std::string &name, const std::string &key) const override;
 
     std::vector<Property *> getAllProperties() const override;
-    std::vector<Property *> getProperties(const std::string &name, int *set = nullptr) const override;
-    std::vector<Property *> getAllProperties(const std::string &name, int *set = nullptr) const override;
+    std::vector<Property *> getProperties(const std::string &name, bool *set = nullptr) const override;
+    std::vector<Property *> getAllProperties(const std::string &name, bool *set = nullptr) const override;
 
     Document* readDocument() const;
     Group* readGroup(const std::string &name) const override;

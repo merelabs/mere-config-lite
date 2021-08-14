@@ -15,13 +15,13 @@ public:
     explicit DotConfig(const std::string &path);
 
     // config
-    std::string get(const std::string &fqkp, int *set = nullptr) const override;
+    std::string get(const std::string &fqkp, bool *set = nullptr) const override;
     void set(const std::string &fqkp, const std::string &value) override;
-    std::string read(const std::string &fqkp, int *set = nullptr) const override;
+    std::string read(const std::string &fqkp, bool *set = nullptr) const override;
 
 //    // property config
     std::vector<std::string> getKeys() const override;
-    std::string getValue(const std::string &key, int *set = nullptr) const override;
+    std::string getValue(const std::string &key, bool *set = nullptr) const override;
     Property* getProperty(const std::string &key) const override;
     std::vector<Property *> getProperties() const override;
     void setProperty(Property *property) override;

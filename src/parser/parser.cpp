@@ -15,7 +15,7 @@ const Mere::Config::Spec::Base& Mere::Config::Parser::Parser::config() const
     return m_spec;
 }
 
-Mere::Config::Spec::Base::Strict Mere::Config::Parser::Parser::strict() const
+Mere::Config::Spec::Strict Mere::Config::Parser::Parser::strict() const
 {
     return m_spec.strict();
 }
