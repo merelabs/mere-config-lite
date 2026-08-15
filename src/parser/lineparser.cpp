@@ -1,6 +1,8 @@
 #include "lineparser.h"
 
+#include <mere/utils/stringutils.h>
 #include <fstream>
+
 
 Mere::Config::Parser::LineParser::LineParser(const Spec::Base &spec)
     : Parser(spec)
@@ -40,7 +42,9 @@ std::string Mere::Config::Parser::LineParser::key(const std::string &line) const
     auto pos = line.find(config().property()->delimiter());
     if (pos == 0 || pos == std::string::npos) return "";
 
-    return line.substr(0, pos);
+    std::string key(line.substr(0, pos));
+
+    return Mere::Utils::StringUtils::trim(key);
 }
 
 std::string Mere::Config::Parser::LineParser::value(const std::string &line) const
@@ -48,5 +52,7 @@ std::string Mere::Config::Parser::LineParser::value(const std::string &line) con
     auto pos = line.find(config().property()->delimiter());
     if (pos == 0 || pos == std::string::npos) return "";
 
-    return line.substr(pos + 1);
+    std::string value(line.substr(pos + 1));
+
+    return Mere::Utils::StringUtils::trim(value);
 }
