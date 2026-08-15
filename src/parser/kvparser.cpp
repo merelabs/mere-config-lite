@@ -2,6 +2,7 @@
 #include "../exception.h"
 
 #include <fstream>
+#include <iostream>
 
 Mere::Config::Parser::KVParser::KVParser(const Spec::Base &spec)
     : PropertyParser(spec)
@@ -23,6 +24,9 @@ std::vector<Mere::Config::Property *> Mere::Config::Parser::KVParser::parse() co
     }
     catch (Exception &e)
     {
+        std::cerr << "Error in config: " << std::endl;
+        std::cerr << "\t file  : " << config().path() << std::endl;
+        std::cerr << "\t error : " << e.what() << std::endl;
         if (strict() == Spec::Strict::Hard)
             throw Exception("malformed configuration");
     }

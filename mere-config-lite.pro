@@ -1,8 +1,7 @@
 QT      = core
-CONFIG += c++11
+CONFIG += c++17
 CONFIG += shared
 
-# to avoid warning: duplicate script for target
 CONFIG += object_parallel_to_source
 
 TARGET = mere-config-lite
