@@ -6,9 +6,8 @@ Mere::Config::Spec::Property::~Property()
 }
 
 Mere::Config::Spec::Property::Property()
-    : Property("^([\\w._]+)=(.*)$")
+    : Property("^([\\w._]+)\\s*=\\s*(.*)$")
 {
-
 }
 
 Mere::Config::Spec::Property::Property(const std::string &pattern)
